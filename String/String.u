@@ -1,0 +1,11 @@
+CInstall["string"]
+Begin[String]
+
+CInterface["string",
+Value[System`StringJoin],
+`length[],
+`join[_String]
+]
+
+End[]
+Path[x_String] := Path[].join[x]

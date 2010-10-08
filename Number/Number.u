@@ -1,0 +1,5 @@
+CInstall["number"]
+
+CInterface["number",
+Value[System`Number`Cast,Plus,Times]
+]

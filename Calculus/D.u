@@ -1,0 +1,58 @@
+Begin[System]
+
+`D`Heads = {Exp, Log, Sin, Cos, Tan, Cot, Sec, ArcCosh, ArcTanh, Csc, ArcSin, ArcCos, ArcTan, ArcCot, ArcSec, ArcCsc, Sinh, Cosh, Tanh, Coth, Sech, Csch, ArcSinh, ArcSech, ArcCsch, ArcTanh}
+
+Begin[D]
+
+Rules = {
+A[x_,x_] :> 1,
+A[E^x_, x_] :> E^x,
+A[Exp[x_], x_] :> Exp[x],
+A[Log[x_], x_] :> 1/x,
+A[Sin[x_], x_] :> Cos[x],
+A[Cos[x_], x_] :> -Sin[x],
+A[Tan[x_], x_] :> Sec[x]^2,
+A[Cot[x_], x_] :> -Csc[x]^2,
+A[Sec[x_], x_] :> Sec[x] Tan[x],
+A[ArcCosh[x_], x_] :> 1/(Sqrt[x-1] Sqrt[x+1]),
+A[ArcTanh[x_], x_] :> 1/(1-x^2),
+A[Csc[x_], x_] :> -Cot[x] Csc[x],
+A[ArcSin[x_], x_] :> 1/Sqrt[1-x^2],
+A[ArcCos[x_], x_] :> -(1/Sqrt[1-x^2]),
+A[ArcTan[x_], x_] :> 1/(1+x^2),
+A[ArcCot[x_], x_] :> -(1/(1+x^2)),
+A[ArcSec[x_], x_] :> 1/(Sqrt[1-1/x^2] x^2),
+A[ArcCsc[x_], x_] :> -(1/(Sqrt[1-1/x^2] x^2)),
+A[Sinh[x_], x_] :> Cosh[x],
+A[Cosh[x_], x_] :> Sinh[x],
+A[Tanh[x_], x_] :> Sech[x]^2,
+A[Coth[x_], x_] :> -Csch[x]^2,
+A[Sech[x_], x_] :> -Sech[x] Tanh[x],
+A[Csch[x_], x_] :> -Coth[x] Csch[x],
+A[ArcSinh[x_], x_] :> 1/Sqrt[1+x^2],
+A[ArcSech[x_], x_] :> -(1/(x Sqrt[(1-x)/(1+x)] (1+x))),
+A[ArcCsch[x_], x_] :> -(1/(Sqrt[1+1/x^2] x^2)),
+A[ArcTanh[x_], x_] :> 1/(1-x^2),
+A[x_^x_, x_] :> x^x (1+Log[x]),
+A[f_ + g_, x_] :> A[f, x] + A[g, x],
+A[a_, x_] :> 0 /; FreeQ[a, x], 
+A[x_^n_, x_] :> n x^(n-1) /; NumberQ[n],
+A[g_^n_, x_] :> n g^(n-1) A[g, x] /; FreeQ[n, x],
+A[E^g_, x_] :> E^g A[g, x] /; !FreeQ[g, x],
+A[a_^x_, x_] :> a^x Log[a] /; FreeQ[a, x],
+A[a_^g_, x_] :> a^g Log[a] A[g, x] /; FreeQ[a, x] && !FreeQ[g, x],
+A[g_^h_, x_] :> g^h ((h A[g, x])/g+Log[g] A[h, x]) /; !FreeQ[g, x] && !FreeQ[h, x],
+A[a_ f_, x_] :> a A[f, x] /; FreeQ[a, x] && ! FreeQ[f, x],
+A[f_ g_, x_] :> A[f, x] g + f A[g, x] /; ! FreeQ[f, x] && ! FreeQ[g, x],
+A[(f_)[g_], x_] :> A[f[g], g] A[g, x] /; g =!= x && !FreeQ[Heads, f],
+A[(f_)[g_], x_] :> Derivative[1][f][g] A[g, x] /; FreeQ[Heads, f],
+A[(f_)[g__], x_] :> MultiA[f,g,x] /; Head[g]==List && FreeQ[Heads, f]
+}
+
+(*Evaluate[Rules/.Dispatch[RuleDelayed->SetDelayed,A->D]]*)
+Rules = ListC@@Rules
+D[f_, x_] := A[f, x] //. Rules
+
+End[]
+
+End[]

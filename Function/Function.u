@@ -1,0 +1,54 @@
+CInstall["function"]
+
+CInterface["function",
+Value[Factorial,Binomial,Fibonacci,Lucas,Pi,EulerGamma,Catalan,E,Log,Log2,Log10,Exp,Cos,Sin,Tan,Sec,Csc,Cot,ArcCos,ArcSin,ArcTan,Cosh,Sinh,Tanh,Coth,Sech,Csch,ArcCosh,ArcSinh,ArcTanh,Gamma,LogGamma,Zeta,Erfc,Sqrt]
+]
+
+(*
+Begin[System]
+Sin[Pi] := 0
+Sin[Pi/2] := 1
+Sin[Pi/3] := Sqrt[3]/2
+Sin[2 Pi/3] := Sqrt[3]/2
+Sin[Pi/4] := Sqrt[2]/2
+Sin[3 Pi/4] := Sqrt[2]/2
+Sin[Pi/6] := 1/2
+Sin[5 Pi/6] := 1/2
+Sin[0] := 0
+Sin[k_Integer] := -Sin[-k] /; k < 0
+Sin[k_Rational] := -Sin[-k] /; k < 0
+Sin[k_Integer Pi] := 0
+Sin[k_Rational Pi] := -Sin[-k Pi] /; k < 0
+Sin[k_Rational Pi] := Module[{n = IntegerPart[k], x = Pretty[k], q, p},
+q = x[[1]]; p = x[[2]];
+If[n != 0, (-1)^n Sin[((q%p)/p) Pi],'Sin[k Pi]]] /; k > 0
+(*»¯¼ò*)
+Sin[-x_] := -Sin[x]
+Sin[Pi+x_] := -Sin[x]
+Sin[k_Integer Pi+x_] := (-1)^k Sin[x]
+Sin[Pi/2+x_] := Cos[x]
+
+Cos[Pi] := -1
+Cos[Pi/2] := 0
+Cos[Pi/3] := 1/2
+Cos[2 Pi/3] := -1/2
+Cos[Pi/4] := Sqrt[2]/2
+Cos[3 Pi/4] := -Sqrt[2]/2
+Cos[Pi/6] := Sqrt[3]/2
+Cos[5 Pi/6] := -1/2
+Cos[0] := 1
+Cos[k_Integer] := Cos[-k] /; k < 0
+Cos[k_Rational] := Cos[-k] /; k < 0
+Cos[k_Integer Pi] := (-1)^k
+Cos[k_Rational Pi] := Module[{n = IntegerPart[k], x = Pretty[k], q, p},
+q = x[[1]]; p = x[[2]];
+If[n != 0, (-1)^n Cos[((q%p)/p) Pi],'Cos[k Pi]]] /; k > 0
+(*»¯¼ò*)
+Cos[-x_] := Cos[x]
+Cos[Pi+x_] := -Cos[x]
+Cos[k_Integer Pi+x_] := (-1)^k Cos[x]
+Cos[Pi/2+x_] := -Sin[x]
+
+Log[1] := 0
+End[]
+*)

@@ -1,0 +1,7 @@
+(*
+Print[2+3+3+4/.x_+x_+y_:>{x,y}]
+Print[3+4/.(x_+y_/;x>y):>{x,y}]
+Print[3+4/.(x_+y_/;x<y):>{x,y}]
+Print[3+4/.x_+y_:>{x,y}/;x>y]
+<< "../Calculus/D.u"
+*)

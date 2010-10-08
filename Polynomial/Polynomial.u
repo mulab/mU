@@ -1,0 +1,5 @@
+CInstall["polynomial"]
+
+CInterface["polynomial",
+Value[Plus,Times]
+]
