@@ -1,5 +1,8 @@
 #include <mU/Parser.h>
 #include <mU/System.h>
+#ifdef _MSC_VER
+#pragma comment(lib,"Parser.lib")
+#endif
 
 namespace mU {
 bool In(Kernel& k, var& r, wcs s) {

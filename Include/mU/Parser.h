@@ -106,7 +106,7 @@ protected:
         int value;
     };
     std::vector<Node> mNode;
-    std::tr1::unordered_multimap<uint, uint> mChild;
+    std::tr1::unordered_map<uint, std::vector<uint> > mChild;
     std::tr1::unordered_map<uint, wcs> mNote;
     std::vector<uint> mOper;
     std::vector<uint> mOprn;
@@ -127,9 +127,6 @@ protected:
 
     std::vector<var> mCode;
     std::vector<std::pair<var, uint> > mGen;
-    typedef std::tr1::unordered_multimap<uint, uint>::const_iterator NodeIter;
-    NodeIter lower(uint);
-    NodeIter upper(uint);
     uint count(uint);
     void emit(const var&);
     void head(uint);
@@ -162,3 +159,13 @@ inline void println(Kernel& k, const var& x, wostream& o = wcout) {
 	o << endl;
 }
 }
+
+#ifndef _MSC_VER
+namespace std { namespace tr1 {
+template<>
+inline size_t
+hash<mU::Parser::Token>::operator()(mU::Parser::Token v) const {
+	   return static_cast<size_t>(v);
+}
+}}
+#endif

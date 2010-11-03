@@ -1,11 +1,13 @@
 CInstall["string"]
-Begin[String]
+Begin[System`String]
 
 CInterface["string",
-Value[System`StringJoin],
-`length[],
-`join[_String]
+Value[`Join],
+`add[_String],
+`len[]
 ]
 
 End[]
-Path[x_String] := Path[].join[x]
+
+StringJoin = System`String`Join
+Path[x_String] := Path[].add[x]

@@ -1,97 +1,27 @@
 #include <mU/Number.h>
+#include <mU/Polynomial.h>
+#ifdef _MSC_VER
+#pragma comment(lib,"Number.lib")
+#endif
 
 namespace mU {
-var Plus(Kernel& k, const Object& x, const Object& y) {
-	if (x.type == $.Integer) {
-		if (y.type == $.Integer) {
-			Integer* r = new Integer();
-			mpz_add(r->mpz, static_cast<const Integer&>(x).mpz, 
-				static_cast<const Integer&>(y).mpz);
-			return r;
-		}
-		if (y.type == $.Rational) {
-			Rational* r = new Rational();
-			mpq_set_z(r->mpq, static_cast<const Integer&>(x).mpz);
-			mpq_add(r->mpq, r->mpq, static_cast<const Rational&>(y).mpq);
-			return r;
-		}
-		if (y.type == $.Real) {
-			Real* r = new Real();
-			mpf_set_z(r->mpf, static_cast<const Integer&>(x).mpz);
-			mpf_add(r->mpf, r->mpf, static_cast<const Real&>(y).mpf);
-			return r;
-		}
-	}
-	if (x.type == $.Rational) {
-		if (y.type == $.Integer) {
-			Rational* r = new Rational();
-			mpq_set_z(r->mpq, static_cast<const Integer&>(y).mpz);
-			mpq_add(r->mpq, r->mpq, static_cast<const Rational&>(x).mpq);
-			return r;
-		}
-		if (y.type == $.Rational) {
-			Rational* r = new Rational();
-			mpq_add(r->mpq, static_cast<const Rational&>(x).mpq, 
-				static_cast<const Rational&>(y).mpq);
-			return r;
-		}
-		if (y.type == $.Real) {
-			Real* r = new Real();
-			mpf_set_q(r->mpf, static_cast<const Rational&>(x).mpq);
-			mpf_add(r->mpf, r->mpf, static_cast<const Real&>(y).mpf);
-			return r;
-		}
-	}
-	if (x.type == $.Real) {
-		if (y.type == $.Integer) {
-			Real* r = new Real();
-			mpf_set_z(r->mpf, static_cast<const Integer&>(y).mpz);
-			mpf_add(r->mpf, r->mpf, static_cast<const Real&>(x).mpf);
-			return r;
-		}
-		if (y.type == $.Rational) {
-			Real* r = new Real();
-			mpf_set_q(r->mpf, static_cast<const Rational&>(y).mpq);
-			mpf_add(r->mpf, r->mpf, static_cast<const Real&>(x).mpf);
-			return r;
-		}
-		if (y.type == $.Real) {
-			Real* r = new Real();
-			mpf_add(r->mpf, static_cast<const Real&>(x).mpf, 
-				static_cast<const Real&>(y).mpf);
-			return r;
-		}
-	}
-	Tuple* r = tuple(3);
-	if (x.compare(y) == 0) {
-		r->tuple[0] = $.Times;
-		r->tuple[1] = new Integer(2L);
-		r->tuple[2] = &x;
-	} else {
-		r->tuple[0] = $.Plus;
-		r->tuple[1] = &x;
-		r->tuple[2] = &y;
-	}
-	return r;
-}
 var Plus(Kernel& k, const Tuple& x) {
     if (x.size == 1) 
 		return new Integer(0L);
     if (x.size == 2) 
 		return x[1];
-    uint pos = 1;
-	std::vector<var> t;
-    if (isNumber(x[1])) {
-        var c = x[1];
-        for (pos = 2; pos < x.size && isNumber(x[pos]); ++pos);
-        for (uint j = 2; j < pos; ++j)
-            c = Plus(k, c.object(), x[j].object());
+    std::vector<var> r;
+	uint pos = 1;
+    if (isNumber(x[pos])) {
+        var c = x[pos];
+        for (++pos; pos < x.size && isNumber(x[pos]); ++pos)
+            c = Number::Plus(k, c.object(), x[pos].object());
         if(c.isObject($.Rational))
 			mpq_canonicalize(cast<Rational>(c).mpq);
         if (pos == x.size)
 			return c;
-        if (cmpD(c.object()))
-            t.push_back(c);
+        if (Number::CmpD(c.object(), 0.0))
+            r.push_back(c);
     }
 	MMap mmap;
     for (; pos < x.size; ++pos) {
@@ -115,52 +45,40 @@ var Plus(Kernel& k, const Tuple& x) {
             e = new Integer(1L);
         mmap.insert(std::make_pair(b,e));
     }
-    {
-		MMap::const_iterator iter = mmap.begin();
-        while (iter != mmap.end()) {
-            var b = iter->first, e = iter->second;
-            MMap::const_iterator end = mmap.upper_bound(b);
-			++iter;
-			for (; iter != end; ++iter)
-				e = Plus(k, e.object(),iter->second.object());
-			double ed = toD(e.object());
-			if (ed != 0.0) {
-				if (ed != 1.0) {
-					if (b.isTuple($.Times)) {
-						Tuple* c = tuple(b.tuple().size + 1);
-						c->tuple[0] = $.Times;
-						c->tuple[1] = e;
-						for (uint i = 1; i < b.tuple().size; ++i)
-							c->tuple[i + 1] = b.tuple()[i];
-						b = c;
-					} else
-						b = tuple($.Times, e, b);
-				}
-				t.push_back(b);
+	MMap::const_iterator iter = mmap.begin();
+	while (iter != mmap.end()) {
+		var b = iter->first, e = iter->second;
+		MMap::const_iterator end = mmap.upper_bound(b);
+		for (++iter; iter != end; ++iter)
+			e = Number::Plus(k, e.object(),iter->second.object());
+		double ed = toD(e.object());
+		if (ed != 0.0) {
+			if (ed != 1.0) {
+				if (b.isTuple($.Times)) {
+					Tuple* c = tuple(b.tuple().size + 1);
+					c->tuple[0] = $.Times;
+					c->tuple[1] = e;
+					for (uint i = 1; i < b.tuple().size; ++i)
+						c->tuple[i + 1] = b.tuple()[i];
+					b = c;
+				} else
+					b = tuple($.Times, e, b);
 			}
-        }
-    }
-    if (t.size() == 0)
+			r.push_back(b);
+		}
+	}
+    if (r.size() == 0)
 		return new Integer(0L);
-    if (t.size() == 1)
-		return t[0];
-    return mU::list(t.size(), t.begin(), $.Plus);
+    if (r.size() == 1)
+		return r[0];
+    return mU::list(r.size(), r.begin(), $.Plus);
 }
-/*
-var Plus(const var& x, const var& y) {
-	std::vector<var> t;
-    if (x.isTuple($.Plus))
-        Flatten(t,$.Plus,x.toV());
-    else
-        t.push_back(x);
-	if (y.isV(SYM(Plus)))
-		Flatten(t,SYM(Plus),y.toV());
-	else
-		t.push_back(y);
-	std::sort(t.begin(),t.end(),Before);
-    return Plus(t);
+var Plus(Kernel& k, const var& x, const var& y) {
+	var r = tuple($.Plus, x, y);
+    r = k.flatten($.Plus, r.tuple());
+	std::sort(r.tuple().tuple + 1, r.tuple().tuple + r.tuple().size);
+    return Plus(k, r.tuple());
 }
-*/
 }
 
 using namespace mU;

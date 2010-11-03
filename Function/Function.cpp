@@ -1,4 +1,7 @@
 #include <mU/Function.h>
+#ifdef _MSC_VER
+#pragma comment(lib,"Kernel.lib")
+#endif
 
 using namespace mU;
 
@@ -6,7 +9,7 @@ CAPI void Install(Kernel& k) {
 	//wcout << "#Function# Install Successfully!" << endl;
 }
 CAPI void Uninstall(Kernel& k) {
-	//wcout << "#Function# Uninstall Successfully!" << endl;
+	wcout << "#Function# Uninstall Successfully!" << endl;
 }
 CAPI void CVALUE(System, Factorial)(Kernel& k, var& r, Tuple& x) {
 	if (x.size > 1 && x[1].isObject())

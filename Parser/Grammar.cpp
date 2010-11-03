@@ -128,7 +128,6 @@ Grammar::Grammar() {
     end.insert(Parser::RBRACKET);
     end.insert(Parser::RPAREN);
     end.insert(Parser::RBRACE);
-	//end.insert(Parser::SEMICOLON);
 #include "character.txt"
 	for (uint i = 0; i < character.size(); ++i) {
         unicode[character[i].unicode] = i;

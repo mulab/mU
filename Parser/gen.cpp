@@ -32,13 +32,7 @@ var Parser::eval() {
     return r;
 }
 var Parser::code() {
-    var r;
-    if (mCode.size() == 1)
-        r = mCode.back();
-    else
-        r = mU::list(mCode.size(), mCode.begin(), $.Serial);
-    mCode.clear();
-    return r;
+	return mCode.back();
 }
 void Parser::emit(const var& x) {
     if (mGen.empty()) {
@@ -55,24 +49,19 @@ void Parser::head(uint n) {
     emit(r);
     mGen.push_back(std::make_pair(r, 0));
 }
-Parser::NodeIter Parser::lower(uint i) {
-    return mChild.equal_range(i).first;
-}
-Parser::NodeIter Parser::upper(uint i) {
-    return mChild.equal_range(i).second;
-}
 uint Parser::count(uint i) {
-    return mChild.count(i);
+    return mChild[i].size();
 }
 #define oper(x) emit($.x)
 void Parser::gen(uint m) {
     Parser::Node& n = mNode[m];
-    NodeIter iter = lower(m);
+    std::vector<uint>& v = mChild[m];
+    typedef std::vector<uint>::const_iterator Iter;
+    Iter iter = v.begin(), end = v.end();
     switch (n.tag) {
     case tag_sequence: {
-        NodeIter end = upper(m);
         while (iter != end) {
-            gen(iter->second);
+            gen(*iter);
             ++iter;
         }
     }
@@ -81,27 +70,19 @@ void Parser::gen(uint m) {
 		if (grammar.oper[n.value].postfix || grammar.oper[n.value].prefix) {
 			head(2);
 			emit(grammar.operSymbol[n.value]);
-			gen(iter->second);
+			gen(*iter);
 			break;
 		}
 		head(3);
 		emit(grammar.operSymbol[n.value]);
-		gen(iter->second);
-		gen((++iter)->second);
+		gen(*iter);
+		gen(*(++iter));
         break;
     case tag_suffix:
         switch (n.value) {
         case -1: {
-            // FIXME: 看起来unordered_multimap::const_iterator不是双向的，
-            // 暂时用一个list中转一下
-            NodeIter begin0 = lower(m), end0 = upper(m);
-            std::list<uint> temp;
-            for (NodeIter iii = begin0; iii != end0; ++iii) {
-                temp.push_back(iii->second);
-            }
-            const std::list<uint>::const_iterator begin = temp.begin();
-            std::list<uint>::const_iterator end = temp.end();
-            std::list<uint>::const_iterator iter = --end;
+            Iter begin = iter;
+            iter = --end;
             while (iter != begin) {
                 --iter;
                 gen(*iter);
@@ -118,13 +99,13 @@ void Parser::gen(uint m) {
             n.value = -4;
             break;
         case -3:
-            head(count(iter->second) + 1);
+            head(count(*iter) + 1);
             n.value = -5;
             break;
         case -4:
             break;
         case -5:
-            gen(iter->second);
+            gen(*iter);
             break;
         }
         break;
@@ -149,7 +130,7 @@ void Parser::gen(uint m) {
         }
 			break;
         case -1:
-            gen(iter->second);
+            gen(*iter);
             break;
         }
         break;
@@ -161,9 +142,9 @@ void Parser::gen(uint m) {
         }
 			break;
         case -2: {
-            head(count(iter->second) + 1);
+            head(count(*iter) + 1);
             oper(List);
-            gen(iter->second);
+            gen(*iter);
         }
 			break;
         }
@@ -172,9 +153,8 @@ void Parser::gen(uint m) {
         switch (n.value) {
         case -1: {
             sym c = kernel.context();
-            NodeIter end = upper(m);
             while (iter != end) {
-                c = c->symbol(mNote[iter->second]);
+                c = c->symbol(mNote[*iter]);
                 ++iter;
             }
             emit(c);
@@ -193,8 +173,8 @@ void Parser::gen(uint m) {
         }
 			break;
         case -1: {
-            kernel.beginContext(root->symbol(mNote[iter->second]));
-            gen((++iter)->second);
+            kernel.beginContext(root->symbol(mNote[*iter]));
+            gen(*(++iter));
             kernel.endContext();
         }
 			break;
@@ -205,7 +185,7 @@ void Parser::gen(uint m) {
 		case instr_symbol: {
 			head(2);
 			oper(Blank);
-			gen(iter->second);
+			gen(*iter);
         }
 			break;
 		case -1: {

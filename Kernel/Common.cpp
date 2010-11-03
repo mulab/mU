@@ -17,7 +17,7 @@ void Enum::Init() {
 	M(Production)M(Alternatives)
 #undef M
 #define M(x) $.x = SYS(x);
-    M(Null)M(Symbol)M(Key)M(Object)M(Tuple)M(True)M(False)
+    M(Null)M(Symbol)M(Key)M(Object)M(Tuple)M(True)M(False)M(Infinity)
     M(Value)M(Assign)M(Method)M(Delayed)M(Match)
 	M(Integer)M(Rational)M(Real)M(String)
     M(Fail)M(Self)M(List)M(Sequence)M(Serial)M(Interface)

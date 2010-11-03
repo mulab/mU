@@ -23,7 +23,7 @@ struct Enum {
 	Production, Alternatives;
 
     sym
-    Null, Symbol, Key, Object, Tuple, True, False,
+    Null, Symbol, Key, Object, Tuple, True, False, Infinity,
     Value, Assign, Method, Delayed, Match,
 	Integer, Rational, Real, String,
     Fail, Self, List, Sequence, Serial, Interface,

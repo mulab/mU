@@ -29,5 +29,14 @@
     <ClCompile Include="Cast.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Number.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Divide.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Minus.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

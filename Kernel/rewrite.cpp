@@ -19,19 +19,19 @@ Tuple* Kernel::rewrite(Tuple* x) {
                 }
             }
 //             if (!iter->second.count($.SequenceHold))
-//                 if (x = flatten($.Sequence, *r)) {
+//                 if ((x = flatten($.Sequence, *r)) != r) {
 //                     r->destroy();
 //                     r = x;
 //                 }
             if (iter->second.count($.Flat))
-                if (x = flatten(r->tuple[0].symbol(), *r)) {
+                if ((x = flatten(r->tuple[0].symbol(), *r)) != r) {
                     r->destroy();
                     r = x;
                 }
             if (iter->second.count($.Orderless))
                 std::sort(r->tuple + 1, r->tuple + r->size);
             if (iter->second.count($.Listable))
-                if (x = thread(*r)) {
+                if ((x = thread(*r)) != r) {
                     r->destroy();
                     r = x;
                 }
@@ -41,7 +41,7 @@ Tuple* Kernel::rewrite(Tuple* x) {
 		r = x;
         for (uint i = 1; i < r->size; ++i)
             r->tuple[i] = eval(r->tuple[i]);
-//         if (x = flatten($.Sequence, *r)) {
+//         if ((x = flatten($.Sequence, *r)) != r) {
 //             r->destroy();
 //             r = x;
 //         }
@@ -54,7 +54,7 @@ Tuple* Kernel::thread(const Tuple& x) {
         if (x[i].isTuple() && x[i].tuple()[0] == $.List)
             m = std::max(m, x[i].tuple().size - 1);
     if (m == 0)
-        return 0;
+        return const_cast<Tuple*>(&x);
     Tuple* r = tuple(m + 1);
     r->tuple[0] = $.List;
     for (uint i = 1; i < m + 1; ++i)	{
@@ -81,7 +81,7 @@ Tuple* Kernel::flatten(sym h, const Tuple& x) {
             v.push_back(x[i]);
     }
     if (v.size() == x.size - 1)
-        return 0;
-	return list(v.size(), v.begin(), x[0]);
+        return const_cast<Tuple*>(&x);
+	return mU::list(v.size(), v.begin(), x[0]);
 }
 }

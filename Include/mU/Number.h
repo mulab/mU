@@ -23,20 +23,11 @@
 namespace mU {
 namespace Number {
 API var Cast(Kernel&, const var&, sym);
-}
-inline int cmpD(const Object& x, double a = 0.0, double b = 1.0) {
-	if (x.type == $.Integer)
-		return mpz_cmp_si(static_cast<const Integer&>(x).mpz, 
-		static_cast<long>(a / b));
-	if (x.type == $.Rational)
-		return mpq_cmp_si(static_cast<const Rational&>(x).mpq, static_cast<long>(a), 
-		static_cast<long>(b));
-	if (x.type == $.Real)
-		return mpf_cmp_d(static_cast<const Real&>(x).mpf, a / b);
-	return 0;
-}
+API int CmpD(const Object&, double, double = 1.0);
+API var Minus(Kernel&, const Object&);
+API var Divide(Kernel&, const Object&);
+API var Divide(Kernel&, const Object&, const Object&);
 API var Plus(Kernel&, const Object&, const Object&);
-API var Plus(Kernel&, const Tuple&);
 API var Times(Kernel&, const Object&, const Object&);
-API var Times(Kernel&, const Tuple&);
+}
 }

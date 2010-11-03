@@ -1,6 +1,11 @@
 #include <mU/Kernel.h>
 #include <mU/Parser.h>
 #include <mU/Interface.h>
+#ifdef _MSC_VER
+#pragma comment(lib,"Kernel.lib")
+#pragma comment(lib,"Parser.lib")
+#pragma comment(lib,"Interface.lib")
+#endif
 
 using namespace mU;
 
@@ -20,6 +25,7 @@ int main(int argc, char *argv[]) {
     wifstream f;
     setlocale(LC_ALL, "");
     //wcerr.rdbuf(0);
+
     if (argc > 1) {
         for (int i = 1; i < argc; ++i) {
             f.open(argv[i]);
@@ -31,11 +37,7 @@ int main(int argc, char *argv[]) {
         }
         return 0;
     }
-#ifdef _MSC_VER
     f.open("mU.ini");
-#else
-    f.open("mu.ini");
-#endif
     if (f) {
         p.start(f);
         p.eval();

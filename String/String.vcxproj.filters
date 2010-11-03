@@ -18,6 +18,9 @@
     <ClCompile Include="String.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Join.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Include\mU\String.h">

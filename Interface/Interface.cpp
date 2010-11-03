@@ -1,6 +1,7 @@
 #include <mU/Kernel.h>
 #include <mU/Interface.h>
 #ifndef _MSC_VER
+#pragma comment(lib,"Kernel.lib")
 #include <dlfcn.h>
 #endif
 
@@ -19,24 +20,20 @@ string cpath(const char* x) {
 #endif
 }
 void* cload(const char* x) {
-	return
 #ifdef _MSC_VER
-        LoadLibraryA(cpath(x).c_str())
+	return LoadLibraryA(cpath(x).c_str());
 #else
-		cout << cpath(x) << endl;
-        dlopen(x, RTLD_LAZY)
+	string s = cpath(x);
+	return dlopen(s.c_str(), RTLD_LAZY);
 #endif
-        ;
 }
 void* cnoload(const char* x) {
-    return
 #ifdef _MSC_VER
-        GetModuleHandleA(cpath(x).c_str())
+	return GetModuleHandleA(cpath(x).c_str());
 #else
-        cout << cpath(x) << endl;
-        dlopen(x, RTLD_NOLOAD)
+	string s = cpath(x);
+	return dlopen(s.c_str(), RTLD_LAZY | RTLD_NOLOAD);
 #endif
-        ;
 }
 void cunload(void* x) {
 #ifdef _MSC_VER

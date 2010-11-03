@@ -1,5 +1,13 @@
 CInstall["polynomial"]
+Begin[System`Polynomial]
 
 CInterface["polynomial",
-Value[Plus,Times]
+Value[System`Minus,System`Divide,System`Plus,System`Times]
 ]
+
+End[]
+
+Attribute[Minus] = {Listable}
+Attribute[Divide] = {Listable}
+Attribute[Plus] = {OneIdentity,Flat,Orderless,Listable}
+Attribute[Times] = {OneIdentity,Flat,Orderless,Listable}

@@ -43,6 +43,17 @@ var Cast(Kernel& k, const var& x, sym type) {
 	}
 	return x;
 }
+int CmpD(const Object& x, double a, double b) {
+	if (x.type == $.Integer)
+		return mpz_cmp_si(static_cast<const Integer&>(x).mpz, 
+		static_cast<long>(a / b));
+	if (x.type == $.Rational)
+		return mpq_cmp_si(static_cast<const Rational&>(x).mpq, static_cast<long>(a), 
+		static_cast<long>(b));
+	if (x.type == $.Real)
+		return mpf_cmp_d(static_cast<const Real&>(x).mpf, a / b);
+	return 0;
+}
 }
 }
 

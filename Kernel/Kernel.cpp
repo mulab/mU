@@ -15,7 +15,7 @@ Kernel::Kernel() : recursion(128), precision(20) {
 using namespace mU;
 
 CAPI void Install(Kernel& k) {
-    wcout << "#Kernel# Install Successfully!" << endl;
+    //wcout << "#Kernel# Install Successfully!" << endl;
 }
 CAPI void Uninstall(Kernel& k) {
     wcout << "#Kernel# Uninstall Successfully!" << endl;

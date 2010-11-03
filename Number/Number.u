@@ -1,5 +1,20 @@
 CInstall["number"]
+Begin[System`Number]
 
 CInterface["number",
-Value[System`Number`Cast,Plus,Times]
+Value[`Cast,`Minus,`Divide,`Plus,`Times],
+System`Integer`neg[],
+System`Integer`add[_Integer],
+System`Integer`mul[_Integer],
+System`Integer`div[_Integer],
+System`Rational`neg[],
+System`Rational`add[_Rational],
+System`Rational`mul[_Rational],
+System`Rational`div[_Rational],
+System`Real`neg[],
+System`Real`add[_Real],
+System`Real`mul[_Real],
+System`Real`div[_Real]
 ]
+
+End[]

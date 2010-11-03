@@ -174,7 +174,7 @@ struct MatchE {
 					if (next(x, 1))
 						return true;
 				} else {
-					Tuple* t = tuple(certains.size(), certains.begin());
+					Tuple* t = mU::tuple(certains.size(), certains.begin());
 					var c = t;
 					x.ptr = t->tuple;
 					x.end = t->tuple + t->size;
@@ -197,7 +197,7 @@ struct MatchE {
 					if (i == 0)
 						result = t[0];
 					else
-						result = list(t.size(), t.begin(), arg(0));
+						result = mU::list(t.size(), t.begin(), arg(0));
 					if (next(x, 1))
 						return true;
 				}
@@ -246,7 +246,8 @@ struct MatchE {
 }
 bool CMatch::operator()(Kernel& k, var& r, const var& x) {
 	MatchE m(k, *this);
-	if (m.match(Pos(x, 0))) {
+	Pos p(x, 0);
+	if (m.match(p)) {
 		r = m.result;
 		return true;
 	}

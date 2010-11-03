@@ -20,7 +20,7 @@ void Parser::start(wistream& in) {
 uint Parser::parse() {
     if (mLookahead == EOI)
         error();
-    uint r = sequence(SEMICOLON);
+    uint r = expression();
     if (!mLinebreak && mLookahead != EOI)
         error();
     return r;
@@ -33,7 +33,7 @@ uint Parser::node(Tag t, int v) {
     return mNode.size() - 1;
 }
 void Parser::insert(uint i, uint j) {
-    mChild.insert(std::make_pair(i, j));
+    mChild[i].push_back(j);
 }
 void Parser::note(uint i, const wstring& s) {
     mNote.insert(std::make_pair(i, wstr(s.c_str())));

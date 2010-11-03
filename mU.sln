@@ -19,8 +19,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Number", "Number\Number.vcx
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Function", "Function\Function.vcxproj", "{C54118E8-1BD5-46CB-8213-115425DE1435}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4B23D1AC-B07F-4167-B00F-F6C3246FA233} = {4B23D1AC-B07F-4167-B00F-F6C3246FA233}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Polynomial", "Polynomial\Polynomial.vcxproj", "{825C6BFC-839C-4D9B-BD78-63596C724439}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4B23D1AC-B07F-4167-B00F-F6C3246FA233} = {4B23D1AC-B07F-4167-B00F-F6C3246FA233}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -22,7 +22,7 @@ Sin[k_Rational Pi] := -Sin[-k Pi] /; k < 0
 Sin[k_Rational Pi] := Module[{n = IntegerPart[k], x = Pretty[k], q, p},
 q = x[[1]]; p = x[[2]];
 If[n != 0, (-1)^n Sin[((q%p)/p) Pi],'Sin[k Pi]]] /; k > 0
-(*»¯¼ò*)
+
 Sin[-x_] := -Sin[x]
 Sin[Pi+x_] := -Sin[x]
 Sin[k_Integer Pi+x_] := (-1)^k Sin[x]
@@ -43,7 +43,7 @@ Cos[k_Integer Pi] := (-1)^k
 Cos[k_Rational Pi] := Module[{n = IntegerPart[k], x = Pretty[k], q, p},
 q = x[[1]]; p = x[[2]];
 If[n != 0, (-1)^n Cos[((q%p)/p) Pi],'Cos[k Pi]]] /; k > 0
-(*»¯¼ò*)
+
 Cos[-x_] := Cos[x]
 Cos[Pi+x_] := -Cos[x]
 Cos[k_Integer Pi+x_] := (-1)^k Cos[x]

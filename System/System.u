@@ -15,8 +15,6 @@ Attribute[Serial] = {HoldAll,Flat}
 Attribute[SetDelayed] = {HoldAll}
 Attribute[Assign] = {HoldAll}
 Attribute[Value] = {HoldAll}
-Attribute[Plus] = {OneIdentity,Flat,Orderless,Listable}
-Attribute[Times] = {OneIdentity,Flat,Orderless,Listable}
 Attribute[Unset] = {HoldFirst}
 Attribute[RuleDelayed] = {HoldRest}
 Attribute[Unevaluated] =  {HoldAll}
@@ -37,6 +35,9 @@ Attribute[Delayed] = {HoldAll}
 
 << "../String/String.u"
 << "../Number/Number.u"
+<< "../Polynomial/Polynomial.u"
 << "../Function/Function.u"
+<< "../Calculus/D.u"
+<< "../Calculus/Integrate.u"
 
 (*End[]*)

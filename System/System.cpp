@@ -1,4 +1,7 @@
 #include <mU/System.h>
+#ifdef _MSC_VER
+#pragma comment(lib,"Kernel.lib")
+#endif
 
 using namespace mU;
 
@@ -16,4 +19,5 @@ CAPI void Install(Kernel& k) {
     k.endContext();
 }
 CAPI void Uninstall(Kernel& k) {
+	wcout << "#System# Uninstall Successfully!" << endl;
 }
