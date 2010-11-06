@@ -36,6 +36,20 @@ CAPI void VALUE(While)(Kernel& k, var& r, Tuple& x) {
 		}
 	}
 }
+CAPI void VALUE(Serial)(Kernel& k, var& r, Tuple& x) {
+	for (uint i = 1; i < x.size; ++i) {
+		r = k.eval(x[i]);
+		if (r.isTuple() && r.tuple()[0].isSymbol()) {
+			sym h = r.tuple()[0].symbol();
+			if (h == $.Return) {
+				r = r.tuple().size == 1 ? null : r.tuple()[1];
+				return;
+			}
+			if (h == $.Break || h == $.Continue)
+				break;
+		}
+	}
+}
 CAPI void VALUE(If)(Kernel& k, var& r, Tuple& x) {
 	if (x.size >= 3) {
 		if (x[1] == $.True) {

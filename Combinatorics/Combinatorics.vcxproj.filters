@@ -15,28 +15,31 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="sieve.h">
+    <ClCompile Include="Factorial.sieve.cpp">
       <Filter>源文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Include\mU\Function.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
+    </ClCompile>
+    <ClCompile Include="gmp.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Factorial.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Factorial.Impl.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Combinatorics.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="sieve.cpp">
+    <ClInclude Include="Factorial.sieve.h">
       <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="chudnovsky.cpp">
+    </ClInclude>
+    <ClInclude Include="Factorial.Impl.h">
       <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="factorial.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Function.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="mpfr.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
+    </ClInclude>
+    <ClInclude Include="..\Include\mU\Combinatorics.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -33,9 +33,6 @@
     <ClCompile Include="New.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Order.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Path.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -45,10 +42,28 @@
     <ClCompile Include="Set.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="System.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Order.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Block.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Function.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Output.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
     <ClCompile Include="Slot.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="System.cpp">
+    <ClCompile Include="Context.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

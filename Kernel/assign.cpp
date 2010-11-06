@@ -53,7 +53,7 @@ bool Kernel::rule(const Tuple& x, const Match* y) {
 		if (iter != assigns.end())
 			return cast<Assign>(iter->second)(*this, x, y);
 		if (y)
-			matches[h.symbol()].insert(std::make_pair(&x, y));
+			matches[h.symbol()][&x] = y;
 		else
 			matches[h.symbol()].erase(&x);
 		return true;

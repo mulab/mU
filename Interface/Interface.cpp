@@ -1,7 +1,8 @@
 #include <mU/Kernel.h>
 #include <mU/Interface.h>
-#ifndef _MSC_VER
+#ifdef _MSC_VER
 #pragma comment(lib,"Kernel.lib")
+#else
 #include <dlfcn.h>
 #endif
 

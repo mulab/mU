@@ -218,6 +218,9 @@ public:
     }
 };
 
+#define LOG_2_10 3.3219280948873623478703194294894
+#define LOG_10_2 0.3010299956639811952137388947245
+
 /*!
 * \brief
 * 实数
@@ -235,28 +238,37 @@ public:
         return mpf_cmp(mpf, static_cast<const Real&>(x).mpf);
     }
     virtual Real* clone() const {
-        Real* r = new Real();
+        Real* r = new Real(mpf_get_prec(mpf));
         mpf_set(r->mpf, mpf);
         return r;
     }
-    Real() : Object($.Real) {
-        mpf_init(mpf);
+    Real(uint n = 0) : Object($.Real) {
+        mpf_init2(mpf, n ? static_cast<uint>(LOG_2_10 * n) : 
+			mpf_get_default_prec());
     }
-    Real(void* dummy, uint x) : Object($.Real) {
-        mpf_init2(mpf, x);
+    Real(uint x, uint n) : Object($.Real) {
+		mpf_init2(mpf, n ? static_cast<uint>(LOG_2_10 * n) : 
+			mpf_get_default_prec());
+		mpf_set_ui(mpf, x);
     }
-    Real(uint x) : Object($.Real) {
-        mpf_init_set_ui(mpf, x);
+    Real(sint x, uint n) : Object($.Real) {
+		mpf_init2(mpf, n ? static_cast<uint>(LOG_2_10 * n) : 
+			mpf_get_default_prec());
+		mpf_set_si(mpf, x);
     }
-    Real(sint x) : Object($.Real) {
-        mpf_init_set_si(mpf, x);
+    Real(double x, uint n) : Object($.Real) {
+		mpf_init2(mpf, n ? static_cast<uint>(LOG_2_10 * n) : 
+			mpf_get_default_prec());
+		mpf_set_d(mpf, x);
     }
-    Real(double x) : Object($.Real) {
-        mpf_init_set_d(mpf, x);
+    Real(const char* x, int y, uint n) : Object($.Real) {
+		mpf_init2(mpf, n ? static_cast<uint>(LOG_2_10 * n) : 
+			mpf_get_default_prec());
+		mpf_set_str(mpf, x, y);
     }
-    Real(const char* x, int y) : Object($.Real) {
-        mpf_init_set_str(mpf, x, y);
-    }
+	uint prec() const {
+		return static_cast<uint>(LOG_10_2 * mpf_get_prec(mpf));
+	}
     uint toUI() const {
         return mpf_get_ui(mpf);
     }
@@ -276,6 +288,17 @@ inline double toD(const Object& x) {
 	if (x.type == $.Real)
 		return static_cast<const Real&>(x).toD();
 	return 0.0;
+}
+inline int cmpD(const Object& x, double a, double b = 1.0) {
+	if (x.type == $.Integer)
+		return mpz_cmp_si(static_cast<const Integer&>(x).mpz, 
+		static_cast<long>(a / b));
+	if (x.type == $.Rational)
+		return mpq_cmp_si(static_cast<const Rational&>(x).mpq, static_cast<long>(a), 
+		static_cast<long>(b));
+	if (x.type == $.Real)
+		return mpf_cmp_d(static_cast<const Real&>(x).mpf, a / b);
+	return 0;
 }
 
 /*!

@@ -20,18 +20,23 @@ var Plus(Kernel& k, const Tuple& x) {
 			mpq_canonicalize(cast<Rational>(c).mpq);
         if (pos == x.size)
 			return c;
-        if (Number::CmpD(c.object(), 0.0))
+        if (cmpD(c.object(), 0.0))
             r.push_back(c);
     }
 	MMap mmap;
     for (; pos < x.size; ++pos) {
         var b = x[pos], e;
+		if (b == $.Infinity)
+			return $.Infinity;
         if (b.isTuple($.Times)) {
 			const Tuple& t = b.tuple();
             if (isNumber(t[1])) {
                 e = t[1];
-                if (t.size == 3)
-                    b = t[2];
+                if (t.size == 3) {
+					b = t[2];
+					if (b == $.Infinity)
+						return x[pos];
+				}
 				else {
 					Tuple* c = tuple(t.size - 1);
 					c->tuple[0] = $.Times;

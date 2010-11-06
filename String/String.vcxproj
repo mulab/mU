@@ -103,12 +103,6 @@
   <ItemGroup>
     <ClInclude Include="..\Include\mU\String.h" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Kernel\Kernel.vcxproj">
-      <Project>{4b23d1ac-b07f-4167-b00f-f6c3246fa233}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

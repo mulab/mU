@@ -77,7 +77,7 @@ CAPI void VALUE(ReplaceAll)(Kernel& k, var& r, Tuple& x) {
 			else
 				x[2] = matchC(k, x[2]);
 		}
-		r = k.replace(x[1], cast<Match>(x[2]));
+		r = k.eval(k.replace(x[1], cast<Match>(x[2])));
 		return;
 	}
 }
@@ -92,7 +92,7 @@ CAPI void VALUE(ReplaceRepeated)(Kernel& k, var& r, Tuple& x) {
 		r = k.replace(x[1], cast<Match>(x[2]));
 		while (r != x[1]) {
 			x[1] = r;
-			r = k.replace(x[1], cast<Match>(x[2])); 
+			r = k.eval(k.replace(x[1], cast<Match>(x[2])));
 		}
 		return;
 	}
@@ -105,7 +105,7 @@ CAPI bool ASSIGN(Condition)(Kernel& k, const Tuple& x, const var& y) {
 		h = h.tuple()[0];
 	if (h.isSymbol()) {
 		if (y)
-			k.matches[h.symbol()].insert(std::make_pair(&x, y));
+			k.matches[h.symbol()][&x] = y;
 		else
 			k.matches[h.symbol()].erase(&x);
 		return true;

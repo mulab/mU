@@ -53,10 +53,9 @@ struct timer {
 API wstring Path();
 API bool Shell(wcs);
 API double Timing(Kernel&, var&, const var&);
-API bool In(Kernel&, var&, wcs);
-API bool Out(Kernel&, const var&, wcs);
-API bool OutAppend(Kernel&, const var&, wcs);
-API int Order(Kernel&, const var&, const var&);
+API bool Input(Kernel&, var&, wcs);
+API bool Output(Kernel&, const var&, wcs);
+API bool OutputAppend(Kernel&, const var&, wcs);
 }
 /*
 API void SetAttributes(const var&, const var&);

@@ -5,8 +5,6 @@
 #endif
 
 namespace mU {
-	Parser::Oper::Oper(Token $token, wcs $name, wcs $show, bool $postfix, bool $prefix, bool $rassoc) :
-token($token), name($name), show($show), prec(grammar.prec), postfix($postfix), prefix($prefix), rassoc($rassoc) {}
 Parser::Parser(Kernel& k) : kernel(k), mIn(&wcin) {
 	Grammar::Init();
 }

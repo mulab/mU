@@ -74,10 +74,10 @@ bool Kernel::certain(var& r, sym h, const Tuple& x) {
 	return false;
 }
 bool Kernel::match(var& r, sym h, const Tuple& x) {
-	std::tr1::unordered_map<sym, MMap>::const_iterator
+	std::tr1::unordered_map<sym, Map>::const_iterator
 		iter = matches.find(h);
 	if (iter != matches.end()) {
-		MMap::const_iterator
+		Map::const_iterator
 			iter2 = iter->second.begin();
 		while (iter2 != iter->second.end()) {
 			//println(iter2->first);

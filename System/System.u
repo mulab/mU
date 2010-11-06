@@ -3,21 +3,20 @@
 
 CInterface["system",
 Assign[List,Slot,Attribute,Condition],
-Value[Head,Print,Primary,Serial,Set,SetDelayed,Unset,Slot,Attribute,In,Clear,Kind,Type,FreeQ,Unevaluated,Context,ContextPath,New,Module,MatchQ,Replace,ReplaceAll,Full,Path,Begin,End,BeginPackage,EndPackage,Map,Apply,Order,Less,Equal,Greater,LessEqual,Unequal,GreaterEqual,Timing,Evaluate,SameQ,UnsameQ,For,While,And,Or,Not,If,MatchC,RuleC,Dispatch,ListC,TestC,ReplaceRepeated,Delayed,Lazy],
+Value[Head,Print,Primary,Serial,Set,SetDelayed,Unset,Slot,Attribute,Input,Clear,Kind,Type,Unevaluated,Context,ContextPath,New,Block,Module,MatchQ,Replace,ReplaceAll,Full,Path,Begin,End,BeginPackage,EndPackage,Map,Apply,Order,SameQ,UnsameQ,FreeQ,Timing,Evaluate,For,While,And,Or,Not,If,MatchC,RuleC,Dispatch,ListC,TestC,ReplaceRepeated,Delayed,Lazy,Function],
 CInstall[_String],
 CUninstall[_String],
 Shell[_String],
-Out[_,_String],
-OutAppend[_,_String]
+Output[_,_String],
+OutputAppend[_,_String]
 ]
 
 Attribute[Serial] = {HoldAll,Flat}
 Attribute[SetDelayed] = {HoldAll}
-Attribute[Assign] = {HoldAll}
-Attribute[Value] = {HoldAll}
 Attribute[Unset] = {HoldFirst}
 Attribute[RuleDelayed] = {HoldRest}
 Attribute[Unevaluated] =  {HoldAll}
+Attribute[Block] = {HoldAll}
 Attribute[Module] = {HoldAll}
 Attribute[Slot] = {HoldRest}
 Attribute[Context] = {HoldFirst}
@@ -32,11 +31,13 @@ Attribute[If] = {HoldRest}
 Attribute[And] = {HoldAll,OneIdentity,Flat}
 Attribute[Or] = {HoldAll,OneIdentity,Flat}
 Attribute[Delayed] = {HoldAll}
+Attribute[Function] = {HoldAll}
 
 << "../String/String.u"
 << "../Number/Number.u"
 << "../Polynomial/Polynomial.u"
-<< "../Function/Function.u"
+<< "../Numeric/Numeric.u"
+<< "../Combinatorics/Combinatorics.u"
 << "../Calculus/D.u"
 << "../Calculus/Integrate.u"
 

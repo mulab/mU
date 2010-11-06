@@ -28,30 +28,11 @@ CAPI bool ASSIGN(Attribute)(Kernel& k, const Tuple& x, const var& y) {
             return false;
     return true;
 }
-CAPI void VALUE(Kind)(Kernel& k, var& r, Tuple& x) {
-	if (x.size == 2 && x[1].isKey()) {
-		r = kind(x[1].key());
-		return;
-	}
-}
 CAPI void VALUE(Type)(Kernel& k, var& r, Tuple& x) {
 	if (x.size == 2 && x[1].isObject()) {
 		r = x[1].object().type;
 		return;
 	}
-}
-CAPI void VALUE(Context)(Kernel& k, var& r, Tuple& x) {
-	if (x.size == 1) {
-		r = k.context();
-		return;
-	}
-	if (x.size == 2 && x[1].isSymbol()) {
-		r = x[1].symbol()->context;
-		return;
-	}
-}
-CAPI void VALUE(ContextPath)(Kernel& k, var& r, Tuple& x) {
-    r = mU::list(k.contextPath().size(), k.contextPath().begin());
 }
 CAPI void VALUE(Primary)(Kernel& k, var& r, Tuple& x) {
     if (x.size == 2) {

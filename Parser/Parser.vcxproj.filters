@@ -41,5 +41,8 @@
     <ClInclude Include="..\Include\mU\Parser.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="..\Include\mU\Grammar.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

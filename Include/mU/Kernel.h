@@ -83,7 +83,7 @@ public:
     // Rule
 	std::tr1::unordered_map<sym, var> owns;
 	std::tr1::unordered_map<sym, Map> certains;
-	std::tr1::unordered_map<sym, MMap> matches;
+	std::tr1::unordered_map<sym, Map> matches;
 	
 	// Interface
 	std::tr1::unordered_map<sym, var> assigns;
@@ -160,8 +160,7 @@ public:
 
 	// TODO: 其他内核变量改用Symbol Value控制
 	uint recursion;
-	uint precision;
-	ostringstream error;
 	uint depth;
+	ostringstream error;
 };
 }

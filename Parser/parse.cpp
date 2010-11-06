@@ -144,28 +144,24 @@ void Parser::shift(Frame &s) {
         }
 		if (mLookahead == BLANK && mLookback == SYMBOL) {
 			//SYMBOL BLANK -> SYMBOL COLON BLANK
-			//cache变为常数
-			s.op = grammar.infixToken[COLON];
+			s.op = grammar.operCOLON;
 			s.mode = -3;
 			return;
 		}
 		if (mLookahead == POUND) {
 			//POUND -> PERIOD POUND
-			//cache变为常数
-			s.op = grammar.infixToken[PERIOD];
+			s.op = grammar.operPERIOD;
 			s.mode = -3;
 			return;
 		}
 		if (mLookahead == MINUS) {
 			//MINUS -> PLUS MINUS
-			//cache变为常数
-			s.op = grammar.infixToken[PLUS];
+			s.op = grammar.operPLUS;
 			s.mode = -3;
 			return;
 		}
         //SPACE -> STAR
-        //cache变为常数
-        s.op = grammar.infixToken[STAR];
+		s.op = grammar.operSTAR;
         s.mode = -3;
         return;
     }
@@ -428,13 +424,18 @@ uint Parser::pound() {
 	mLookahead = scan();
 	switch (mLookahead) {
 	case INTEGER:
-		r[0] = node(tag_pound, instr_key);
+		r[0] = node(tag_pound, -1);
+		note(r[0], mText);
+		accept();
+		break;
+	case SYMBOL:
+		r[0] = node(tag_pound, -2);
 		note(r[0], mText);
 		accept();
 		break;
 	default:
 		skip();
-		r[0] = node(tag_pound, -1);
+		r[0] = node(tag_pound, instr_key);
 		break;
 	}
 	return r[0];

@@ -30,6 +30,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <gmp.h>
+#include "NPi.Impl.h"
 
 namespace {
 #define A   13591409

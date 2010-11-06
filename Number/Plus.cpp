@@ -17,7 +17,7 @@ var Plus(Kernel& k, const Object& x, const Object& y) {
 			return r;
 		}
 		if (y.type == $.Real) {
-			Real* r = new Real();
+			Real* r = new Real(static_cast<const Real&>(y).prec());
 			mpf_set_z(r->mpf, static_cast<const Integer&>(x).mpz);
 			mpf_add(r->mpf, r->mpf, static_cast<const Real&>(y).mpf);
 			return r;
@@ -37,7 +37,7 @@ var Plus(Kernel& k, const Object& x, const Object& y) {
 			return r;
 		}
 		if (y.type == $.Real) {
-			Real* r = new Real();
+			Real* r = new Real(static_cast<const Real&>(y).prec());
 			mpf_set_q(r->mpf, static_cast<const Rational&>(x).mpq);
 			mpf_add(r->mpf, r->mpf, static_cast<const Real&>(y).mpf);
 			return r;
@@ -45,19 +45,20 @@ var Plus(Kernel& k, const Object& x, const Object& y) {
 	}
 	if (x.type == $.Real) {
 		if (y.type == $.Integer) {
-			Real* r = new Real();
+			Real* r = new Real(static_cast<const Real&>(x).prec());
 			mpf_set_z(r->mpf, static_cast<const Integer&>(y).mpz);
 			mpf_add(r->mpf, r->mpf, static_cast<const Real&>(x).mpf);
 			return r;
 		}
 		if (y.type == $.Rational) {
-			Real* r = new Real();
+			Real* r = new Real(static_cast<const Real&>(x).prec());
 			mpf_set_q(r->mpf, static_cast<const Rational&>(y).mpq);
 			mpf_add(r->mpf, r->mpf, static_cast<const Real&>(x).mpf);
 			return r;
 		}
 		if (y.type == $.Real) {
-			Real* r = new Real();
+			Real* r = new Real(std::min(static_cast<const Real&>(x).prec(), 
+				static_cast<const Real&>(y).prec()));
 			mpf_add(r->mpf, static_cast<const Real&>(x).mpf, 
 				static_cast<const Real&>(y).mpf);
 			return r;

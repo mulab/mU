@@ -98,34 +98,25 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Attribute.cpp" />
+    <ClCompile Include="Block.cpp" />
     <ClCompile Include="CInterface.cpp" />
     <ClCompile Include="For.cpp" />
+    <ClCompile Include="Function.cpp" />
+    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="Slot.cpp" />
     <ClCompile Include="List.cpp" />
     <ClCompile Include="Match.cpp" />
     <ClCompile Include="New.cpp" />
     <ClCompile Include="Order.cpp" />
+    <ClCompile Include="Output.cpp" />
     <ClCompile Include="Path.cpp" />
     <ClCompile Include="Print.cpp" />
     <ClCompile Include="Set.cpp" />
-    <ClCompile Include="Slot.cpp" />
+    <ClCompile Include="Context.cpp" />
     <ClCompile Include="System.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Include\mU\System.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Interface\Interface.vcxproj">
-      <Project>{ddf87c63-2a9e-4c36-ab4d-82feb8f0a97d}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\Kernel\Kernel.vcxproj">
-      <Project>{4b23d1ac-b07f-4167-b00f-f6c3246fa233}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="..\Parser\Parser.vcxproj">
-      <Project>{8417bf8d-9c6b-4936-a70a-9108f440f230}</Project>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

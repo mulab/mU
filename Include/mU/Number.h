@@ -23,7 +23,6 @@
 namespace mU {
 namespace Number {
 API var Cast(Kernel&, const var&, sym);
-API int CmpD(const Object&, double, double = 1.0);
 API var Minus(Kernel&, const Object&);
 API var Divide(Kernel&, const Object&);
 API var Divide(Kernel&, const Object&, const Object&);

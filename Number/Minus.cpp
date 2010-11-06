@@ -14,7 +14,7 @@ var Minus(Kernel& k, const Object& x) {
 		return r;
 	}
 	if (x.type == $.Real) {
-		Real* r = new Real();
+		Real* r = new Real(static_cast<const Real&>(x).prec());
 		mpf_neg(r->mpf, static_cast<const Real&>(x).mpf);
 		return r;
 	}

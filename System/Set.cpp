@@ -37,12 +37,6 @@ CAPI void VALUE(Clear)(Kernel& k, var& r, Tuple& x) {
 		r = null;
 	}
 }
-CAPI void VALUE(FreeQ)(Kernel& k, var& r, Tuple& x) {
-	if (x.size == 3) {
-		r = boolean(!x[1].depend(x[2]));
-		return;
-	}
-}
 CAPI void VALUE(Unevaluated)(Kernel& k, var& r, Tuple& x) {
 	if (x.size == 2)
 		r = x[1];

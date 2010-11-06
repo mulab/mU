@@ -15,14 +15,19 @@ var Times(Kernel& k, const Tuple& x) {
 			c = Number::Times(k, c.object(), x[pos].object());
 		if(c.isObject($.Rational))
 			mpq_canonicalize(cast<Rational>(c).mpq);
-		if (pos == x.size || !Number::CmpD(c.object(), 0.0))
+		if (pos == x.size || !cmpD(c.object(), 0.0))
 			return c;
-		if (Number::CmpD(c.object(), 1.0))
+		if (cmpD(c.object(), 1.0))
 			r.push_back(c);
 	}
 	MMap mmap;
 	for (; pos < x.size; ++pos) {
 		var b = x[pos], e;
+		if (b == $.Infinity) {
+			if (r.size() > 0 && cmpD(r[0].object(), 0.0) < 0)
+				return tuple($.Times, new Integer(-1L), $.Infinity);
+			return $.Infinity;
+		}
 		if (b.isTuple($.Power)) {
 			const Tuple& t = b.tuple();
 			b = t[1];
@@ -41,13 +46,13 @@ var Times(Kernel& k, const Tuple& x) {
 		std::sort(v.begin(), v.end());
 		e = mU::list(v.size(), v.begin(), $.Plus);
 		e = Plus(k, e.tuple());
-		if (e.isObject()) { 
-			if (!Number::CmpD(e.object(), 0.0))
+		if (isNumber(e)) {
+			double ed = toD(e.object());
+			if (ed == 0.0)
 				continue;
-			if (Number::CmpD(e.object(), 1.0))
+			if (ed != 1.0)
 				b = tuple($.Power, b, e);
-		}
-		else
+		} else
 			b = tuple($.Power, b, e);
 		r.push_back(b);
 	}

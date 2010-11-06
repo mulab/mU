@@ -1,7 +1,6 @@
 #include <cstdlib>
 #include <cmath>
-#include <algorithm>
-#include "sieve.h"
+#include "Factorial.sieve.h"
 
 namespace {
 uint const get_mask[8] = {1, 2, 4, 8, 16, 32, 64, 128};

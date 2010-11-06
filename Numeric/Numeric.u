@@ -1,11 +1,32 @@
-CInstall["function"]
+CInstall["numeric"]
 
-CInterface["function",
-Value[Factorial,Binomial,Fibonacci,Lucas,Pi,EulerGamma,Catalan,E,Log,Log2,Log10,Exp,Cos,Sin,Tan,Sec,Csc,Cot,ArcCos,ArcSin,ArcTan,Cosh,Sinh,Tanh,Coth,Sech,Csch,ArcCosh,ArcSinh,ArcTanh,Gamma,LogGamma,Zeta,Erfc,Sqrt]
+Begin[System]
+
+CInterface["numeric",
+Value[`N,`Precision,`Compare,`Less,`Equal,`Greater,`LessEqual,`Unequal,`GreaterEqual]
 ]
+
+End[]
+
+Begin[System`Numeric]
+
+`Heads = {"Log","Log2","Log10","Exp","Exp2","Exp10","Cos","Sin","Tan","Sec","Csc","Cot","ArcCos","ArcSin","ArcTan","Cosh","Sinh","Tanh","Coth","Sech","Csch","ArcCosh","ArcSinh","ArcTanh","Gamma","LogGamma","Zeta","Erf","Erfc","Sqrt"}
+
+M[h_] := System`Numeric.{h}
+
+CInterface["numeric",
+Value@@(M /@ `Heads)
+]
+
+M[h_] := SetDelayed@@(Hold[(System.{H})[x_Real],(System`Numeric.{H})[x]] /. H->h)
+
+M /@ `Heads
+
+End[]
 
 (*
 Begin[System]
+
 Sin[Pi] := 0
 Sin[Pi/2] := 1
 Sin[Pi/3] := Sqrt[3]/2
@@ -19,10 +40,11 @@ Sin[k_Integer] := -Sin[-k] /; k < 0
 Sin[k_Rational] := -Sin[-k] /; k < 0
 Sin[k_Integer Pi] := 0
 Sin[k_Rational Pi] := -Sin[-k Pi] /; k < 0
+(*
 Sin[k_Rational Pi] := Module[{n = IntegerPart[k], x = Pretty[k], q, p},
 q = x[[1]]; p = x[[2]];
 If[n != 0, (-1)^n Sin[((q%p)/p) Pi],'Sin[k Pi]]] /; k > 0
-
+*)
 Sin[-x_] := -Sin[x]
 Sin[Pi+x_] := -Sin[x]
 Sin[k_Integer Pi+x_] := (-1)^k Sin[x]
@@ -40,15 +62,17 @@ Cos[0] := 1
 Cos[k_Integer] := Cos[-k] /; k < 0
 Cos[k_Rational] := Cos[-k] /; k < 0
 Cos[k_Integer Pi] := (-1)^k
+(*
 Cos[k_Rational Pi] := Module[{n = IntegerPart[k], x = Pretty[k], q, p},
 q = x[[1]]; p = x[[2]];
 If[n != 0, (-1)^n Cos[((q%p)/p) Pi],'Cos[k Pi]]] /; k > 0
-
+*)
 Cos[-x_] := Cos[x]
 Cos[Pi+x_] := -Cos[x]
 Cos[k_Integer Pi+x_] := (-1)^k Cos[x]
 Cos[Pi/2+x_] := -Sin[x]
 
 Log[1] := 0
+
 End[]
 *)

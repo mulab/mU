@@ -1,7 +1,6 @@
 #include <mU/Common.h>
 #include <mU/Kernel.h>
 #include <mU/Parser.h>
-#include <list>
 
 namespace mU {
 var Parser::eval() {
@@ -117,12 +116,14 @@ void Parser::gen(uint m) {
 			break;
         case instr_integer: {
             wcs s = mNote[m];
-            emit(new Integer(string(s, s + wcslen(s)).c_str(), 10));
+            uint len = wcslen(s);
+			emit(new Integer(string(s, s + len).c_str(), 10));
         }
 			break;
         case instr_float: {
-            wcs s = mNote[m];
-            emit(new Real(string(s, s + wcslen(s)).c_str(), 10));
+			wcs s = mNote[m];
+            uint len = wcslen(s);
+			emit(new Real(string(s, s + len).c_str(), 10, len));
         }
 			break;
         case instr_string: {
@@ -197,15 +198,19 @@ void Parser::gen(uint m) {
 		break;
 	case tag_pound:
         switch (n.value) {
-        case instr_key: {
+        case -1: {
             wstringstream wss;
             wss << mNote[m];
-            uint k;
+			uint k = 0;
             wss >> k;
             emit(key(k));
         }
 			break;
-		case -1: {
+		case -2: {
+            emit(key(mNote[m]));
+        }
+			break;
+		case instr_key: {
 			emit(key(uint2wcs(0)));
         }
 			break;

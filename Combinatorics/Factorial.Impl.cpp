@@ -1,5 +1,6 @@
-#include <mU/Function.h>
-#include "sieve.h"
+#include <stack>
+#include <map>
+#include "Factorial.Impl.h"
 
 namespace {
 inline mpz_ptr mpz_new() {
@@ -115,6 +116,7 @@ void facs(mpz_ptr r, uint N) {
     delete [] e;
     delete [] v;
 }
+}
 void facz(mpz_ptr r, uint N) {
     sieve primes(N);
     int count = 0;
@@ -191,35 +193,4 @@ void facz(mpz_ptr r, uint N) {
     for(uint e = 1, i = 0; i < count; ++i, e <<= 1)	mpz_pow_ui(swing[i], swing[i], e);
     return product(swing, swing + count);
     */
-}
-}
-namespace mU {
-var Factorial(uint x) {
-    Integer* r = new Integer();
-    facz(r->mpz, x);
-    uint e = 0;
-    while (x >>= 1) e += x;
-    mpz_mul_2exp(r->mpz, r->mpz, e);
-    return r;
-}
-var Binomial(const Integer& x, uint y) {
-    Integer* r = new Integer();
-    mpz_bin_ui(r->mpz, x.mpz, y);
-    return r;
-}
-var Binomial(uint x, uint y) {
-    Integer* r = new Integer();
-    mpz_bin_uiui(r->mpz, x, y);
-    return r;
-}
-var Fibonacci(uint x) {
-    Integer* r = new Integer();
-    mpz_fib_ui(r->mpz, x);
-    return r;
-}
-var Lucas(uint x) {
-    Integer* r = new Integer();
-    mpz_lucnum_ui(r->mpz, x);
-    return r;
-}
 }

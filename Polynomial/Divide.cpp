@@ -22,6 +22,8 @@ var Divide(Kernel& k, const var& x) {
 			return r;
 		}
 	}
+	if (x == $.Infinity)
+		return new Integer(0L);
 	return tuple($.Power, x, new Integer(-1L));
 }
 var Divide(Kernel& k, const var& x, const var& y) {

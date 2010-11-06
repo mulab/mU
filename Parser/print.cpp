@@ -1,6 +1,6 @@
 #include <mU/Common.h>
 #include <mU/Kernel.h>
-#include <mU/Parser.h>
+#include <mU/Grammar.h>
 
 namespace mU {
 void Grammar::print(Kernel& k, wostream& o, wchar x) {
@@ -45,8 +45,12 @@ void Grammar::print(Kernel& k, wostream& o, sym x) {
 void Grammar::print(Kernel& k, wostream& o, const Key& x) {
 	if (x) {
 		switch (x.kind()) {
-		case Key::String:
-			print(k, o, x.toS());
+		case Key::String: {
+			wcs s = x.toS();
+			if (isupper(s[0]))
+				o << _W('#');
+			print(k, o, s);
+		}
 			break;
 		case Key::Integer:
 			o << _W('#') << x.toUI();
@@ -120,7 +124,7 @@ void Grammar::print(Kernel& k, wostream& o, const Tuple& x, uint y) {
                 }
                 std::tr1::unordered_map<sym, uint>::const_iterator iter = postfixSymbol.find(h);
                 if (iter != postfixSymbol.end()) {
-					Parser::Oper &op = oper[iter->second];
+					Oper &op = oper[iter->second];
                     if (op.prec < y) {
                         o << L'(';
                         print(k, o, x[1], op.prec);
@@ -134,7 +138,7 @@ void Grammar::print(Kernel& k, wostream& o, const Tuple& x, uint y) {
                 }
                 iter = prefixSymbol.find(h);
                 if (iter != prefixSymbol.end()) {
-                    Parser::Oper &op = oper[iter->second];
+                    Oper &op = oper[iter->second];
                     if (op.prec < y) {
                         o << L'(';
                         o << op.show;
@@ -149,7 +153,7 @@ void Grammar::print(Kernel& k, wostream& o, const Tuple& x, uint y) {
             } else if (x.size > 2) {
                 std::tr1::unordered_map<sym, uint>::const_iterator iter = infixSymbol.find(h);
                 if (iter != infixSymbol.end()) {
-                    Parser::Oper &op = oper[iter->second];
+                    Oper &op = oper[iter->second];
                     if (op.prec < y) o << L'(';
                     print(k, o, x[1], op.rassoc ? op.prec : op.prec + 1);
 					if (x.size == 3) {

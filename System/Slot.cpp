@@ -19,3 +19,9 @@ CAPI bool ASSIGN(Slot)(Kernel& k, const Tuple& x, const var& y) {
         return k.set(k.eval(x[1]), x[2].tuple(), y);
     return false;
 }
+CAPI void VALUE(Kind)(Kernel& k, var& r, Tuple& x) {
+	if (x.size == 2 && x[1].isKey()) {
+		r = kind(x[1].key());
+		return;
+	}
+}

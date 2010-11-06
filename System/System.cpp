@@ -10,12 +10,12 @@ CAPI void Install(Kernel& k) {
     M(Null, null)
 #undef M
 #define M(x,y) k.attributes[SYS(x)].insert($.y);
-    M(CInterface, HoldRest)M(Set, HoldFirst)
+    /*M(CInterface, HoldRest)*/M(Set, HoldFirst)
 #undef M
     cvalue(k, cnoload("system"), SYS(CInterface));
     var r;
     k.beginContext(sys);
-    In(k, r, _W("../System/System.u"));
+    Input(k, r, _W("../System/System.u"));
     k.endContext();
 }
 CAPI void Uninstall(Kernel& k) {

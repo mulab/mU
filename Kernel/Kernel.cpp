@@ -2,7 +2,7 @@
 #include <mU/Kernel.h>
 
 namespace mU {
-Kernel::Kernel() : recursion(128), precision(20) {
+Kernel::Kernel() : recursion(128) {
 	Enum::Init();
     mContextPath.push_back(std::list<sym>());
     contextPath().push_back(sys);

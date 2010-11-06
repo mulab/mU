@@ -1,0 +1,17 @@
+CInstall["combinatorics"]
+Begin[System`Combinatorics]
+
+CInterface["combinatorics",
+Value[`Factorial,`Binomial,`Fibonacci,`Lucas]
+]
+
+End[]
+
+Begin[System]
+
+`Factorial[x_Integer] := `Combinatorics`Factorial[x]
+`Binomial[x_Integer] := `Combinatorics`Binomial[x]
+`Fibonacci[x_Integer] := `Combinatorics`Fibonacci[x]
+`Lucas[x_Integer] := `Combinatorics`Lucas[x]
+
+End[]

@@ -25,7 +25,7 @@ var Divide(Kernel& k, const Object& x) {
 	if (x.type == $.Real) {
 		if (!mpf_sgn(static_cast<const Real&>(x).mpf))
 			return $.Infinity;
-		Real* r = new Real();
+		Real* r = new Real(static_cast<const Real&>(x).prec());
 		mpf_ui_div(r->mpf, 1L, static_cast<const Real&>(x).mpf);
 		return r;
 	}
@@ -55,7 +55,7 @@ var Divide(Kernel& k, const Object& x, const Object& y) {
 			return r;
 		}
 		if (x.type == $.Real) {
-			Real* r = new Real();
+			Real* r = new Real(static_cast<const Real&>(x).prec());
 			mpf_set_z(r->mpf, static_cast<const Integer&>(y).mpz);
 			mpf_div(r->mpf, static_cast<const Real&>(x).mpf, r->mpf);
 			return r;
@@ -75,7 +75,7 @@ var Divide(Kernel& k, const Object& x, const Object& y) {
 			return r;
 		}
 		if (x.type == $.Real) {
-			Real* r = new Real();
+			Real* r = new Real(static_cast<const Real&>(x).prec());
 			mpf_set_q(r->mpf, static_cast<const Rational&>(y).mpq);
 			mpf_div(r->mpf, static_cast<const Real&>(x).mpf, r->mpf);
 			return r;
@@ -85,19 +85,20 @@ var Divide(Kernel& k, const Object& x, const Object& y) {
 		if (!mpf_sgn(static_cast<const Real&>(y).mpf))
 			return $.Infinity;
 		if (x.type == $.Integer) {
-			Real* r = new Real();
+			Real* r = new Real(static_cast<const Real&>(y).prec());
 			mpf_set_z(r->mpf, static_cast<const Integer&>(x).mpz);
 			mpf_div(r->mpf, r->mpf, static_cast<const Real&>(y).mpf);
 			return r;
 		}
 		if (x.type == $.Rational) {
-			Real* r = new Real();
+			Real* r = new Real(static_cast<const Real&>(y).prec());
 			mpf_set_q(r->mpf, static_cast<const Rational&>(x).mpq);
 			mpf_div(r->mpf, r->mpf, static_cast<const Real&>(y).mpf);
 			return r;
 		}
 		if (x.type == $.Real) {
-			Real* r = new Real();
+			Real* r = new Real(std::min(static_cast<const Real&>(y).prec(), 
+				static_cast<const Real&>(y).prec()));
 			mpf_div(r->mpf, static_cast<const Real&>(x).mpf, 
 				static_cast<const Real&>(y).mpf);
 			return r;

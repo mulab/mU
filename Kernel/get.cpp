@@ -58,11 +58,14 @@ var Kernel::get(const var& x, const Tuple& y) {
     for (uint i = 1; i < y.size && r != $.Fail; ++i) {
         var c = eval(y[i]);
         Key* k;
-        if (c.isObject() && c.object().type == $.Integer)
-            k = key(cast<Integer>(c).toUI());
-        else if (c.isObject() && c.object().type == $.String)
-            k = key(wstr(cast<String>(c).toS()));
-        else
+        if (c.isObject()) {
+			if (c.object().type == $.Integer)
+				k = key(cast<Integer>(c).toUI());
+			else if (c.object().type == $.String)
+				k = key(wstr(cast<String>(c).toS()));
+			else
+				return $.Fail;
+		} else
             return $.Fail;
         if (i == 1)
             r = get(x, *k);

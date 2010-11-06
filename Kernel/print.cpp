@@ -42,8 +42,12 @@ void Kernel::print(wostream& o, sym x) {
 void Kernel::print(wostream& o, const Key& x) {
 	if (x) {
 		switch (x.kind()) {
-		case Key::String:
-			print(o, x.toS());
+		case Key::String: {
+			wcs s = x.toS();
+			if (isupper(s[0]))
+				o << _W('#');
+			print(o, s);
+		}
 			break;
 		case Key::Integer:
 			o << _W('#') << x.toUI();
@@ -63,8 +67,9 @@ void Kernel::print(wostream& o, const Object& x) {
     }
     if (x.type == $.Real) {
         long exp;
-        char *s = mpf_get_str(0, &exp, 10, mpf_get_prec(static_cast<const Real&>(x).mpf),
-                               static_cast<const Real&>(x).mpf);
+        char *s = mpf_get_str(0, &exp, 10, static_cast<uint>(LOG_10_2 * 
+			mpf_get_prec(static_cast<const Real&>(x).mpf)), 
+			static_cast<const Real&>(x).mpf);
         wstring t(s, s + strlen(s));
         const wchar *buf = t.c_str();
         if (exp == 0)

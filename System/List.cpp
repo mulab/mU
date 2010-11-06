@@ -15,24 +15,6 @@ CAPI bool ASSIGN(List)(Kernel& k, const Tuple& x, const var& y) {
     }
     return flag;
 }
-CAPI void VALUE(Begin)(Kernel& k, var& r, Tuple& x) {
-	if (x.size == 2 && x[1].isSymbol()) {
-		r = boolean(k.beginContext(x[1].symbol()));
-		return;
-	}
-}
-CAPI void VALUE(End)(Kernel& k, var& r, Tuple& x) {
-    r = boolean(k.endContext());
-}
-CAPI void VALUE(BeginPackage)(Kernel& k, var& r, Tuple& x) {
-	if (x.size == 2 && x[1].isSymbol()) {
-		r = boolean(k.beginPackage(x[1].symbol()));
-        return;
-	}
-}
-CAPI void VALUE(EndPackage)(Kernel& k, var& r, Tuple& x) {
-    r = boolean(k.endPackage());
-}
 CAPI void VALUE(Map)(Kernel& k, var& r, Tuple& x) {
 	if (x.size == 3 && x[2].isTuple()) {
 		Tuple* t = tuple(x[2].tuple().size);

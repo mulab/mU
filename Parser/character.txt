@@ -1,4 +1,4 @@
-#define M(...) character.push_back(Parser::Char(__VA_ARGS__));
+#define M(...) character.push_back(Char(__VA_ARGS__));
 	M(225,_W("AAcute"))
 	M(257,_W("ABar"))
 	M(259,_W("ACup"))
