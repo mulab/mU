@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{9FB7811B-1DD9-4666-BD25-56EAB6384519}</ProjectGuid>
+    <RootNamespace>Graphics</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;GRAPHICS_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4819</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalLibraryDirectories>../../Lib</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;GRAPHICS_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalIncludeDirectories>../../Include</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4819</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+      <AdditionalLibraryDirectories>../../Lib</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent>
+      <Command>copy $(OutDir)$(ProjectName).lib $(SolutionDir)\..\Lib\
+copy $(OutDir)$(ProjectName).dll $(SolutionDir)\..\Package\
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Package\Graphics\common.h" />
+    <ClInclude Include="..\..\Package\Graphics\CommonCurve.h" />
+    <ClInclude Include="..\..\Package\Graphics\CommonCurveWithPlotRange.h" />
+    <ClInclude Include="..\..\Package\Graphics\ContourPlot.h" />
+    <ClInclude Include="..\..\Package\Graphics\ContourPlot3D.h" />
+    <ClInclude Include="..\..\Package\Graphics\Curve.h" />
+    <ClInclude Include="..\..\Package\Graphics\Curve3D.h" />
+    <ClInclude Include="..\..\Package\Graphics\F1P.h" />
+    <ClInclude Include="..\..\Package\Graphics\F2P.h" />
+    <ClInclude Include="..\..\Package\Graphics\F3P.h" />
+    <ClInclude Include="..\..\Package\Graphics\GraphicsMaker.h" />
+    <ClInclude Include="..\..\Package\Graphics\GraphicsMaker2D.h" />
+    <ClInclude Include="..\..\Package\Graphics\GraphicsMaker3D.h" />
+    <ClInclude Include="..\..\Package\Graphics\ImplicitCurve.h" />
+    <ClInclude Include="..\..\Package\Graphics\ImplicitSurface.h" />
+    <ClInclude Include="..\..\Package\Graphics\IndexedQuadArray.h" />
+    <ClInclude Include="..\..\Package\Graphics\IndexedQuadArray3D.h" />
+    <ClInclude Include="..\..\Package\Graphics\ListPlot.h" />
+    <ClInclude Include="..\..\Package\Graphics\ParametricCurve.h" />
+    <ClInclude Include="..\..\Package\Graphics\ParametricCurve3D.h" />
+    <ClInclude Include="..\..\Package\Graphics\ParametricCurvePlot.h" />
+    <ClInclude Include="..\..\Package\Graphics\ParametricCurvePlot3D.h" />
+    <ClInclude Include="..\..\Package\Graphics\ParametricRegion.h" />
+    <ClInclude Include="..\..\Package\Graphics\ParametricRegionPlot.h" />
+    <ClInclude Include="..\..\Package\Graphics\ParametricSurface.h" />
+    <ClInclude Include="..\..\Package\Graphics\ParametricSurfacePlot3D.h" />
+    <ClInclude Include="..\..\Package\Graphics\Plot.h" />
+    <ClInclude Include="..\..\Package\Graphics\Plot3D.h" />
+    <ClInclude Include="..\..\Package\Graphics\PolarCurve.h" />
+    <ClInclude Include="..\..\Package\Graphics\PolarPlot.h" />
+    <ClInclude Include="..\..\Package\Graphics\Surface.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Package\Graphics\CommonCurve.cpp" />
+    <ClCompile Include="..\..\Package\Graphics\CommonCurveWithPlotRange.cpp" />
+    <ClCompile Include="..\..\Package\Graphics\ContourPlot.cpp" />
+    <ClCompile Include="..\..\Package\Graphics\ContourPlot3D.cpp" />
+    <ClCompile Include="..\..\Package\Graphics\Curve.cpp" />
+    <ClCompile Include="..\..\Package\Graphics\Curve3D.cpp" />
+    <ClCompile Include="..\..\Package\Graphics\F1P.cpp" />
+    <ClCompile Include="..\..\Package\Graphics\F2P.cpp" />
+    <ClCompile Include="..\..\Package\Graphics\F3P.cpp" />
+    <ClCompile Include="..\..\Package\Graphics\Graphics.cpp" />
+    <ClCompile Include="..\..\Package\Graphics\GraphicsMaker.cpp" />
+    <ClCompile Include="..\..\Package\Graphics\GraphicsMaker2D.cpp" />
+    <ClCompile Include="..\..\Package\Graphics\GraphicsMaker3D.cpp" />
+    <ClCompile Include="..\..\Package\Graphics\ImplicitCurve.cpp" />
+    <ClCompile Include="..\..\Package\Graphics\ImplicitSurface.cpp" />
+    <ClCompile Include="..\..\Package\Graphics\IndexedQuadArray.cpp" />
+    <ClCompile Include="..\..\Package\Graphics\IndexedQuadArray3D.cpp" />
+    <ClCompile Include="..\..\Package\Graphics\ListPlot.cpp" />
+    <ClCompile Include="..\..\Package\Graphics\ParametricCurve.cpp" />
+    <ClCompile Include="..\..\Package\Graphics\ParametricCurve3D.cpp" />
+    <ClCompile Include="..\..\Package\Graphics\ParametricCurvePlot.cpp" />
+    <ClCompile Include="..\..\Package\Graphics\ParametricCurvePlot3D.cpp" />
+    <ClCompile Include="..\..\Package\Graphics\ParametricRegion.cpp" />
+    <ClCompile Include="..\..\Package\Graphics\ParametricRegionPlot.cpp" />
+    <ClCompile Include="..\..\Package\Graphics\ParametricSurface.cpp" />
+    <ClCompile Include="..\..\Package\Graphics\ParametricSurfacePlot3D.cpp" />
+    <ClCompile Include="..\..\Package\Graphics\Plot.cpp" />
+    <ClCompile Include="..\..\Package\Graphics\Plot3D.cpp" />
+    <ClCompile Include="..\..\Package\Graphics\PolarCurve.cpp" />
+    <ClCompile Include="..\..\Package\Graphics\PolarPlot.cpp" />
+    <ClCompile Include="..\..\Package\Graphics\Surface.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
