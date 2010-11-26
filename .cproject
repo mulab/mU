@@ -7,11 +7,7 @@
 <storageModule buildSystemId="org.eclipse.cdt.core.defaultConfigDataProvider" id="org.eclipse.cdt.core.default.config.1" moduleId="org.eclipse.cdt.core.settings" name="Configuration">
 <externalSettings/>
 <extensions>
-<extension id="org.eclipse.cdt.core.ELF" point="org.eclipse.cdt.core.BinaryParser"/>
-<extension id="org.eclipse.cdt.core.GNU_ELF" point="org.eclipse.cdt.core.BinaryParser">
-<attribute key="addr2line" value="addr2line"/>
-<attribute key="c++filt" value="c++filt"/>
-</extension>
+<extension id="org.eclipse.cdt.core.PE" point="org.eclipse.cdt.core.BinaryParser"/>
 </extensions>
 </storageModule>
 <storageModule moduleId="org.eclipse.cdt.core.language.mapping">
@@ -20,1178 +16,1766 @@
 <storageModule moduleId="org.eclipse.cdt.core.externalSettings"/>
 <storageModule moduleId="org.eclipse.cdt.core.pathentry">
 <pathentry excluding="**/CMakeFiles/" kind="out" path=""/>
-<pathentry include="/home/zx/workspace/mU/Include" kind="inc" path="" system="true"/>
+<pathentry include="C:/Users/Git/nfish.org/mU/root.git/Include" kind="inc" path="" system="true"/>
 <pathentry include="/usr/include" kind="inc" path="" system="true"/>
 <pathentry include="/usr/include/c++/4.4" kind="inc" path="" system="true"/>
 </storageModule>
 <storageModule moduleId="org.eclipse.cdt.make.core.buildtargets">
 <buildTargets>
+<target name=": edit_cache" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>edit_cache</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
 <target name=": rebuild_cache" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
 <buildTarget>rebuild_cache</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name=": all" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
 <buildTarget>all</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name=": clean" path="" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
 <buildTarget>clean</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[lib] kernel" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[lib] combinatorics" path="Combinatorics" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>kernel</buildTarget>
+<buildTarget>combinatorics</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[lib] kernel/fast" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[lib] combinatorics/fast" path="Combinatorics" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>kernel/fast</buildTarget>
+<buildTarget>combinatorics/fast</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name=": all" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name=": all" path="Combinatorics" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
 <buildTarget>all</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name=": clean" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name=": clean" path="Combinatorics" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
 <buildTarget>clean</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[obj] Common.cpp.o" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[obj] Combinatorics.cpp.obj" path="Combinatorics" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>Common.cpp.o</buildTarget>
+<buildTarget>Combinatorics.cpp.obj</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[pre] Common.cpp.i" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[pre] Combinatorics.cpp.i" path="Combinatorics" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>Common.cpp.i</buildTarget>
+<buildTarget>Combinatorics.cpp.i</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[to asm] Common.cpp.s" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[to asm] Combinatorics.cpp.s" path="Combinatorics" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>Common.cpp.s</buildTarget>
+<buildTarget>Combinatorics.cpp.s</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[obj] Kernel.cpp.o" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[obj] Factorial.Impl.cpp.obj" path="Combinatorics" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>Kernel.cpp.o</buildTarget>
+<buildTarget>Factorial.Impl.cpp.obj</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[pre] Kernel.cpp.i" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[pre] Factorial.Impl.cpp.i" path="Combinatorics" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>Kernel.cpp.i</buildTarget>
+<buildTarget>Factorial.Impl.cpp.i</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[to asm] Kernel.cpp.s" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[to asm] Factorial.Impl.cpp.s" path="Combinatorics" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>Kernel.cpp.s</buildTarget>
+<buildTarget>Factorial.Impl.cpp.s</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[obj] assign.cpp.o" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[obj] Factorial.cpp.obj" path="Combinatorics" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>assign.cpp.o</buildTarget>
+<buildTarget>Factorial.cpp.obj</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[pre] assign.cpp.i" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[pre] Factorial.cpp.i" path="Combinatorics" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>assign.cpp.i</buildTarget>
+<buildTarget>Factorial.cpp.i</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[to asm] assign.cpp.s" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[to asm] Factorial.cpp.s" path="Combinatorics" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>assign.cpp.s</buildTarget>
+<buildTarget>Factorial.cpp.s</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[obj] eval.cpp.o" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[obj] Factorial.sieve.cpp.obj" path="Combinatorics" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>eval.cpp.o</buildTarget>
+<buildTarget>Factorial.sieve.cpp.obj</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[pre] eval.cpp.i" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[pre] Factorial.sieve.cpp.i" path="Combinatorics" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>eval.cpp.i</buildTarget>
+<buildTarget>Factorial.sieve.cpp.i</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[to asm] eval.cpp.s" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[to asm] Factorial.sieve.cpp.s" path="Combinatorics" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>eval.cpp.s</buildTarget>
+<buildTarget>Factorial.sieve.cpp.s</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[obj] get.cpp.o" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[obj] gmp.cpp.obj" path="Combinatorics" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>get.cpp.o</buildTarget>
+<buildTarget>gmp.cpp.obj</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[pre] get.cpp.i" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[pre] gmp.cpp.i" path="Combinatorics" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>get.cpp.i</buildTarget>
+<buildTarget>gmp.cpp.i</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[to asm] get.cpp.s" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[to asm] gmp.cpp.s" path="Combinatorics" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>get.cpp.s</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[obj] match.cpp.o" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>match.cpp.o</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[pre] match.cpp.i" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>match.cpp.i</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[to asm] match.cpp.s" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>match.cpp.s</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[obj] print.cpp.o" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>print.cpp.o</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[pre] print.cpp.i" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>print.cpp.i</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[to asm] print.cpp.s" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>print.cpp.s</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[obj] rewrite.cpp.o" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>rewrite.cpp.o</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[pre] rewrite.cpp.i" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>rewrite.cpp.i</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[to asm] rewrite.cpp.s" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>rewrite.cpp.s</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[obj] set.cpp.o" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>set.cpp.o</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[pre] set.cpp.i" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>set.cpp.i</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[to asm] set.cpp.s" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>set.cpp.s</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[obj] symbol.cpp.o" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>symbol.cpp.o</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[pre] symbol.cpp.i" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>symbol.cpp.i</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[to asm] symbol.cpp.s" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>symbol.cpp.s</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[obj] value.cpp.o" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>value.cpp.o</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[pre] value.cpp.i" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>value.cpp.i</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[to asm] value.cpp.s" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>value.cpp.s</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[obj] var.cpp.o" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>var.cpp.o</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[pre] var.cpp.i" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>var.cpp.i</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[to asm] var.cpp.s" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>var.cpp.s</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[lib] parser" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>parser</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[lib] parser/fast" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>parser/fast</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name=": all" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>all</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name=": clean" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>clean</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[obj] Grammar.cpp.o" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>Grammar.cpp.o</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[pre] Grammar.cpp.i" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>Grammar.cpp.i</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[to asm] Grammar.cpp.s" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>Grammar.cpp.s</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[obj] Parser.cpp.o" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>Parser.cpp.o</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[pre] Parser.cpp.i" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>Parser.cpp.i</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[to asm] Parser.cpp.s" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>Parser.cpp.s</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[obj] gen.cpp.o" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>gen.cpp.o</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[pre] gen.cpp.i" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>gen.cpp.i</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[to asm] gen.cpp.s" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>gen.cpp.s</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[obj] parse.cpp.o" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>parse.cpp.o</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[pre] parse.cpp.i" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>parse.cpp.i</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[to asm] parse.cpp.s" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>parse.cpp.s</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[obj] print.cpp.o" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>print.cpp.o</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[pre] print.cpp.i" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>print.cpp.i</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[to asm] print.cpp.s" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>print.cpp.s</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[obj] read.cpp.o" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>read.cpp.o</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[pre] read.cpp.i" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>read.cpp.i</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[to asm] read.cpp.s" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>read.cpp.s</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[obj] scan.cpp.o" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>scan.cpp.o</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[pre] scan.cpp.i" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>scan.cpp.i</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[to asm] scan.cpp.s" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>scan.cpp.s</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[lib] system" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>system</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[lib] system/fast" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>system/fast</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name=": all" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>all</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name=": clean" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>clean</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[obj] Attribute.cpp.o" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>Attribute.cpp.o</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[pre] Attribute.cpp.i" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>Attribute.cpp.i</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[to asm] Attribute.cpp.s" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>Attribute.cpp.s</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[obj] CInterface.cpp.o" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>CInterface.cpp.o</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[pre] CInterface.cpp.i" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>CInterface.cpp.i</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[to asm] CInterface.cpp.s" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>CInterface.cpp.s</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[obj] For.cpp.o" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>For.cpp.o</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[pre] For.cpp.i" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>For.cpp.i</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[to asm] For.cpp.s" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>For.cpp.s</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[obj] List.cpp.o" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>List.cpp.o</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[pre] List.cpp.i" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>List.cpp.i</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[to asm] List.cpp.s" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>List.cpp.s</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[obj] Match.cpp.o" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>Match.cpp.o</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[pre] Match.cpp.i" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>Match.cpp.i</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[to asm] Match.cpp.s" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>Match.cpp.s</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[obj] New.cpp.o" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>New.cpp.o</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[pre] New.cpp.i" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>New.cpp.i</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[to asm] New.cpp.s" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>New.cpp.s</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[obj] Order.cpp.o" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>Order.cpp.o</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[pre] Order.cpp.i" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>Order.cpp.i</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[to asm] Order.cpp.s" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>Order.cpp.s</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[obj] Path.cpp.o" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>Path.cpp.o</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[pre] Path.cpp.i" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>Path.cpp.i</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[to asm] Path.cpp.s" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>Path.cpp.s</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[obj] Print.cpp.o" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>Print.cpp.o</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[pre] Print.cpp.i" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>Print.cpp.i</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[to asm] Print.cpp.s" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>Print.cpp.s</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[obj] Set.cpp.o" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>Set.cpp.o</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[pre] Set.cpp.i" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>Set.cpp.i</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[to asm] Set.cpp.s" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>Set.cpp.s</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[obj] Slot.cpp.o" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>Slot.cpp.o</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[pre] Slot.cpp.i" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>Slot.cpp.i</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[to asm] Slot.cpp.s" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>Slot.cpp.s</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[obj] System.cpp.o" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>System.cpp.o</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[pre] System.cpp.i" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>System.cpp.i</buildTarget>
-<stopOnError>true</stopOnError>
-<useDefaultCommand>false</useDefaultCommand>
-</target>
-<target name="[to asm] System.cpp.s" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
-<buildArguments/>
-<buildTarget>System.cpp.s</buildTarget>
+<buildTarget>gmp.cpp.s</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name="[lib] interface" path="Interface" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
 <buildTarget>interface</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name="[lib] interface/fast" path="Interface" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
 <buildTarget>interface/fast</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name=": all" path="Interface" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
 <buildTarget>all</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name=": clean" path="Interface" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
 <buildTarget>clean</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[obj] Interface.cpp.o" path="Interface" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[obj] Interface.cpp.obj" path="Interface" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>Interface.cpp.o</buildTarget>
+<buildTarget>Interface.cpp.obj</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name="[pre] Interface.cpp.i" path="Interface" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
 <buildTarget>Interface.cpp.i</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name="[to asm] Interface.cpp.s" path="Interface" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
 <buildTarget>Interface.cpp.s</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[obj] MatchC.cpp.o" path="Interface" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[obj] MatchC.cpp.obj" path="Interface" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>MatchC.cpp.o</buildTarget>
+<buildTarget>MatchC.cpp.obj</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name="[pre] MatchC.cpp.i" path="Interface" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
 <buildTarget>MatchC.cpp.i</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name="[to asm] MatchC.cpp.s" path="Interface" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
 <buildTarget>MatchC.cpp.s</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[obj] MatchE.cpp.o" path="Interface" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[obj] MatchE.cpp.obj" path="Interface" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>MatchE.cpp.o</buildTarget>
+<buildTarget>MatchE.cpp.obj</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name="[pre] MatchE.cpp.i" path="Interface" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
 <buildTarget>MatchE.cpp.i</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name="[to asm] MatchE.cpp.s" path="Interface" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
 <buildTarget>MatchE.cpp.s</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[lib] string" path="String" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[lib] kernel" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>string</buildTarget>
+<buildTarget>kernel</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[lib] string/fast" path="String" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[lib] kernel/fast" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>string/fast</buildTarget>
+<buildTarget>kernel/fast</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name=": all" path="String" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name=": all" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
 <buildTarget>all</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name=": clean" path="String" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name=": clean" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
 <buildTarget>clean</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[obj] String.cpp.o" path="String" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[obj] Common.cpp.obj" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>String.cpp.o</buildTarget>
+<buildTarget>Common.cpp.obj</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[pre] String.cpp.i" path="String" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[pre] Common.cpp.i" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>String.cpp.i</buildTarget>
+<buildTarget>Common.cpp.i</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[to asm] String.cpp.s" path="String" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[to asm] Common.cpp.s" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>String.cpp.s</buildTarget>
+<buildTarget>Common.cpp.s</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[lib] number" path="Number" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[obj] Kernel.cpp.obj" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>number</buildTarget>
+<buildTarget>Kernel.cpp.obj</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[lib] number/fast" path="Number" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[pre] Kernel.cpp.i" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>number/fast</buildTarget>
+<buildTarget>Kernel.cpp.i</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name=": all" path="Number" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[to asm] Kernel.cpp.s" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>all</buildTarget>
+<buildTarget>Kernel.cpp.s</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name=": clean" path="Number" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[obj] assign.cpp.obj" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>clean</buildTarget>
+<buildTarget>assign.cpp.obj</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[obj] Cast.cpp.o" path="Number" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[pre] assign.cpp.i" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>Cast.cpp.o</buildTarget>
+<buildTarget>assign.cpp.i</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[pre] Cast.cpp.i" path="Number" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[to asm] assign.cpp.s" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>Cast.cpp.i</buildTarget>
+<buildTarget>assign.cpp.s</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[to asm] Cast.cpp.s" path="Number" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[obj] eval.cpp.obj" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>Cast.cpp.s</buildTarget>
+<buildTarget>eval.cpp.obj</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[obj] Plus.cpp.o" path="Number" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[pre] eval.cpp.i" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>Plus.cpp.o</buildTarget>
+<buildTarget>eval.cpp.i</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[pre] Plus.cpp.i" path="Number" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[to asm] eval.cpp.s" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>Plus.cpp.i</buildTarget>
+<buildTarget>eval.cpp.s</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[to asm] Plus.cpp.s" path="Number" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[obj] get.cpp.obj" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>Plus.cpp.s</buildTarget>
+<buildTarget>get.cpp.obj</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[obj] Times.cpp.o" path="Number" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[pre] get.cpp.i" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>Times.cpp.o</buildTarget>
+<buildTarget>get.cpp.i</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[pre] Times.cpp.i" path="Number" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[to asm] get.cpp.s" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>Times.cpp.i</buildTarget>
+<buildTarget>get.cpp.s</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[to asm] Times.cpp.s" path="Number" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[obj] match.cpp.obj" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>Times.cpp.s</buildTarget>
+<buildTarget>match.cpp.obj</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[lib] function" path="Function" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[pre] match.cpp.i" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>function</buildTarget>
+<buildTarget>match.cpp.i</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[lib] function/fast" path="Function" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[to asm] match.cpp.s" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>function/fast</buildTarget>
+<buildTarget>match.cpp.s</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name=": all" path="Function" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[obj] print.cpp.obj" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>all</buildTarget>
+<buildTarget>print.cpp.obj</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name=": clean" path="Function" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[pre] print.cpp.i" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>clean</buildTarget>
+<buildTarget>print.cpp.i</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[obj] Function.cpp.o" path="Function" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[to asm] print.cpp.s" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>Function.cpp.o</buildTarget>
+<buildTarget>print.cpp.s</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[pre] Function.cpp.i" path="Function" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[obj] rewrite.cpp.obj" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>Function.cpp.i</buildTarget>
+<buildTarget>rewrite.cpp.obj</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[to asm] Function.cpp.s" path="Function" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[pre] rewrite.cpp.i" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>Function.cpp.s</buildTarget>
+<buildTarget>rewrite.cpp.i</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[obj] chudnovsky.cpp.o" path="Function" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[to asm] rewrite.cpp.s" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>chudnovsky.cpp.o</buildTarget>
+<buildTarget>rewrite.cpp.s</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[pre] chudnovsky.cpp.i" path="Function" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[obj] set.cpp.obj" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>chudnovsky.cpp.i</buildTarget>
+<buildTarget>set.cpp.obj</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[to asm] chudnovsky.cpp.s" path="Function" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[pre] set.cpp.i" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>chudnovsky.cpp.s</buildTarget>
+<buildTarget>set.cpp.i</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[obj] factorial.cpp.o" path="Function" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[to asm] set.cpp.s" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>factorial.cpp.o</buildTarget>
+<buildTarget>set.cpp.s</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[pre] factorial.cpp.i" path="Function" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[obj] symbol.cpp.obj" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>factorial.cpp.i</buildTarget>
+<buildTarget>symbol.cpp.obj</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[to asm] factorial.cpp.s" path="Function" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[pre] symbol.cpp.i" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>factorial.cpp.s</buildTarget>
+<buildTarget>symbol.cpp.i</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[obj] mpfr.cpp.o" path="Function" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[to asm] symbol.cpp.s" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>mpfr.cpp.o</buildTarget>
+<buildTarget>symbol.cpp.s</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[pre] mpfr.cpp.i" path="Function" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[obj] value.cpp.obj" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>mpfr.cpp.i</buildTarget>
+<buildTarget>value.cpp.obj</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[to asm] mpfr.cpp.s" path="Function" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[pre] value.cpp.i" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>mpfr.cpp.s</buildTarget>
+<buildTarget>value.cpp.i</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[obj] sieve.cpp.o" path="Function" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[to asm] value.cpp.s" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>sieve.cpp.o</buildTarget>
+<buildTarget>value.cpp.s</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[pre] sieve.cpp.i" path="Function" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[obj] var.cpp.obj" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>sieve.cpp.i</buildTarget>
+<buildTarget>var.cpp.obj</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[to asm] sieve.cpp.s" path="Function" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[pre] var.cpp.i" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>sieve.cpp.s</buildTarget>
+<buildTarget>var.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] var.cpp.s" path="Kernel" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>var.cpp.s</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name="[exe] mu" path="mU" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
 <buildTarget>mu</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name="[exe] mu/fast" path="mU" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
 <buildTarget>mu/fast</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name=": all" path="mU" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
 <buildTarget>all</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name=": clean" path="mU" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
 <buildTarget>clean</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
-<target name="[obj] main.cpp.o" path="mU" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<target name="[obj] main.cpp.obj" path="mU" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
-<buildTarget>main.cpp.o</buildTarget>
+<buildTarget>main.cpp.obj</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name="[pre] main.cpp.i" path="mU" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
 <buildTarget>main.cpp.i</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
 <target name="[to asm] main.cpp.s" path="mU" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
-<buildCommand>/usr/bin/make</buildCommand>
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
 <buildArguments/>
 <buildTarget>main.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[lib] number" path="Number" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>number</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[lib] number/fast" path="Number" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>number/fast</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": all" path="Number" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>all</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": clean" path="Number" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>clean</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] Cast.cpp.obj" path="Number" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Cast.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] Cast.cpp.i" path="Number" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Cast.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] Cast.cpp.s" path="Number" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Cast.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] Divide.cpp.obj" path="Number" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Divide.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] Divide.cpp.i" path="Number" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Divide.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] Divide.cpp.s" path="Number" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Divide.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] Minus.cpp.obj" path="Number" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Minus.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] Minus.cpp.i" path="Number" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Minus.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] Minus.cpp.s" path="Number" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Minus.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] Number.cpp.obj" path="Number" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Number.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] Number.cpp.i" path="Number" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Number.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] Number.cpp.s" path="Number" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Number.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] Plus.cpp.obj" path="Number" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Plus.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] Plus.cpp.i" path="Number" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Plus.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] Plus.cpp.s" path="Number" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Plus.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] Times.cpp.obj" path="Number" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Times.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] Times.cpp.i" path="Number" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Times.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] Times.cpp.s" path="Number" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Times.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[lib] numeric" path="Numeric" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>numeric</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[lib] numeric/fast" path="Numeric" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>numeric/fast</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": all" path="Numeric" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>all</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": clean" path="Numeric" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>clean</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] Compare.cpp.obj" path="Numeric" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Compare.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] Compare.cpp.i" path="Numeric" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Compare.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] Compare.cpp.s" path="Numeric" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Compare.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] N.cpp.obj" path="Numeric" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>N.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] N.cpp.i" path="Numeric" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>N.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] N.cpp.s" path="Numeric" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>N.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] Numeric.cpp.obj" path="Numeric" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Numeric.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] Numeric.cpp.i" path="Numeric" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Numeric.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] Numeric.cpp.s" path="Numeric" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Numeric.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] Pi.Impl.cpp.obj" path="Numeric" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Pi.Impl.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] Pi.Impl.cpp.i" path="Numeric" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Pi.Impl.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] Pi.Impl.cpp.s" path="Numeric" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Pi.Impl.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] Pi.cpp.obj" path="Numeric" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Pi.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] Pi.cpp.i" path="Numeric" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Pi.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] Pi.cpp.s" path="Numeric" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Pi.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] Precision.cpp.obj" path="Numeric" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Precision.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] Precision.cpp.i" path="Numeric" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Precision.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] Precision.cpp.s" path="Numeric" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Precision.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] mpfr.cpp.obj" path="Numeric" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>mpfr.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] mpfr.cpp.i" path="Numeric" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>mpfr.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] mpfr.cpp.s" path="Numeric" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>mpfr.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[lib] parser" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>parser</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[lib] parser/fast" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>parser/fast</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": all" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>all</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": clean" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>clean</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] Grammar.cpp.obj" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Grammar.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] Grammar.cpp.i" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Grammar.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] Grammar.cpp.s" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Grammar.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] Parser.cpp.obj" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Parser.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] Parser.cpp.i" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Parser.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] Parser.cpp.s" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Parser.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] gen.cpp.obj" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>gen.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] gen.cpp.i" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>gen.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] gen.cpp.s" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>gen.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] parse.cpp.obj" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>parse.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] parse.cpp.i" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>parse.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] parse.cpp.s" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>parse.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] print.cpp.obj" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>print.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] print.cpp.i" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>print.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] print.cpp.s" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>print.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] read.cpp.obj" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>read.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] read.cpp.i" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>read.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] read.cpp.s" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>read.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] scan.cpp.obj" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>scan.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] scan.cpp.i" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>scan.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] scan.cpp.s" path="Parser" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>scan.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[lib] polynomial" path="Polynomial" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>polynomial</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[lib] polynomial/fast" path="Polynomial" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>polynomial/fast</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": all" path="Polynomial" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>all</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": clean" path="Polynomial" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>clean</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] Add.cpp.obj" path="Polynomial" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Add.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] Add.cpp.i" path="Polynomial" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Add.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] Add.cpp.s" path="Polynomial" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Add.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] Divide.cpp.obj" path="Polynomial" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Divide.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] Divide.cpp.i" path="Polynomial" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Divide.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] Divide.cpp.s" path="Polynomial" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Divide.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] Expand.cpp.obj" path="Polynomial" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Expand.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] Expand.cpp.i" path="Polynomial" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Expand.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] Expand.cpp.s" path="Polynomial" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Expand.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] Minus.cpp.obj" path="Polynomial" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Minus.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] Minus.cpp.i" path="Polynomial" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Minus.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] Minus.cpp.s" path="Polynomial" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Minus.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] Mul.cpp.obj" path="Polynomial" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Mul.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] Mul.cpp.i" path="Polynomial" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Mul.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] Mul.cpp.s" path="Polynomial" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Mul.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] Plus.cpp.obj" path="Polynomial" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Plus.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] Plus.cpp.i" path="Polynomial" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Plus.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] Plus.cpp.s" path="Polynomial" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Plus.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] Polynomial.cpp.obj" path="Polynomial" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Polynomial.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] Polynomial.cpp.i" path="Polynomial" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Polynomial.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] Polynomial.cpp.s" path="Polynomial" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Polynomial.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] Sparse.cpp.obj" path="Polynomial" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Sparse.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] Sparse.cpp.i" path="Polynomial" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Sparse.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] Sparse.cpp.s" path="Polynomial" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Sparse.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] Times.cpp.obj" path="Polynomial" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Times.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] Times.cpp.i" path="Polynomial" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Times.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] Times.cpp.s" path="Polynomial" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Times.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[lib] system" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>system</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[lib] system/fast" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>system/fast</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": all" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>all</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": clean" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>clean</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] Attribute.cpp.obj" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Attribute.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] Attribute.cpp.i" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Attribute.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] Attribute.cpp.s" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Attribute.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] Block.cpp.obj" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Block.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] Block.cpp.i" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Block.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] Block.cpp.s" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Block.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] CInterface.cpp.obj" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>CInterface.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] CInterface.cpp.i" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>CInterface.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] CInterface.cpp.s" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>CInterface.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] Context.cpp.obj" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Context.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] Context.cpp.i" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Context.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] Context.cpp.s" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Context.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] For.cpp.obj" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>For.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] For.cpp.i" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>For.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] For.cpp.s" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>For.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] Function.cpp.obj" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Function.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] Function.cpp.i" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Function.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] Function.cpp.s" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Function.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] Input.cpp.obj" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Input.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] Input.cpp.i" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Input.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] Input.cpp.s" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Input.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] List.cpp.obj" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>List.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] List.cpp.i" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>List.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] List.cpp.s" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>List.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] Match.cpp.obj" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Match.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] Match.cpp.i" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Match.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] Match.cpp.s" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Match.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] New.cpp.obj" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>New.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] New.cpp.i" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>New.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] New.cpp.s" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>New.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] Order.cpp.obj" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Order.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] Order.cpp.i" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Order.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] Order.cpp.s" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Order.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] Output.cpp.obj" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Output.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] Output.cpp.i" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Output.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] Output.cpp.s" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Output.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] Path.cpp.obj" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Path.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] Path.cpp.i" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Path.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] Path.cpp.s" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Path.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] Print.cpp.obj" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Print.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] Print.cpp.i" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Print.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] Print.cpp.s" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Print.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] Set.cpp.obj" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Set.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] Set.cpp.i" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Set.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] Set.cpp.s" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Set.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] Slot.cpp.obj" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Slot.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] Slot.cpp.i" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Slot.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] Slot.cpp.s" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Slot.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] System.cpp.obj" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>System.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] System.cpp.i" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>System.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] System.cpp.s" path="System" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>System.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[lib] string" path="String" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>string</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[lib] string/fast" path="String" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>string/fast</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": all" path="String" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>all</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name=": clean" path="String" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>clean</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] Join.cpp.obj" path="String" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Join.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] Join.cpp.i" path="String" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Join.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] Join.cpp.s" path="String" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>Join.cpp.s</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[obj] String.cpp.obj" path="String" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>String.cpp.obj</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[pre] String.cpp.i" path="String" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>String.cpp.i</buildTarget>
+<stopOnError>true</stopOnError>
+<useDefaultCommand>false</useDefaultCommand>
+</target>
+<target name="[to asm] String.cpp.s" path="String" targetID="org.eclipse.cdt.make.MakeTargetBuilder">
+<buildCommand>E:/msys/bin/make.exe</buildCommand>
+<buildArguments/>
+<buildTarget>String.cpp.s</buildTarget>
 <stopOnError>true</stopOnError>
 <useDefaultCommand>false</useDefaultCommand>
 </target>
@@ -1205,7 +1789,7 @@
 <parser enabled="true"/>
 </buildOutputProvider>
 <scannerInfoProvider id="specsFile">
-<runAction arguments="-E -P -v -dD ${plugin_state_location}/${specs_file}" command="/usr/bin/c++" useDefault="true"/>
+<runAction arguments="-E -P -v -dD ${plugin_state_location}/${specs_file}" command="E:/MinGW/bin/c++.exe" useDefault="true"/>
 <parser enabled="true"/>
 </scannerInfoProvider>
 </profile>
@@ -1215,7 +1799,7 @@
 <parser enabled="true"/>
 </buildOutputProvider>
 <scannerInfoProvider id="makefileGenerator">
-<runAction arguments="-f ${project_name}_scd.mk" command="/usr/bin/make" useDefault="true"/>
+<runAction arguments="-f ${project_name}_scd.mk" command="E:/msys/bin/make.exe" useDefault="true"/>
 <parser enabled="true"/>
 </scannerInfoProvider>
 </profile>

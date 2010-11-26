@@ -77,7 +77,7 @@ inline void println(Kernel& k, const var& x, wostream& o = wcout) {
 namespace std { namespace tr1 {
 template<>
 inline size_t
-hash<mU::Parser::Token>::operator()(mU::Parser::Token v) const {
+hash<mU::Token>::operator()(mU::Token v) const {
 	   return static_cast<size_t>(v);
 }
 }}

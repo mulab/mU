@@ -83,12 +83,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Include\mU\Polynomial.h" />
+    <ClInclude Include="Sparse.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Add.cpp" />
     <ClCompile Include="Divide.cpp" />
     <ClCompile Include="Minus.cpp" />
     <ClCompile Include="Plus.cpp" />
     <ClCompile Include="Polynomial.cpp" />
+    <ClCompile Include="Sparse.cpp" />
     <ClCompile Include="Times.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

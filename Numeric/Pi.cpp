@@ -1,8 +1,8 @@
 #include <mU/Numeric.h>
-#include "NPi.Impl.h"
+#include "Pi.Impl.h"
 
 namespace mU {
-void NPi() {
+var NPi() {
 	Real* r = new Real();
 	pi_chudnovsky(r->mpf, mpf_get_default_prec());
 	return r;

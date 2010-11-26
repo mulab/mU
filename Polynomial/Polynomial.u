@@ -2,7 +2,7 @@ CInstall["polynomial"]
 Begin[System`Polynomial]
 
 CInterface["polynomial",
-Value[System`Minus,System`Divide,System`Plus,System`Times]
+Value[System`Minus,System`Divide,System`Plus,System`Times,`Add]
 ]
 
 End[]
@@ -11,3 +11,7 @@ Attribute[Minus] = {Listable}
 Attribute[Divide] = {Listable}
 Attribute[Plus] = {OneIdentity,Flat,Orderless,Listable}
 Attribute[Times] = {OneIdentity,Flat,Orderless,Listable}
+
+x=Polynomial[1,0,0,0,0,1,]
+y=x
+z=System`Polynomial`Add[x,y]

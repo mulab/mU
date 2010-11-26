@@ -187,8 +187,9 @@ Key* key(uint x) {
 Tuple* tuple(uint n) {
     if (n == 0)
         return 0;
-    Tuple* r = reinterpret_cast<Tuple*>(new char[sizeof(Tuple) + (n - 1) * sizeof(var)]);
-    memset(r, 0, sizeof(Tuple) + (n - 1) * sizeof(var));
+	size_t m = sizeof(Tuple) + (n - 1) * sizeof(var);
+    Tuple* r = reinterpret_cast<Tuple*>(new char[m]);
+    memset(r, 0, m);
     r->id = Primary::Tuple;
     r->size = n;
     return r;

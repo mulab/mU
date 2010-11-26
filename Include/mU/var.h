@@ -14,6 +14,7 @@
 #include <cstdarg>
 #include <cmath>
 #include <ctime>
+#include <cassert>
 #include <locale>
 #include <vector>
 #include <stack>
@@ -25,6 +26,13 @@
 #include <algorithm>
 #include <functional>
 #include <iterator>
+#ifdef _WIN32
+#define WIN32_LEAN_AND_MEAN
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#include <windows.h>
+#endif
 #ifdef _MSC_VER
 #include <unordered_set>
 #include <unordered_map>
@@ -36,9 +44,6 @@
 #undef API
 #ifdef _MSC_VER
 #pragma warning(disable:4819)
-#define WIN32_LEAN_AND_MEAN
-#define NOMINMAX
-#include <windows.h>
 #define CAPI extern "C" __declspec(dllexport)
 #ifdef KERNEL_EXPORTS
 #define API __declspec(dllexport)
@@ -75,7 +80,7 @@ API extern std::basic_ostream<wchar> wcerr;
 */
 typedef const wchar* wcs;
 typedef signed long sint;
-#ifdef _MSC_VER
+#ifdef _WIN32
 typedef unsigned long uint;
 #endif
 
@@ -144,6 +149,7 @@ public:
         return this;
     }
     void destroy() {
+		assert(id >= Primary::size);
         id -= Primary::size;
         if (id < Primary::size)
             Primary::ruin[id](this);

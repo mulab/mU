@@ -79,6 +79,12 @@ var Plus(Kernel& k, const Tuple& x) {
     return mU::list(r.size(), r.begin(), $.Plus);
 }
 var Plus(Kernel& k, const var& x, const var& y) {
+	if (!x)
+		return y;
+	if (!y)
+		return x;
+	if (x.isObject() && y.isObject())
+		return Number::Plus(k, x.object(), y.object());
 	var r = tuple($.Plus, x, y);
     r = k.flatten($.Plus, r.tuple());
 	std::sort(r.tuple().tuple + 1, r.tuple().tuple + r.tuple().size);

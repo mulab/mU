@@ -20,6 +20,8 @@ void Grammar::print(Kernel& k, wostream& o, wcs x) {
         print(k, o, x[i]);
 }
 void Grammar::print(Kernel& k, wostream& o, sym x) {
+	if (!x)
+		return;
     sym c = x->context;
     if (c != k.context() &&
             std::find(

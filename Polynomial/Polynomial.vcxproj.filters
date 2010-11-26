@@ -18,6 +18,9 @@
     <ClInclude Include="..\Include\mU\Polynomial.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Sparse.h">
+      <Filter>源文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Polynomial.cpp">
@@ -33,6 +36,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Minus.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Add.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Sparse.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

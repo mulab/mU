@@ -1,9 +1,10 @@
 #include <mU/Kernel.h>
 #include <mU/Interface.h>
+#ifndef _WIN32
+#include <dlfcn.h>
+#endif
 #ifdef _MSC_VER
 #pragma comment(lib,"Kernel.lib")
-#else
-#include <dlfcn.h>
 #endif
 
 namespace mU {
@@ -14,14 +15,18 @@ string cstr(const var& x) {
     return cstr(cast<String>(x).toS());
 }
 string cpath(const char* x) {
-#ifdef _MSC_VER
-		return string(x) + string(".dll");
+#ifdef _WIN32
+#ifdef _MSC_VER_
+    return string(x) + string(".dll");
 #else
-        return string("lib") + string(x) + string(".so");
+    return string("lib") + string(x) + string(".dll");
+#endif
+#else
+    return string("lib") + string(x) + string(".so");
 #endif
 }
 void* cload(const char* x) {
-#ifdef _MSC_VER
+#ifdef _WIN32
 	return LoadLibraryA(cpath(x).c_str());
 #else
 	string s = cpath(x);
@@ -29,15 +34,15 @@ void* cload(const char* x) {
 #endif
 }
 void* cnoload(const char* x) {
-#ifdef _MSC_VER
+#ifdef _WIN32
 	return GetModuleHandleA(cpath(x).c_str());
 #else
 	string s = cpath(x);
-	return dlopen(s.c_str(), RTLD_LAZY | RTLD_NOLOAD);
+	return dlopen(s.c_str(), RTLD_LAZY/* | RTLD_NOLOAD*/);
 #endif
 }
 void cunload(void* x) {
-#ifdef _MSC_VER
+#ifdef _WIN32
     FreeLibrary(reinterpret_cast<HMODULE>(x));
 #else
     dlclose(x);
@@ -45,8 +50,8 @@ void cunload(void* x) {
 }
 void* csym(void* m, const char* x) {
     return
-#ifdef _MSC_VER
-        GetProcAddress(reinterpret_cast<HMODULE>(m), x)
+#ifdef _WIN32
+        (void*)GetProcAddress(reinterpret_cast<HMODULE>(m), x)
 #else
         dlsym(m, x)
 #endif

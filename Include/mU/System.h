@@ -24,7 +24,7 @@
 namespace mU {
 struct timer {
 	double value;
-#ifdef _MSC_VER
+#ifdef _WIN32
 	timer() {
 		QueryPerformanceFrequency(&Frequency);
 	}

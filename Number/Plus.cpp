@@ -80,8 +80,6 @@ CAPI void VALUE(Plus)(Kernel& k, var& r, Tuple& x) {
 	for (uint i = 2; i < x.size; ++i)
 		if (isNumber(x[i]))
 			c = Number::Plus(k, c.object(), x[i].object());
-		else
-			return;
 	r = c;
 }
 CAPI void CMETHOD(System_Integer, add, 1)(Kernel& k, var& r, Tuple& x, var self, sym local) {

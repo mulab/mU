@@ -2,7 +2,7 @@
 
 namespace mU {
 wstring Path() {
-#ifdef _MSC_VER
+#ifdef _WIN32
     wchar buf[0x100];
     memset(buf, 0, 0x100);
     GetModuleFileNameW(NULL, buf, 0x100);
@@ -17,14 +17,14 @@ wstring Path() {
 #endif
 }
 bool Shell(wcs x) {
-#ifdef _MSC_VER
-    STARTUPINFO si;
+#ifdef _WIN32
+    STARTUPINFOW si;
     PROCESS_INFORMATION pi;
     ZeroMemory( &si, sizeof(si) );
     si.cb = sizeof(si);
     ZeroMemory( &pi, sizeof(pi) );
     // Start the child process.
-    if (CreateProcess(NULL,	// No module name (use command line)
+    if (CreateProcessW(NULL,	// No module name (use command line)
                       const_cast<wchar*>(x),	// Command line
                       NULL,           // Process handle not inheritable
                       NULL,           // Thread handle not inheritable

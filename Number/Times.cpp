@@ -80,8 +80,6 @@ CAPI void VALUE(Times)(Kernel& k, var& r, Tuple& x) {
 	for (uint i = 2; i < x.size; ++i)
 		if (isNumber(x[i]))
 			c = Number::Times(k, c.object(), x[i].object());
-		else
-			return;
 	r = c;
 }
 CAPI void CMETHOD(System_Integer, mul, 1)(Kernel& k, var& r, Tuple& x, var self, sym local) {

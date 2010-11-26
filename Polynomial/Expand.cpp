@@ -2,7 +2,7 @@
 #include <mU/Polynomial.h>
 
 namespace mU {
-var Times(Kernel& k, const Tuple& x) {
+var Expand(Kernel& k, const Tuple& x) {
 	if (x.size == 1)
 		return new Integer(1L);
 	if (x.size == 2)
@@ -76,20 +76,18 @@ var Times(Kernel& k, const Tuple& x) {
 	*/
 	return mU::list(r.size(), r.begin(), $.Times);
 }
-var Times(Kernel& k, const var& x, const var& y) {
-	if (!x || !y)
-		return null;
+var Expand(Kernel& k, const var& x, const var& y) {
 	if (x.isObject() && y.isObject())
 		return Number::Times(k, x.object(), y.object());
 	var r = tuple($.Times, x, y);
 	r = k.flatten($.Times, r.tuple());
 	std::sort(r.tuple().tuple + 1, r.tuple().tuple + r.tuple().size);
-	return Times(k, r.tuple());
+	return Expand(k, r.tuple());
 }
 }
 
 using namespace mU;
 
-CAPI void CVALUE(System, Times)(Kernel& k, var& r, Tuple& x) {
-	r = Times(k, x);
+CAPI void CVALUE(System, Expand)(Kernel& k, var& r, Tuple& x) {
+	r = Expand(k, x);
 }

@@ -18,6 +18,8 @@ void Kernel::print(wostream& o, wcs x) {
         print(o, x[i]);
 }
 void Kernel::print(wostream& o, sym x) {
+	if (!x)
+		return;
     sym c = x->context;
     if (c != context() &&
             std::find(contextPath().begin(),

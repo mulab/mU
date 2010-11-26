@@ -1,5 +1,6 @@
 #include <stack>
 #include <map>
+#include <cmath>
 #include "Factorial.Impl.h"
 
 namespace {

@@ -10,7 +10,17 @@
 using namespace mU;
 
 inline void prompt() {
-    wcout << (wchar)956 << _W("> ");
+    wcout <<
+#ifdef _WIN32
+#ifdef _MSC_VER
+    (wchar)956 <<
+#else
+    _W("mU") <<
+#endif
+#else
+    (wchar)956 <<
+#endif
+    _W("> ");
 }
 inline void newline() {
     wcout << _W("  > ");
