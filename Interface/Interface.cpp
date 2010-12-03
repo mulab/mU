@@ -16,7 +16,7 @@ string cstr(const var& x) {
 }
 string cpath(const char* x) {
 #ifdef _WIN32
-#ifdef _MSC_VER_
+#ifdef _MSC_VER
     return string(x) + string(".dll");
 #else
     return string("lib") + string(x) + string(".dll");
@@ -38,7 +38,7 @@ void* cnoload(const char* x) {
 	return GetModuleHandleA(cpath(x).c_str());
 #else
 	string s = cpath(x);
-	return dlopen(s.c_str(), RTLD_LAZY/* | RTLD_NOLOAD*/);
+	return dlopen(s.c_str(), RTLD_LAZY | RTLD_NOLOAD);
 #endif
 }
 void cunload(void* x) {

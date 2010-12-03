@@ -30,7 +30,7 @@ int Symbol::compare(sym x) const {
     int r = context->compare(x->context);
     if (r)
         return r;
-    return reinterpret_cast<int>(this) - reinterpret_cast<int>(x);
+    return reinterpret_cast<long>(this) - reinterpret_cast<long>(x);
 }
 sym Symbol::clone(wcs w) const {
     sym r = new Symbol(this);

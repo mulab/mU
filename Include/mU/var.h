@@ -80,9 +80,10 @@ API extern std::basic_ostream<wchar> wcerr;
 */
 typedef const wchar* wcs;
 typedef signed long sint;
-#ifdef _WIN32
-typedef unsigned long uint;
+#ifndef _WIN32
+#define uint another_uint_type
 #endif
+typedef unsigned long uint;
 
 using std::string;
 typedef std::basic_string<wchar> wstring;
@@ -223,7 +224,7 @@ public:
     explicit Object(sym $type = 0) : Var(Primary::Object), type($type) {}
     virtual ~Object() {}
     virtual int compare(const Object& $other) const {
-        return reinterpret_cast<int>(this) - reinterpret_cast<int>(&$other);
+        return reinterpret_cast<long>(this) - reinterpret_cast<long>(&$other);
     }
     virtual Object* clone() const {
         return new Object(*this);
@@ -394,4 +395,39 @@ var var::subs(const T& m) const {
 }
 typedef std::map<var, var> Map;
 typedef std::multimap<var, var> MMap;
+struct Pos {
+	Pos* prev;
+	const var* ptr;
+	const var* end;
+	Pos(const Tuple& x, Pos* y) : ptr(x.tuple), end(x.tuple + x.size), prev(y) {}
+	Pos(const var& x, Pos* y) : ptr(&x), end((&x) + 1), prev(y) {}
+	uint size() {
+		return end - ptr;
+	}
+	bool empty() {
+		return size() == 0;
+	}
+	const var& operator*() {
+		return *ptr;
+	}
+	const var* operator->() {
+		return ptr;
+	}
+	Pos& operator++() {
+		++ptr;
+		return *this;
+	}
+	Pos& operator+=(uint n) {
+		ptr += n;
+		return *this;
+	}
+	Pos& operator--() {
+		--ptr;
+		return *this;
+	}
+	Pos& operator-=(uint n) {
+		ptr -= n;
+		return *this;
+	}
+};
 }

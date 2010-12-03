@@ -45,3 +45,5 @@
 /System/.svn
 /Test/.svn
 /build
+*.project
+*.cproject

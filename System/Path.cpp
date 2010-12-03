@@ -69,7 +69,7 @@ CAPI void VALUE(Timing)(Kernel& k, var& r, Tuple& x) {
 		var b;
 		timer t;
 		t.start();
-		for (uint i = 0; i < 100000; ++i)
+		// for (uint i = 0; i < 100000; ++i)
 			b = k.eval(x[1]);
 		t.end();
 		r = tuple($.List, new Integer((uint)t.value), b);

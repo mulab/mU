@@ -3,41 +3,6 @@
 
 namespace mU {
 namespace {
-struct Pos {
-	Pos* prev;
-	const var* ptr;
-	const var* end;
-	Pos(const Tuple& x, Pos* y) : ptr(x.tuple), end(x.tuple + x.size), prev(y) {}
-	Pos(const var& x, Pos* y) : ptr(&x), end((&x) + 1), prev(y) {}
-	uint size() {
-		return end - ptr;
-	}
-	bool empty() {
-		return size() == 0;
-	}
-	const var& operator*() {
-		return *ptr;
-	}
-	const var* operator->() {
-		return ptr;
-	}
-	Pos& operator++() {
-		++ptr;
-		return *this;
-	}
-	Pos& operator+=(uint n) {
-		ptr += n;
-		return *this;
-	}
-	Pos& operator--() {
-		--ptr;
-		return *this;
-	}
-	Pos& operator-=(uint n) {
-		ptr -= n;
-		return *this;
-	}
-};
 struct MatchE {
 	MatchE(Kernel& k, const CMatch& x, MatchE* y = 0) : mKernel(k), mMatch(x), mNext(y), mCode(0), mArg(0) {}
 	Kernel& mKernel;
