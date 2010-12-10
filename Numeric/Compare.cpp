@@ -8,7 +8,7 @@ namespace mU {
 int Compare(Kernel& k, const var& x, const var& y) {
 	var r = N(k, Plus(k, x, Minus(k, y)));
 	if (r.isObject($.Real))
-		return mpf_sgn(cast<Real>(r).mpf);
+		return mpf_sgn(r.cast<Real>().mpf);
 	if (r == $.Infinity)
 		return 1;
 	if (r.isTuple($.Times) && r.tuple().size == 3 && r.tuple()[2] == $.Infinity)

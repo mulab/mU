@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Attribute.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="CInterface.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -64,6 +61,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Context.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Attributes.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Local.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

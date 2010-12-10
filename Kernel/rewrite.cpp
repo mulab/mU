@@ -1,4 +1,3 @@
-#include <mU/Common.h>
 #include <mU/Kernel.h>
 
 namespace mU {
@@ -20,19 +19,19 @@ Tuple* Kernel::rewrite(Tuple* x) {
             }
 //             if (!iter->second.count($.SequenceHold))
 //                 if ((x = flatten($.Sequence, *r)) != r) {
-//                     r->destroy();
+//                     r->discard();
 //                     r = x;
 //                 }
             if (iter->second.count($.Flat))
                 if ((x = flatten(r->tuple[0].symbol(), *r)) != r) {
-                    r->destroy();
+                    r->discard();
                     r = x;
                 }
             if (iter->second.count($.Orderless))
                 std::sort(r->tuple + 1, r->tuple + r->size);
             if (iter->second.count($.Listable))
                 if ((x = thread(*r)) != r) {
-                    r->destroy();
+                    r->discard();
                     r = x;
                 }
         }
@@ -42,7 +41,7 @@ Tuple* Kernel::rewrite(Tuple* x) {
         for (uint i = 1; i < r->size; ++i)
             r->tuple[i] = eval(r->tuple[i]);
 //         if ((x = flatten($.Sequence, *r)) != r) {
-//             r->destroy();
+//             r->discard();
 //             r = x;
 //         }
     }
@@ -71,7 +70,7 @@ Tuple* Kernel::thread(const Tuple& x) {
     }
     return r;
 }
-Tuple* Kernel::flatten(sym h, const Tuple& x) {
+Tuple* Kernel::flatten(sym h, const Tuple& x) const {
     std::vector<var> v;
     v.reserve(x.size - 1);
     for (uint i = 1; i < x.size; ++i) {

@@ -6,23 +6,24 @@
 
 namespace mU {
 var Plus(Kernel& k, const Tuple& x) {
-    if (x.size == 1) 
+    if (x.size == 1)
 		return new Integer(0L);
     if (x.size == 2) 
 		return x[1];
     std::vector<var> r;
 	uint pos = 1;
     if (isNumber(x[pos])) {
-        var c = x[pos];
-        for (++pos; pos < x.size && isNumber(x[pos]); ++pos)
-            c = Number::Plus(k, c.object(), x[pos].object());
+        var c = new Integer(0L);
+		for (; pos < x.size && isNumber(x[pos]); ++pos)
+            Number::add(c, c.object(), x[pos].object());
         if(c.isObject($.Rational))
-			mpq_canonicalize(cast<Rational>(c).mpq);
+			mpq_canonicalize(c.cast<Rational>().mpq);
         if (pos == x.size)
 			return c;
         if (cmpD(c.object(), 0.0))
             r.push_back(c);
     }
+	typedef std::multimap<var, var> MMap;
 	MMap mmap;
     for (; pos < x.size; ++pos) {
         var b = x[pos], e;
@@ -55,7 +56,7 @@ var Plus(Kernel& k, const Tuple& x) {
 		var b = iter->first, e = iter->second;
 		MMap::const_iterator end = mmap.upper_bound(b);
 		for (++iter; iter != end; ++iter)
-			e = Number::Plus(k, e.object(),iter->second.object());
+			Number::add(e, e.object(),iter->second.object());
 		double ed = toD(e.object());
 		if (ed != 0.0) {
 			if (ed != 1.0) {
@@ -83,9 +84,12 @@ var Plus(Kernel& k, const var& x, const var& y) {
 		return y;
 	if (!y)
 		return x;
-	if (x.isObject() && y.isObject())
-		return Number::Plus(k, x.object(), y.object());
-	var r = tuple($.Plus, x, y);
+	var r;
+	if (x.isObject() && y.isObject()) {
+		Number::add(r, x.object(), y.object());
+		return r;
+	}
+	r = tuple($.Plus, x, y);
     r = k.flatten($.Plus, r.tuple());
 	std::sort(r.tuple().tuple + 1, r.tuple().tuple + r.tuple().size);
     return Plus(k, r.tuple());

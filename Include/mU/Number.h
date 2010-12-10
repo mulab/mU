@@ -23,10 +23,10 @@
 namespace mU {
 namespace Number {
 API var Cast(Kernel&, const var&, sym);
-API var Minus(Kernel&, const Object&);
-API var Divide(Kernel&, const Object&);
-API var Divide(Kernel&, const Object&, const Object&);
-API var Plus(Kernel&, const Object&, const Object&);
-API var Times(Kernel&, const Object&, const Object&);
+API void neg(var&, const Object&);
+API void div(var&, const Object&);
+API void div(var&, const Object&, const Object&);
+API void add(var&, const Object&, const Object&);
+API void mul(var&, const Object&, const Object&);
 }
 }

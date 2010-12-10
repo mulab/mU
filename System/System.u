@@ -2,43 +2,46 @@
 (*CInstall["system"]*)
 
 CInterface["system",
-Assign[List,Slot,Attribute,Condition],
-Value[Head,Print,Primary,Serial,Set,SetDelayed,Unset,Slot,Attribute,Input,Clear,Kind,Type,Unevaluated,Context,ContextPath,New,Block,Module,MatchQ,Replace,ReplaceAll,Full,Path,Begin,End,BeginPackage,EndPackage,Map,Apply,Order,SameQ,UnsameQ,FreeQ,Timing,Evaluate,For,While,And,Or,Not,If,MatchC,RuleC,Dispatch,ListC,TestC,ReplaceRepeated,Delayed,Lazy,Function],
+Assign[Attributes,Condition,List,Slot],
+Value[And,Apply,Attributes,Begin,BeginLocal,BeginPackage,Block,Clear,ClearAttributes,Context,ContextPath,Delayed,Dispatch,End,EndLocal,EndPackage,Evaluate,For,FreeQ,Full,Function,Head,If,Input,Kind,Lazy,ListC,Local,Map,MatchC,MatchQ,Module,New,Not,Or,Order,Path,Postfix,Prefix,Primary,Print,Replace,ReplaceAll,ReplaceRepeated,RuleC,SameQ,Serial,Set,SetAttributes,SetDelayed,Slot,TestC,Timing,Type,Unevaluated,UnsameQ,Unset,While],
 CInstall[_String],
 CUninstall[_String],
-Shell[_String],
 Output[_,_String],
-OutputAppend[_,_String]
+OutputAppend[_,_String],
+Shell[_String]
 ]
 
-Attribute[Serial] = {HoldAll,Flat}
-Attribute[SetDelayed] = {HoldAll}
-Attribute[Unset] = {HoldFirst}
-Attribute[RuleDelayed] = {HoldRest}
-Attribute[Unevaluated] =  {HoldAll}
-Attribute[Block] = {HoldAll}
-Attribute[Module] = {HoldAll}
-Attribute[Slot] = {HoldRest}
-Attribute[Context] = {HoldFirst}
-Attribute[Hold] = {HoldAll}
-Attribute[Pattern] = {HoldFirst}
-Attribute[Condition] = {HoldAll}
-Attribute[Timing] = {HoldAll}
-Attribute[Production] = {HoldAll}
-Attribute[For] = {HoldAll}
-Attribute[While] = {HoldAll}
-Attribute[If] = {HoldRest}
-Attribute[And] = {HoldAll,OneIdentity,Flat}
-Attribute[Or] = {HoldAll,OneIdentity,Flat}
-Attribute[Delayed] = {HoldAll}
-Attribute[Function] = {HoldAll}
+SetAttributes[Set,HoldFirst]
+Attributes[And] = {HoldAll,OneIdentity,Flat}
+Attributes[Block] = {HoldAll}
+Attributes[Condition] = {HoldAll}
+Attributes[Context] = {HoldFirst}
+Attributes[Delayed] = {HoldAll}
+Attributes[For] = {HoldAll}
+Attributes[Function] = {HoldAll}
+Attributes[Hold] = {HoldAll}
+Attributes[If] = {HoldRest}
+Attributes[Local] = {HoldAll}
+Attributes[Module] = {HoldAll}
+Attributes[Or] = {HoldAll,OneIdentity,Flat}
+Attributes[Pattern] = {HoldFirst}
+Attributes[Production] = {HoldAll}
+Attributes[RuleDelayed] = {HoldRest}
+Attributes[Serial] = {HoldAll,Flat}
+Attributes[SetDelayed] = {HoldAll}
+Attributes[Slot] = {HoldRest}
+Attributes[Timing] = {HoldAll}
+Attributes[Unevaluated] =  {HoldAll}
+Attributes[Unset] = {HoldFirst}
+Attributes[While] = {HoldAll}
+Attributes[With] = {HoldAll}
 
-<< "../String/String.u"
-<< "../Number/Number.u"
-<< "../Polynomial/Polynomial.u"
-<< "../Numeric/Numeric.u"
-<< "../Combinatorics/Combinatorics.u"
-<< "../Calculus/D.u"
-<< "../Calculus/Integrate.u"
+<< Path["../Calculus/D.u"]
+<< Path["../Calculus/Integrate.u"]
+<< Path["../Combinatorics/Combinatorics.u"]
+<< Path["../Number/Number.u"]
+<< Path["../Numeric/Numeric.u"]
+<< Path["../Polynomial/Polynomial.u"]
+<< Path["../String/String.u"]
 
 (*End[]*)

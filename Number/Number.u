@@ -10,10 +10,12 @@ System`Integer`div[_Integer],
 System`Rational`neg[],
 System`Rational`add[_Rational],
 System`Rational`mul[_Rational],
+System`Rational`div[],
 System`Rational`div[_Rational],
 System`Real`neg[],
 System`Real`add[_Real],
 System`Real`mul[_Real],
+System`Real`div[],
 System`Real`div[_Real]
 ]
 

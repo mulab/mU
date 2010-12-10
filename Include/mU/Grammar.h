@@ -13,7 +13,6 @@
 #endif
 
 namespace mU {
-class Kernel;
 enum Token {
 	SYMBOL, INTEGER, FLOAT, STRING, BLANK, POUND,
 	PTR_OP, INC_OP, DEC_OP, LEFT_OP, RIGHT_OP, RIGHT_GT, LE_OP, GE_OP, EQ_OP, NE_OP,
@@ -25,11 +24,12 @@ enum Token {
 	SLASH_SLASH_PERIOD, ASSIGN_NE, QUOTE, BACKQUOTE, SLASH_AT, SLASH_SLASH_AT, SPACE, LT_GT, ASSIGN_GT,
 	NEWLINE, EOI = -1
 };
+class Kernel;
 struct Grammar {
     API static bool Inited;
     API static void Init();
-    API Grammar();
-    
+    API Grammar();	
+
 	std::tr1::unordered_set<Token> end;
 	struct Char {
 		wint unicode;
@@ -59,13 +59,14 @@ struct Grammar {
 	std::tr1::unordered_map<Token, uint> postfixToken, prefixToken, infixToken;
 	uint operCOLON, operPERIOD, operPLUS, operSTAR;
 	
-	API void print(Kernel&, wostream&, wchar);
-	API void print(Kernel&, wostream&, wcs);
-	API void print(Kernel&, wostream&, sym);
-	API void print(Kernel&, wostream&, const Key&);
-	API void print(Kernel&, wostream&, const Object&);
-	API void print(Kernel&, wostream&, const Tuple&, uint = 0);
-	API void print(Kernel&, wostream&, const var&, uint = 0);
+	API void print(Kernel&, wostream&, wchar) const;
+	API void print(Kernel&, wostream&, wcs) const;
+	API void print(Kernel&, wostream&, const wstring&) const;
+	API void print(Kernel&, wostream&, sym) const;
+	API void print(Kernel&, wostream&, const Key&) const;
+	API void print(Kernel&, wostream&, const Object&) const;
+	API void print(Kernel&, wostream&, const Tuple&, uint = 0) const;
+	API void print(Kernel&, wostream&, const var&, uint = 0) const;
 } API extern grammar;
 inline void println(Kernel& k, const var& x, wostream& o = wcout) {
 	grammar.print(k, o, x);

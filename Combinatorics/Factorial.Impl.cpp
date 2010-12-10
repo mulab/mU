@@ -87,6 +87,7 @@ struct swing_cache {
     uint high;
     mpz_ptr value;
 };
+}
 void facs(mpz_ptr r, uint N) {
     sieve primes(N);
     int size = primes.lower(N) + 1;
@@ -116,7 +117,6 @@ void facs(mpz_ptr r, uint N) {
     }
     delete [] e;
     delete [] v;
-}
 }
 void facz(mpz_ptr r, uint N) {
     sieve primes(N);

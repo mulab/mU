@@ -18,5 +18,5 @@ using namespace mU;
 
 CAPI void VALUE(Factorial)(Kernel& k, var& r, Tuple& x) {
 	if (x.size == 2 && x[1].isObject($.Integer))
-		r = Combinatorics::Factorial(cast<Integer>(x[1]).toUI());
+		r = Combinatorics::Factorial(x[1].cast<Integer>().toUI());
 }

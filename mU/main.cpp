@@ -1,6 +1,7 @@
 #include <mU/Kernel.h>
 #include <mU/Parser.h>
 #include <mU/Interface.h>
+#include <mU/utils.h>
 #ifdef _MSC_VER
 #pragma comment(lib,"Kernel.lib")
 #pragma comment(lib,"Parser.lib")
@@ -25,35 +26,35 @@ inline void prompt() {
 inline void newline() {
     wcout << _W("  > ");
 }
+inline void open(Parser& p, wifstream& f, const char* s) {
+	f.open(s);
+	if (f) {
+		p.start(f);
+		p.eval();
+		f.close();
+	}
+}
 int main(int argc, char *argv[]) {
-    Kernel k;
-    Parser p(k);
-    if (!cinstall(k, "system")) {
+	setlocale(LC_ALL, "");
+	wcin.imbue(std::locale(""));
+	wcout.imbue(std::locale(""));
+	// wcerr.rdbuf(0);
+
+	Kernel k;
+	if (!cinstall(k, "system")) {
     	wcerr << _W("system library not found, quit...") << endl;
         return -1;
     }
-    wifstream f;
-    setlocale(LC_ALL, "");
-    //wcerr.rdbuf(0);
+
+	Parser p(k);
+	wifstream f;
     if (argc > 1) {
-        for (int i = 1; i < argc; ++i) {
-            f.open(argv[i]);
-            if (f) {
-                p.start(f);
-                p.eval();
-                f.close();
-            }
-        }
+        for (int i = 1; i < argc; ++i)
+            open(p, f, argv[i]);
         return 0;
     }
-    f.open("mU.ini");
-    if (f) {
-        p.start(f);
-        p.eval();
-        f.close();
-    }
-    wcin.imbue(std::locale(""));
-    wcout.imbue(std::locale(""));
+	open(p, f, wcs2mbs(path() + _W("mU.ini")).c_str());
+    open(p, f, "mU.ini");
     wcout <<
     std::setw(45) << _W("*         *    \n") <<
     std::setw(45) << _W("*         *    \n") <<
@@ -99,10 +100,8 @@ int main(int argc, char *argv[]) {
                 r = null;
             }
         } catch (std::exception& e) {
-            wcerr
-            << _W("Eval:")
-            << e.what()
-            << endl;
+            wcerr << _W("Error occurred while eval!") << endl;
+			wcerr << e.what() << endl;
 			k.start();
         }
         prompt();

@@ -26,13 +26,6 @@
 #include <algorithm>
 #include <functional>
 #include <iterator>
-#ifdef _WIN32
-#define WIN32_LEAN_AND_MEAN
-#ifndef NOMINMAX
-#define NOMINMAX
-#endif
-#include <windows.h>
-#endif
 #ifdef _MSC_VER
 #include <unordered_set>
 #include <unordered_map>
@@ -41,8 +34,10 @@
 #include <tr1/unordered_map>
 #endif
 
+#undef CAPI
 #undef API
 #ifdef _MSC_VER
+#pragma warning(push,1)
 #pragma warning(disable:4819)
 #define CAPI extern "C" __declspec(dllexport)
 #ifdef KERNEL_EXPORTS
@@ -59,23 +54,25 @@ namespace mU {
 //#ifdef _MSC_VER
 typedef wchar_t wchar;
 typedef wint_t wint;
-#define WSTR(x) wstr(L## #x)
-#define _W(x) L##x
+#define __W(x) L ## x
+#define _W(x) __W(x)
 using std::wcslen;
 using std::wcin;
 using std::wcout;
 using std::wcerr;
+using std::wclog;
 /*
 #else
 #include <cstdint>
 typedef char16_t wchar;
 typedef uint_least16_t wint;
-#define WSTR(x) u## #x
-#define _W(x) u##x
+#define __W(x) u ## x
+#define _W(x) __W(x)
 API size_t wcslen(const wchar*);
 API extern std::basic_istream<wchar> wcin;
 API extern std::basic_ostream<wchar> wcout;
 API extern std::basic_ostream<wchar> wcerr;
+API extern std::basic_ostream<wchar> wclog;
 #endif
 */
 typedef const wchar* wcs;
@@ -115,13 +112,6 @@ typedef std::basic_ios<wchar> wios;
 using std::endl;
 
 class Var;
-class var;
-class Symbol;
-class Key;
-class Object;
-class Tuple;
-typedef const Symbol* sym;
-
 namespace Primary {
 enum Type {
     Null = -1,
@@ -135,32 +125,53 @@ const uint mask = size - 1;
 API extern void(* const ruin[size])(Var*);
 }
 
+class var;
+class Symbol;
+class Key;
+class Object;
+class Tuple;
+API Tuple* tuple(uint);
 class Var {
-public:
+	friend class var;
+	friend class Symbol;
+	friend class Key;
+	friend class Object;
+	friend class Tuple;
+	friend API Tuple* tuple(uint);
     uint id;
     explicit Var(uint $id) : id($id) {}
     Var* copy() {
         id += Primary::size;
         return this;
     }
-    Var* copy(Var* x) {
+    void pass(Var*& x) {
         id += Primary::size;
         if (x)
             x->destroy();
-        return this;
+        x = this;
     }
     void destroy() {
-		assert(id >= Primary::size);
         id -= Primary::size;
         if (id < Primary::size)
             Primary::ruin[id](this);
     }
+public:
+	void discard() {
+		if (id >= Primary::size)
+			id -= Primary::size;
+		if (id < Primary::size)
+			Primary::ruin[id](this);
+	}
     uint ref() const {
         return id / Primary::size;
     }
     Primary::Type primary() const {
         return static_cast<Primary::Type>(id & Primary::mask);
     }
+	template <class T>
+	T& cast() const {
+		return const_cast<T&>(static_cast<const T&>(*this));
+	}
 };
 
 inline uint wcs2uint(wcs x) {
@@ -173,24 +184,28 @@ API extern std::tr1::unordered_set<wstring> wstrs;
 inline wcs wstr(wcs x) {
     return wstrs.insert(x).first->c_str();
 }
+#define WSTR(x) wstr(_W(#x))
+typedef const Symbol* sym;
 API extern std::tr1::unordered_map<sym, wcs> names;
 API extern sym root, sys;
 class Symbol : public Var {
 public:
-    API static void ruin(Var*);
+	API static void ruin(Var*);
     sym context;
-    API wcs name() const;
-    API int compare(sym) const;
+    explicit Symbol(sym $context = root) : Var(Primary::Symbol), context($context) {}
+	API wcs name() const;
+    API long compare(sym) const;
     API sym clone(wcs = 0) const;
     API sym symbol(wcs) const;
 #define SYM(x,y) x->symbol(WSTR(y))
 #define SYS(x) SYM(sys,x)
     API var get(wcs) const;
     API bool set(wcs, const var&) const;
-    explicit Symbol(sym $context = root) : Var(Primary::Symbol), context($context) {}
+    API wstring toS(sym = 0) const;
+	API void print(wostream& o = wcout) const;
 private:
     ~Symbol() {}
-};
+}; 
 
 class Key : public Var {
 public:
@@ -213,22 +228,9 @@ public:
 	operator bool() const {
 		return key != 0;
 	}
+	API void print(wostream& o = wcout) const;
 private:
     ~Key() {}
-};
-
-class Object : public Var {
-public:
-    API static void ruin(Var*);
-    sym type;
-    explicit Object(sym $type = 0) : Var(Primary::Object), type($type) {}
-    virtual ~Object() {}
-    virtual int compare(const Object& $other) const {
-        return reinterpret_cast<long>(this) - reinterpret_cast<long>(&$other);
-    }
-    virtual Object* clone() const {
-        return new Object(*this);
-    }
 };
 
 class var {
@@ -238,11 +240,17 @@ public:
     var(const Var* $ptr) : ptr($ptr ? const_cast<Var*>($ptr)->copy() : 0) {}
     var(const var& x) : ptr(x.ptr ? x.ptr->copy() : 0) {}
     var& operator =(const Var* x) {
-        ptr = x ? const_cast<Var*>(x)->copy(ptr) : 0;
+        if (x)
+			const_cast<Var*>(x)->pass(ptr);
+		else
+			ptr = 0;
         return *this;
     }
     var& operator =(const var& x) {
-        ptr = x.ptr ? x.ptr->copy(ptr) : 0;
+		if (x.ptr)
+			x.ptr->pass(ptr);
+		else
+			ptr = 0;
         return *this;
     }
     ~var() {
@@ -266,31 +274,31 @@ public:
     bool isObject() const {
         return primary() == Primary::Object;
     }
-	bool isObject(sym x) const {
-		return isObject() &&  object().type == x;
-	}
+	bool isObject(sym) const;
     bool isTuple() const {
         return primary() == Primary::Tuple;
     }
-	API bool isTuple(const var&) const;
-	API bool isTuple(sym) const;
+	bool isTuple(const var&) const;
+	bool isTuple(sym) const;
+	template <class T>
+	T& cast() const {
+		return ptr->cast<T>();
+	}
     sym symbol() const {
         return static_cast<sym>(ptr);
     }
     Key& key() const {
-        return static_cast<Key&>(*ptr);
+        return cast<Key>();
     }
-    Object& object() const {
-        return static_cast<Object&>(*ptr);
-    }
-    API Tuple& tuple() const;
+    Object& object() const;
+    Tuple& tuple() const;
     API var head() const;
     API var clone() const;
-    API int compare(const var&) const;
-    API bool depend(const var&) const;
-    template <class T>
-    var subs(const T& m) const;
-    operator bool() const {
+    API long compare(const var&) const;
+	API bool equal(const var&) const;
+    API size_t hash() const;
+	API void print(wostream& o = wcout) const;
+	operator bool() const {
         return ptr != 0;
     }
     bool operator<(const var& $other) const {
@@ -300,13 +308,13 @@ public:
         return this->compare($other) <= 0;
     }
     bool operator==(const var& $other) const {
-        return this->compare($other) == 0;
+        return equal($other);
     }
     bool operator==(sym $other) const {
         return ptr == $other;
     }
     bool operator!=(const var& $other) const {
-        return this->compare($other) != 0;
+        return !equal($other);
     }
     bool operator!=(sym $other) const {
         return ptr != $other;
@@ -319,6 +327,65 @@ public:
     }
 };
 API extern const var null;
+} 
+
+namespace std {
+#ifndef _MSC_VER
+namespace tr1 {
+#endif
+template<>
+class hash<mU::var>	: public unary_function<mU::var, size_t> {
+public:
+	size_t operator()(const mU::var& x) const {
+		return x.hash();
+	}
+};
+#ifndef _MSC_VER
+}
+#endif
+}
+
+namespace mU {
+inline bool islower(wchar x) {
+	return x > 96 && x < 123;
+}
+inline bool isupper(wchar x) {
+	return x > 64 && x < 91;
+}
+inline bool isalpha(wchar x) {
+	return islower(x) || isupper(x) || x > 0x7F;
+}
+inline bool isdigit(wchar x) {
+	return x > 47 && x < 58;
+}
+inline void print(wchar x, wostream& o = wcout) {
+	if (isgraph(x) && isprint(x))
+		o << x;
+	else
+		o << L"\\:" << std::hex
+		<< ((x >> 12) & 0xF)
+		<< ((x >> 8) & 0xF)
+		<< ((x >> 4) & 0xF)
+		<< (x & 0xF);        
+}
+inline void print(wcs x, wostream& o = wcout) {
+	if (!x)
+		return;
+	while(*x)
+		print(*x++, o);
+}
+inline void print(const wstring& x, wostream& o = wcout) {
+	print(x.c_str(), o);
+}
+inline wostream& operator<<(wostream& o, const var& x) {
+	x.print(o);
+	return o;
+}
+typedef std::tr1::unordered_map<uint, var> Context;
+API extern std::tr1::unordered_map<sym, Context> contexts;
+API extern std::tr1::unordered_map<uint, var> keys;
+API Key* key(wcs);
+API Key* key(uint);
 
 class Tuple : public Var {
 public:
@@ -326,6 +393,10 @@ public:
     uint size;
     var tuple[1];
     API Tuple* clone() const;
+	API long compare(const Tuple&) const;
+	API bool equal(const Tuple&) const;
+	API size_t hash() const;
+	API void print(wostream& o = wcout) const;
     const var& operator[](uint i) const {
         return tuple[i];
     }
@@ -335,13 +406,15 @@ public:
 private:
     ~Tuple() {}
 };
-
-typedef std::tr1::unordered_map<uint, var> Context;
-API extern std::tr1::unordered_map<sym, Context> contexts;
-API extern std::tr1::unordered_map<uint, var> keys;
-API Key* key(wcs);
-API Key* key(uint);
-API Tuple* tuple(uint);
+inline bool var::isTuple(const var& x) const {
+	return isTuple() && tuple()[0] == x;
+}
+inline bool var::isTuple(sym x) const {
+	return isTuple() && tuple()[0] == x;
+}
+inline Tuple& var::tuple() const {
+	return cast<Tuple>();
+}
 inline Tuple* tuple(const var& a) {
     Tuple* r = tuple(1);
     r->tuple[0] = a;
@@ -375,59 +448,8 @@ inline Tuple* tuple(uint size, Iter begin) {
 		r->tuple[i] = *begin;
 	return r;
 }
-template <class T>
-inline T& cast(const var& x) {
-    return static_cast<T&>(x.object());
 }
-template <class T>
-var var::subs(const T& m) const {
-    typename T::const_iterator
-		iter = m.find(*this);
-    if (iter != m.end())
-        return iter->second;
-    if (isTuple()) {
-        Tuple* r = tuple().clone();
-        for (uint i = 0; i < tuple().size; ++i)
-            r->tuple[i] = tuple()[i].subs(m);
-        return r;
-    }
-    return *this;
-}
-typedef std::map<var, var> Map;
-typedef std::multimap<var, var> MMap;
-struct Pos {
-	Pos* prev;
-	const var* ptr;
-	const var* end;
-	Pos(const Tuple& x, Pos* y) : ptr(x.tuple), end(x.tuple + x.size), prev(y) {}
-	Pos(const var& x, Pos* y) : ptr(&x), end((&x) + 1), prev(y) {}
-	uint size() {
-		return end - ptr;
-	}
-	bool empty() {
-		return size() == 0;
-	}
-	const var& operator*() {
-		return *ptr;
-	}
-	const var* operator->() {
-		return ptr;
-	}
-	Pos& operator++() {
-		++ptr;
-		return *this;
-	}
-	Pos& operator+=(uint n) {
-		ptr += n;
-		return *this;
-	}
-	Pos& operator--() {
-		--ptr;
-		return *this;
-	}
-	Pos& operator-=(uint n) {
-		ptr -= n;
-		return *this;
-	}
-};
-}
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif

@@ -2,71 +2,94 @@
 
 namespace mU {
 namespace Number {
-var Plus(Kernel& k, const Object& x, const Object& y) {
+void add(var &r, const Object& x, const Object& y) {
+	var t = r;
 	if (x.type == $.Integer) {
 		if (y.type == $.Integer) {
-			Integer* r = new Integer();
-			mpz_add(r->mpz, static_cast<const Integer&>(x).mpz, 
-				static_cast<const Integer&>(y).mpz);
-			return r;
+			if (!r.isObject($.Integer))
+				r = new Integer();
+			mpz_add(r.cast<Integer>().mpz, x.cast<Integer>().mpz, 
+				y.cast<Integer>().mpz);
+			return;
 		}
 		if (y.type == $.Rational) {
-			Rational* r = new Rational();
-			mpq_set_z(r->mpq, static_cast<const Integer&>(x).mpz);
-			mpq_add(r->mpq, r->mpq, static_cast<const Rational&>(y).mpq);
-			return r;
+			if (!r.isObject($.Rational))
+				r = new Rational();
+			mpq_set_z(r.cast<Rational>().mpq, x.cast<Integer>().mpz);
+			mpq_add(r.cast<Rational>().mpq, r.cast<Rational>().mpq, y.cast<Rational>().mpq);
+			return;
 		}
 		if (y.type == $.Real) {
-			Real* r = new Real(static_cast<const Real&>(y).prec());
-			mpf_set_z(r->mpf, static_cast<const Integer&>(x).mpz);
-			mpf_add(r->mpf, r->mpf, static_cast<const Real&>(y).mpf);
-			return r;
+			if (r.isObject($.Real))
+				mpf_set_prec(r.cast<Real>().mpf, mpf_get_prec(y.cast<Real>().mpf));
+			else
+				r = new Real(y.cast<Real>().prec());
+			mpf_set_z(r.cast<Real>().mpf, x.cast<Integer>().mpz);
+			mpf_add(r.cast<Real>().mpf, r.cast<Real>().mpf, y.cast<Real>().mpf);
+			return;
 		}
 	}
 	if (x.type == $.Rational) {
 		if (y.type == $.Integer) {
-			Rational* r = new Rational();
-			mpq_set_z(r->mpq, static_cast<const Integer&>(y).mpz);
-			mpq_add(r->mpq, r->mpq, static_cast<const Rational&>(x).mpq);
-			return r;
+			if (!r.isObject($.Rational))
+				r = new Rational();
+			mpq_set_z(r.cast<Rational>().mpq, y.cast<Integer>().mpz);
+			mpq_add(r.cast<Rational>().mpq, r.cast<Rational>().mpq, x.cast<Rational>().mpq);
+			return;
 		}
 		if (y.type == $.Rational) {
-			Rational* r = new Rational();
-			mpq_add(r->mpq, static_cast<const Rational&>(x).mpq, 
-				static_cast<const Rational&>(y).mpq);
-			return r;
+			if (!r.isObject($.Rational))
+				r = new Rational();
+			mpq_add(r.cast<Rational>().mpq, x.cast<Rational>().mpq, 
+				y.cast<Rational>().mpq);
+			return;
 		}
 		if (y.type == $.Real) {
-			Real* r = new Real(static_cast<const Real&>(y).prec());
-			mpf_set_q(r->mpf, static_cast<const Rational&>(x).mpq);
-			mpf_add(r->mpf, r->mpf, static_cast<const Real&>(y).mpf);
-			return r;
+			if (r.isObject($.Real))
+				mpf_set_prec(r.cast<Real>().mpf, mpf_get_prec(y.cast<Real>().mpf));
+			else
+				r = new Real(y.cast<Real>().prec());
+			mpf_set_q(r.cast<Real>().mpf, x.cast<Rational>().mpq);
+			mpf_add(r.cast<Real>().mpf, r.cast<Real>().mpf, y.cast<Real>().mpf);
+			return;
 		}
 	}
 	if (x.type == $.Real) {
 		if (y.type == $.Integer) {
-			Real* r = new Real(static_cast<const Real&>(x).prec());
-			mpf_set_z(r->mpf, static_cast<const Integer&>(y).mpz);
-			mpf_add(r->mpf, r->mpf, static_cast<const Real&>(x).mpf);
-			return r;
+			if (r.isObject($.Real))
+				mpf_set_prec(r.cast<Real>().mpf, mpf_get_prec(x.cast<Real>().mpf));
+			else
+				r = new Real(x.cast<Real>().prec());
+			mpf_set_z(r.cast<Real>().mpf, y.cast<Integer>().mpz);
+			mpf_add(r.cast<Real>().mpf, r.cast<Real>().mpf, x.cast<Real>().mpf);
+			return;
 		}
 		if (y.type == $.Rational) {
-			Real* r = new Real(static_cast<const Real&>(x).prec());
-			mpf_set_q(r->mpf, static_cast<const Rational&>(y).mpq);
-			mpf_add(r->mpf, r->mpf, static_cast<const Real&>(x).mpf);
-			return r;
+			if (r.isObject($.Real))
+				mpf_set_prec(r.cast<Real>().mpf, mpf_get_prec(x.cast<Real>().mpf));
+			else
+				r = new Real(x.cast<Real>().prec());;
+			mpf_set_q(r.cast<Real>().mpf, y.cast<Rational>().mpq);
+			mpf_add(r.cast<Real>().mpf, r.cast<Real>().mpf, x.cast<Real>().mpf);
+			return;
 		}
 		if (y.type == $.Real) {
-			Real* r = new Real(std::min(static_cast<const Real&>(x).prec(), 
-				static_cast<const Real&>(y).prec()));
-			mpf_add(r->mpf, static_cast<const Real&>(x).mpf, 
-				static_cast<const Real&>(y).mpf);
-			return r;
+			if (r.isObject($.Real))
+				mpf_set_prec(r.cast<Real>().mpf, std::min(
+				mpf_get_prec(x.cast<Real>().mpf), 
+				mpf_get_prec(y.cast<Real>().mpf)));
+			else
+				r = new Real(std::min(x.cast<Real>().prec(), 
+				y.cast<Real>().prec()));
+			mpf_add(r.cast<Real>().mpf, x.cast<Real>().mpf, 
+				y.cast<Real>().mpf);
+			return;
 		}
 	}
 	if (x.compare(y) == 0)
-		return tuple($.Times, new Integer(2L), &x);
-	return tuple($.Plus, &x, &y);
+		r = tuple($.Times, new Integer(2L), &x);
+	else
+		r = tuple($.Plus, &x, &y);
 }
 }
 }
@@ -74,23 +97,21 @@ var Plus(Kernel& k, const Object& x, const Object& y) {
 using namespace mU;
 
 CAPI void VALUE(Plus)(Kernel& k, var& r, Tuple& x) {
-	if (x.size == 1 || !isNumber(x[1]))
+	if (x.size == 1)
 		return;
-	var c = x[1];
-	for (uint i = 2; i < x.size; ++i)
+	for (uint i = 1; i < x.size; ++i)
 		if (isNumber(x[i]))
-			c = Number::Plus(k, c.object(), x[i].object());
-	r = c;
+			Number::add(r, r.object(), x[i].object());
 }
 CAPI void CMETHOD(System_Integer, add, 1)(Kernel& k, var& r, Tuple& x, var self, sym local) {
-	mpz_add(cast<Integer>(self).mpz, cast<Integer>(self).mpz, cast<Integer>(x[1]).mpz);
+	mpz_add(self.cast<Integer>().mpz, self.cast<Integer>().mpz, x[1].cast<Integer>().mpz);
 	r = self;
 }
 CAPI void CMETHOD(System_Rational, add, 1)(Kernel& k, var& r, Tuple& x, var self, sym local) {
-	mpq_add(cast<Rational>(self).mpq, cast<Rational>(self).mpq, cast<Rational>(x[1]).mpq);
+	mpq_add(self.cast<Rational>().mpq, self.cast<Rational>().mpq, x[1].cast<Rational>().mpq);
 	r = self;
 }
 CAPI void CMETHOD(System_Real, add, 1)(Kernel& k, var& r, Tuple& x, var self, sym local) {
-	mpf_add(cast<Real>(self).mpf, cast<Real>(self).mpf, cast<Real>(x[1]).mpf);
+	mpf_add(self.cast<Real>().mpf, self.cast<Real>().mpf, x[1].cast<Real>().mpf);
 	r = self;
 }

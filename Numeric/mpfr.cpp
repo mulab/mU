@@ -53,8 +53,8 @@ void name(Real& r, const Real& x)\
 using namespace mU;\
 CAPI void VALUE(name)(Kernel& k, var& r, Tuple& x) {\
 	if (x.size > 1 && x[1].isObject($.Real)) {\
-		r = new Real(cast<Real>(x[1]).prec());\
-		Numeric::name(cast<Real>(r), cast<Real>(x[1]));\
+		r = new Real(x[1].cast<Real>().prec());\
+		Numeric::name(r.cast<Real>(), x[1].cast<Real>());\
 	}\
 }\
 namespace mU {\
@@ -122,6 +122,6 @@ CAPI void VALUE(Catalan)(Kernel& k, var& r, Tuple& x) {
 }
 CAPI void VALUE(E)(Kernel& k, var& r, Tuple& x) {
 	r = new Real(1L);
-	r = Exp(cast<Real>(r));
+	r = Exp(r.cast<Real>());
 }
 */

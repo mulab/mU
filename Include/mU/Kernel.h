@@ -1,9 +1,9 @@
 #pragma once
-#include "var.h"
+#include "Common.h"
 
 namespace mU {
 class Match;
-// Rewriting Engine + Map Database + Pattern Matcher
+// Rewriting Engine + Rule Database + Pattern Matcher
 class Kernel {
 public:
     // 重要系统栈,对用户表现为stack,但debug时需要能查看内部,所以用vector
@@ -15,18 +15,27 @@ public:
 
     API Kernel();
 
+	// symbol & context
     API sym symbol(wcs);
     sym& context() {
         return mContext.back();
     }
+	sym context() const {
+		return mContext.back();
+	}
     API bool beginContext(sym);
     API bool endContext();
     std::list<sym>& contextPath() {
         return mContextPath.back();
     }
+	const std::list<sym>& contextPath() const {
+		return mContextPath.back();
+	}
     API bool beginPackage(sym);
     API bool endPackage();
-    sym local() {
+	API void destroy(sym);
+	API void clear(sym);
+    sym local() const {
         return mLocal.back();
     }
     void beginLocal(sym x) {
@@ -41,20 +50,31 @@ public:
     var& self() {
         return mSelf.back();
     }
-    API void destroy(sym);
-    API void clear(sym);
+	var self() const {
+		return mSelf.back();
+	}
+	void beginSelf(const var& x) {
+		mSelf.push_back(x);
+	}
+	void endSelf() {
+		mSelf.pop_back();
+	}
 
-    API void print(wostream&, wchar);
-    API void print(wostream&, wcs);
-    API void print(wostream&, sym);
-    API void print(wostream&, const Key&);
-    API void print(wostream&, const Object&);
-    API void print(wostream&, const Tuple&);
-    API void print(wostream&, const var&);
-    void println(const var& x, wostream& o = wcout) {
-        print(o, x);
-        o << endl;
-    }
+	// print & log
+	API void print(sym, wostream& = wcout) const;
+	API void print(const Object&, wostream& = wcout) const;
+	API void print(const Tuple&, wostream& = wcout) const;
+	API void print(const var&, wostream& = wcout) const;
+	wostream* log;
+	wostream& logging(wcs);
+	Kernel& operator<<(Kernel& (*pf)(Kernel&)) {
+		return pf(*this);
+	}
+	template <class T>
+	Kernel& operator<<(const T& x) {
+		print(x, *log);
+		return *this;
+	}
 
     // Rules Database
 
@@ -63,12 +83,13 @@ public:
     std::tr1::unordered_map<sym, Attribute> attributes;
     API Tuple* rewrite(Tuple*);
     API Tuple* thread(const Tuple&);
-    API Tuple* flatten(sym, const Tuple&);
+    API Tuple* flatten(sym, const Tuple&) const;
 
 	API bool match(var&, const var&, Match&);
 	API var replace(const var&, Match&);
-	std::set<var> mBind;
-	bool bound(const var& x) {
+	// std::set<var> mBind;
+	std::unordered_set<var> mBind;
+	bool bound(const var& x) const {
 		return mBind.count(x) != 0;
 	}
 	bool bind(const var& x, const var& y) {
@@ -82,7 +103,10 @@ public:
 
     // Rule
 	std::tr1::unordered_map<sym, var> owns;
-	std::tr1::unordered_map<sym, Map> certains;
+	// typedef std::map<var, var> UMap;
+	typedef std::tr1::unordered_map<var, var> UMap;
+	std::tr1::unordered_map<sym, UMap> certains;
+	typedef std::map<var, var> Map;
 	std::tr1::unordered_map<sym, Map> matches;
 	
 	// Interface
@@ -112,6 +136,13 @@ public:
         endSelf();
         return r;
     }
+	API var get(const Object&, const Key&) const;
+	var slot(const Object& x, const Key& y) {
+		beginSelf(&x);
+		var r = get(x, y);
+		endSelf();
+		return r;
+	}
     API var get(const Tuple&, const Key&);
     var slot(const Tuple& x, const Key& y) {
         beginSelf(&x);
@@ -132,9 +163,7 @@ public:
         var r = get(x, y);
         endSelf();
         return r;
-    }
-    API void beginSelf(const var&);
-    API void endSelf();
+	}
 
     // set
     API bool set(sym, const Key&, const var&);
@@ -161,6 +190,9 @@ public:
 	// TODO: 其他内核变量改用Symbol Value控制
 	uint recursion;
 	uint depth;
-	ostringstream error;
 };
+inline Kernel& endl(Kernel& k) {
+	*k.log << std::endl;
+	return k;
+}
 }

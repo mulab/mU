@@ -2,23 +2,26 @@
 
 namespace mU {
 namespace Number {
-var Minus(Kernel& k, const Object& x) {
+void neg(var& r, const Object& x) {
 	if (x.type == $.Integer) {
-		Integer* r = new Integer();
-		mpz_neg(r->mpz, static_cast<const Integer&>(x).mpz);
-		return r;
+		if (!r.isObject($.Integer))
+			r = new Integer();
+		mpz_neg(r.cast<Integer>().mpz, x.cast<Integer>().mpz);
+		return;
 	}
 	if (x.type == $.Rational) {
-		Rational* r = new Rational();
-		mpq_neg(r->mpq, static_cast<const Rational&>(x).mpq);
-		return r;
+		if (!r.isObject($.Rational))
+			r = new Rational();
+		mpq_neg(r.cast<Rational>().mpq, x.cast<Rational>().mpq);
+		return;
 	}
 	if (x.type == $.Real) {
-		Real* r = new Real(static_cast<const Real&>(x).prec());
-		mpf_neg(r->mpf, static_cast<const Real&>(x).mpf);
-		return r;
+		if (!r.isObject($.Real))
+			r = new Real(x.cast<Real>().prec());
+		mpf_neg(r.cast<Real>().mpf, x.cast<Real>().mpf);
+		return;
 	}
-	return tuple($.Times, new Integer(-1L), &x);
+	r = tuple($.Times, new Integer(-1L), &x);
 }
 }
 }
@@ -28,17 +31,17 @@ using namespace mU;
 CAPI void VALUE(Minus)(Kernel& k, var& r, Tuple& x) {
 	if (x.size != 2 || !isNumber(x[1]))
 		return;
-	r = Number::Minus(k, x[1].object());
+	Number::neg(r, x[1].object());
 }
 CAPI void CMETHOD(System_Integer, neg, 0)(Kernel& k, var& r, Tuple& x, var self, sym local) {
-	mpz_neg(cast<Integer>(self).mpz, cast<Integer>(self).mpz);
+	mpz_neg(self.cast<Integer>().mpz, self.cast<Integer>().mpz);
 	r = self;
 }
 CAPI void CMETHOD(System_Rational, neg, 0)(Kernel& k, var& r, Tuple& x, var self, sym local) {
-	mpq_neg(cast<Rational>(self).mpq, cast<Rational>(self).mpq);
+	mpq_neg(self.cast<Rational>().mpq, self.cast<Rational>().mpq);
 	r = self;
 }
 CAPI void CMETHOD(System_Real, neg, 0)(Kernel& k, var& r, Tuple& x, var self, sym local) {
-	mpf_neg(cast<Real>(self).mpf, cast<Real>(self).mpf);
+	mpf_neg(self.cast<Real>().mpf, self.cast<Real>().mpf);
 	r = self;
 }

@@ -10,7 +10,6 @@
 #define API __declspec(dllimport)
 #endif
 #else
-#include <sys/time.h>
 #define API
 #endif
 
@@ -22,55 +21,40 @@
 #define METHOD(f,sig) CMETHOD(System,f,sig)
 
 namespace mU {
-struct timer {
-	double value;
-#ifdef _WIN32
-	timer() {
-		QueryPerformanceFrequency(&Frequency);
-	}
-	void start() {
-		QueryPerformanceCounter(&timerB);
-	}
-	void end() {
-		QueryPerformanceCounter(&timerE);
-		value = (double)(timerE.QuadPart - timerB.QuadPart)
-			/ (double)Frequency.QuadPart * 1000000.0;
-	}
-	LARGE_INTEGER timerB, timerE, Frequency;
-#else
-	timer() {}
-	void start() {
-		gettimeofday(&timerB, NULL);
-	}
-	void end() {
-		gettimeofday(&timerE, NULL);
-		value = (double)((timerE.tv_usec - timerB.tv_usec)
-			+ (timerE.tv_sec - timerB.tv_sec) * 1000000);
-	}
-	timeval timerB, timerE;
-#endif
-};
-API wstring Path();
-API bool Shell(wcs);
+API var Attributes(Kernel&, sym);
+API bool FreeQ(const var&, const var&);
+bool Input(Kernel&, var&, wcs);
+inline bool Input(Kernel& k, var& r, const wstring& s) {
+	return Input(k, r, s.c_str());
+} 
+bool Output(Kernel&, const var&, wcs);
+inline bool Output(Kernel& k, const var& r, const wstring& s) {
+	return Output(k, r, s.c_str());
+} 
+bool OutputAppend(Kernel&, const var&, wcs);
+inline bool OutputAppend(Kernel& k, const var& r, const wstring& s) {
+	return OutputAppend(k, r, s.c_str());
+} 
 API double Timing(Kernel&, var&, const var&);
-API bool Input(Kernel&, var&, wcs);
-API bool Output(Kernel&, const var&, wcs);
-API bool OutputAppend(Kernel&, const var&, wcs);
+template <class T>
+var With(const var& x, const T& m) {
+	typename T::const_iterator
+		iter = m.find(x);
+	if (iter != m.end())
+		return iter->second;
+	if (x.isTuple()) {
+		Tuple* r = x.tuple().clone();
+		for (uint i = 0; i < x.tuple().size; ++i)
+			r->tuple[i] = With(x.tuple()[i], m);
+		return r;
+	}
+	return x;
+}
 }
 /*
 API void SetAttributes(const var&, const var&);
-API var Ctx(const wstring&);
-API var Sym(const wstring&);
-API var Ctx2(wcs);
-API var Sym2(wcs);
-API var Unique(const var&);
-API var context();
-API void beginContext(const var&);
-API void endContext();
-API void beginContextPackage(const var&);
-API void endContextPackage();
-API void beginContextClass(const var&);
-API void endContextClass();
+API void beginClass(const var&);
+API void endClass();
 API var Property(const var&,const var&);
 API var Property(const var&);
 API var Method(const var&,const var&);
@@ -85,9 +69,6 @@ API void Print(const var&, wostream& = wcout, size = 0);
 API void Println(const var&, wostream& = wcout);
 API void FullPrint(const var&, wostream& = wcout);
 API void BoxPrint(const var&, wostream& = wcout, size = 0);
-API wstring Path();
-API var Install(const wstring&);
-API bool Uninstall(const var&);
 API bool Run(const wstring&);
 API var Task(const var&);
 API bool Suspend(const var&);
@@ -101,35 +82,26 @@ API bool FixQ(const var&);
 API var Supply(const var&, const var&, const var&);
 API var Thread(const var&, const var&);
 API var Join(const var&);
-API var With(const var&,const var&);
-API var Block(const var&,const var&);
-API var Module(const var&,const var&);
 inline bool OddQ(const var& x) {
     return IntQ(x) && mpz_odd_p(CI(x));
 }
 inline bool EvenQ(const var& x) {
     return IntQ(x) && mpz_even_p(CI(x));
 }
-API var Plus(const var&);
-API var Plus(const var&, const var&);
-API var Times(const var&);
-API var Times(const var&, const var&);
 API var Power(const var&, const var&);
 API var Mod(const var&, const var&);
 API void Do(const var&, size, const var*);
 API var Table(const var&, size, const var*);
 API var Array(const var&, const var&, size, const var*);
 API var Array(const var&, const var&, size, const var*, const var*);
-API var Evalf(const var&);
-API var Evalf(const var&, size);
-API var IPart(const var&);
+API var IntegerPart(const var&);
 API var Floor(const var&);
 API var Ceiling(const var&);
 API var Round(const var&);
 API void  Expand(const var&, const var&, const var&);
 API var  Expand(const var&, const var&);
 API var Expand(const var&);
-API var const var&iables(const var&);
+API var Variables(const var&);
 API void  Coefficient(const var&, const var&, const var&);
 API var Coefficient(const var&, const var&);
 API var Exponent(const var&, const var&);

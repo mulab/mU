@@ -97,12 +97,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Attribute.cpp" />
+    <ClCompile Include="Attributes.cpp" />
     <ClCompile Include="Block.cpp" />
     <ClCompile Include="CInterface.cpp" />
     <ClCompile Include="For.cpp" />
     <ClCompile Include="Function.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="Local.cpp" />
     <ClCompile Include="Slot.cpp" />
     <ClCompile Include="List.cpp" />
     <ClCompile Include="Match.cpp" />

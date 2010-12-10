@@ -1,10 +1,9 @@
-#include <mU/Common.h>
 #include <mU/Kernel.h>
 #include <mU/Grammar.h>
 
 namespace mU {
-void Grammar::print(Kernel& k, wostream& o, wchar x) {
-    if (x >= 0x0080) {
+void Grammar::print(Kernel& k, wostream& o, wchar x) const {
+    /*if (x >= 0x0080) {
         std::tr1::unordered_map<wint, uint>::const_iterator
         iter = unicode.find((wint)x);
         if (iter != unicode.end()) {
@@ -12,39 +11,43 @@ void Grammar::print(Kernel& k, wostream& o, wchar x) {
             return;
         }
     }
-    k.print(o, x);
+	*/
+	if (x < 0x80 || iswprint(x))
+		o << x;
+	else
+		o << L"\\:" << std::hex
+		<< ((x >> 12) & 0xF)
+		<< ((x >> 8) & 0xF)
+		<< ((x >> 4) & 0xF)
+		<< (x & 0xF);        
 }
-void Grammar::print(Kernel& k, wostream& o, wcs x) {
-    uint n = wcslen(x);
-    for (uint i = 0; i < n; ++i)
-        print(k, o, x[i]);
-}
-void Grammar::print(Kernel& k, wostream& o, sym x) {
+void Grammar::print(Kernel& k, wostream& o, wcs x) const {
 	if (!x)
 		return;
-    sym c = x->context;
-    if (c != k.context() &&
-            std::find(
-                k.contextPath().begin(),
-                k.contextPath().end(), c) ==
-            k.contextPath().end()) {
-        wstring s;
-        while (c && c != k.context()) {
-            s = _W("`") + s;
-            s = c->name() + s;
-            c = c->context;
-        }
-        if (c == k.context())
-            o << _W("`");
-        print(k, o, s.c_str());
-    }
-    wcs s = x->name();
-    if (s)
-        print(k, o, s);
-    else
-        o << static_cast<const void*>(x);
+	while(*x)
+		print(k, o, *x++);
 }
-void Grammar::print(Kernel& k, wostream& o, const Key& x) {
+void Grammar::print(Kernel& k, wostream& o, const wstring& x) const {
+	print(k, o, x.c_str());
+}
+void Grammar::print(Kernel& k, wostream& o, sym x) const {
+	if (!x)
+		return;
+	sym c = x->context;
+	if (c != k.context() &&
+		std::find(k.contextPath().begin(),
+		k.contextPath().end(), c) ==
+		k.contextPath().end())
+		print(k, o, x->toS(k.context()));
+	else {
+		wcs s = x->name();
+		if (s)
+			print(k, o, s);
+		else
+			o << static_cast<const void*>(x);
+	}
+}
+void Grammar::print(Kernel& k, wostream& o, const Key& x) const {
 	if (x) {
 		switch (x.kind()) {
 		case Key::String: {
@@ -61,35 +64,40 @@ void Grammar::print(Kernel& k, wostream& o, const Key& x) {
 	} else
 		o << _W('#');
 }
-void Grammar::print(Kernel& k, wostream& o, const Object& x) {
+void Grammar::print(Kernel& k, wostream& o, const Object& x) const {
+	if (x.type == $.Integer || x.type == $.Rational || x.type == $.Real) {
+		x.print(o);
+		return;
+	}
     if (x.type == $.String) {
-        print(k, o, static_cast<const String&>(x).str.c_str());
+        print(k, o, x.cast<String>().str.c_str());
         return;
     }
 	if (x.type == $.Delayed) {
 		o << _W('&');
-		print(k, o, static_cast<const Delayed&>(x).data);
+		print(k, o, tag(x));
 		return;
 	}
-    k.print(o, x);
+    print(k, o, x.type);
+	o << _W('`') << static_cast<const void*>(&x);
 }
-void Grammar::print(Kernel& k, wostream& o, const var& x, uint y) {
+void Grammar::print(Kernel& k, wostream& o, const var& x, uint y) const {
     switch (x.primary()) {
     case Primary::Symbol:
         print(k, o, x.symbol());
-        break;
+        return;
     case Primary::Key:
         print(k, o, x.key());
-        break;
+        return;
     case Primary::Object:
         print(k, o, x.object());
-        break;
+        return;
     case Primary::Tuple:
         print(k, o, x.tuple(), y);
-        break;
+        return;
     }
 }
-void Grammar::print(Kernel& k, wostream& o, const Tuple& x, uint y) {
+void Grammar::print(Kernel& k, wostream& o, const Tuple& x, uint y) const {
     if (x[0].isSymbol()) {
         sym h = x[0].symbol();
         if (h == $.List) {
@@ -126,7 +134,7 @@ void Grammar::print(Kernel& k, wostream& o, const Tuple& x, uint y) {
                 }
                 std::tr1::unordered_map<sym, uint>::const_iterator iter = postfixSymbol.find(h);
                 if (iter != postfixSymbol.end()) {
-					Oper &op = oper[iter->second];
+					const Oper &op = oper[iter->second];
                     if (op.prec < y) {
                         o << L'(';
                         print(k, o, x[1], op.prec);
@@ -140,7 +148,7 @@ void Grammar::print(Kernel& k, wostream& o, const Tuple& x, uint y) {
                 }
                 iter = prefixSymbol.find(h);
                 if (iter != prefixSymbol.end()) {
-                    Oper &op = oper[iter->second];
+                    const Oper &op = oper[iter->second];
                     if (op.prec < y) {
                         o << L'(';
                         o << op.show;
@@ -155,7 +163,7 @@ void Grammar::print(Kernel& k, wostream& o, const Tuple& x, uint y) {
             } else if (x.size > 2) {
                 std::tr1::unordered_map<sym, uint>::const_iterator iter = infixSymbol.find(h);
                 if (iter != infixSymbol.end()) {
-                    Oper &op = oper[iter->second];
+                    const Oper &op = oper[iter->second];
                     if (op.prec < y) o << L'(';
                     print(k, o, x[1], op.rassoc ? op.prec : op.prec + 1);
 					if (x.size == 3) {

@@ -29,13 +29,13 @@ using namespace mU;
 
 CAPI void VALUE(Binomial)(Kernel& k, var& r, Tuple& x) {
 	if (x.size == 3 && x[1].isObject($.Integer) && x[2].isObject($.Integer))
-		r = Combinatorics::Binomial(cast<Integer>(x[1]), cast<Integer>(x[2]).toUI());
+		r = Combinatorics::Binomial(x[1].cast<Integer>(), x[2].cast<Integer>().toUI());
 }
 CAPI void VALUE(Fibonacci)(Kernel& k, var& r, Tuple& x) {
 	if (x.size == 2 && x[1].isObject($.Integer))
-		r = Combinatorics::Fibonacci(cast<Integer>(x[1]).toUI());
+		r = Combinatorics::Fibonacci(x[1].cast<Integer>().toUI());
 }
 CAPI void VALUE(Lucas)(Kernel& k, var& r, Tuple& x) {
 	if (x.size == 2 && x[1].isObject($.Integer))
-		r = Combinatorics::Lucas(cast<Integer>(x[1]).toUI());
+		r = Combinatorics::Lucas(x[1].cast<Integer>().toUI());
 }

@@ -1,4 +1,3 @@
-#include <mU/Common.h>
 #include <mU/Kernel.h>
 
 namespace mU {
@@ -11,18 +10,16 @@ var Kernel::value(sym x) {
 }
 var Kernel::value(const Key& x) {
     if (!x)
-        return top();
-    switch (x.kind()) {
-    case Key::String:
-        return slot(local(), x);
-    case Key::Integer:
-        if (top().isTuple()) {
-            uint i = static_cast<uint>(x);
-            if (i < top().tuple().size)
-                return lazy(top().tuple()[i]);
+        return self();
+    if (x.kind() == Key::Integer) {
+        if (self().isTuple()) {
+            uint i = x.toUI();
+            if (i < self().tuple().size)
+                return lazy(self().tuple()[i]);
         }
+		return $.Fail;
     }
-    return $.Fail;
+	return slot(local(), x);
 }
 var Kernel::value(Tuple& x) {
     push(&x);
@@ -43,7 +40,7 @@ var Kernel::value(Tuple& x) {
         iter = values.find(h.symbol());
         if (iter != values.end()) {
             pop();
-            return cast<Value>(iter->second)(*this, x);
+            return iter->second.cast<Value>()(*this, x);
         }
     }
     pop();
@@ -61,10 +58,10 @@ var Kernel::value(const var& x) {
     return x;
 }
 bool Kernel::certain(var& r, sym h, const Tuple& x) {
-	std::tr1::unordered_map<sym, Map>::const_iterator
+	std::tr1::unordered_map<sym, UMap>::const_iterator
 		iter = certains.find(h);
 	if (iter != certains.end()) {
-		Map::const_iterator
+		UMap::const_iterator
 			iter2 = iter->second.find(&x);
 		if (iter2 != iter->second.end()) {
 			r = lazy(iter2->second);
@@ -81,7 +78,7 @@ bool Kernel::match(var& r, sym h, const Tuple& x) {
 			iter2 = iter->second.begin();
 		while (iter2 != iter->second.end()) {
 			//println(iter2->first);
-			if (match(r, &x, cast<Match>(iter2->second)))
+			if (match(r, &x, iter2->second.cast<Match>()))
 				return true;
 			++iter2;
 		}

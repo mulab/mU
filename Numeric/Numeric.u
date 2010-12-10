@@ -14,9 +14,11 @@ Begin[System`Numeric]
 
 M[h_] := System`Numeric.{h}
 
+ClearAttributes[CInterface,HoldRest]
 CInterface["numeric",
 Value@@(M /@ `Heads)
 ]
+SetAttributes[CInterface,HoldRest]
 
 M[h_] := SetDelayed@@(Hold[(System.{H})[x_Real],(System`Numeric.{H})[x]] /. H->h)
 

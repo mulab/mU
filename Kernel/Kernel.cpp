@@ -1,9 +1,9 @@
-#include <mU/Common.h>
 #include <mU/Kernel.h>
 
 namespace mU {
-Kernel::Kernel() : recursion(128) {
+Kernel::Kernel() : recursion(256), log(&wclog) {
 	Enum::Init();
+	owns[$.Null] = null;
     mContextPath.push_back(std::list<sym>());
     contextPath().push_back(sys);
     contextPath().push_back(root);

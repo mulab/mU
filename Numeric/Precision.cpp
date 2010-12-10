@@ -4,7 +4,7 @@ namespace mU {
 uint Precision(Kernel& k, const var& x) {
 	if (x.isObject()) {
 		if (x.object().type == $.Real)
-			return cast<Real>(x).prec();
+			return x.cast<Real>().prec();
 		return -1;
 	}
 	if (x.isTuple()) {

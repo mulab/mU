@@ -1,4 +1,3 @@
-#include <mU/Common.h>
 #include <mU/Kernel.h>
 
 namespace mU {
@@ -34,7 +33,7 @@ bool Kernel::assign(const Tuple& x, const var& y) {
         std::tr1::unordered_map<sym, var>::const_iterator
         iter = assigns.find(h.symbol());
         if (iter != assigns.end())
-            return cast<Assign>(iter->second)(*this, x, y);
+            return iter->second.cast<Assign>()(*this, x, y);
         if (y)
             certains[h.symbol()][&x] = y;
         else
@@ -51,7 +50,7 @@ bool Kernel::rule(const Tuple& x, const Match* y) {
 		std::tr1::unordered_map<sym, var>::const_iterator
 			iter = assigns.find(h.symbol());
 		if (iter != assigns.end())
-			return cast<Assign>(iter->second)(*this, x, y);
+			return iter->second.cast<Assign>()(*this, x, y);
 		if (y)
 			matches[h.symbol()][&x] = y;
 		else

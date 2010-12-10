@@ -104,7 +104,7 @@ struct MatchC {
 					}
 					if (h == $.RuleDelayed) {
 						compile(x[1]);
-						rule(new Delayed(x[2]));
+						rule(new Tag($.Delayed, x[2]));
 						return;
 					}
 					if (h == $.Condition) {
@@ -144,7 +144,7 @@ struct MatchC {
 		switch (x.primary()) {
 			case Primary::Object:
 				if (x.object().type == $.Match) {
-					match(cast<Match>(x));
+					match(x.cast<Match>());
 					return;
 				}
 				break;

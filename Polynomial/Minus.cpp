@@ -3,8 +3,11 @@
 
 namespace mU {
 var Minus(Kernel& k, const var& x) {
-	if (x.isObject())
-		return Number::Minus(k, x.object());
+	if (x.isObject()) {
+		var r;
+		Number::neg(r, x.object());
+		return r;
+	}
 	if (x.isTuple() && x.tuple()[0].isSymbol()) {
 		sym h = x.tuple()[0].symbol();
 		if (h == $.Plus) {

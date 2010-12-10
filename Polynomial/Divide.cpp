@@ -3,8 +3,11 @@
 
 namespace mU {
 var Divide(Kernel& k, const var& x) {
-	if (x.isObject())
-		return Number::Divide(k, x.object());
+	if (x.isObject()) {
+		var r;
+		Number::div(r, x.object());
+		return r;
+	}
 	if (x.isTuple() && x.tuple()[0].isSymbol()) {
 		sym h = x.tuple()[0].symbol();
 		if (h == $.Times) {
@@ -27,8 +30,11 @@ var Divide(Kernel& k, const var& x) {
 	return tuple($.Power, x, new Integer(-1L));
 }
 var Divide(Kernel& k, const var& x, const var& y) {
-	if (x.isObject() && y.isObject())
-		return Number::Divide(k, x.object(), y.object());
+	if (x.isObject() && y.isObject()) {
+		var r;
+		Number::div(r, x.object(), y.object());
+		return r;
+	}
 	return Times(k, x, Divide(k, y));
 }
 }

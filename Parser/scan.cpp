@@ -6,15 +6,14 @@ namespace mU {
 #define buffer(c) mText.push_back(c)
 #define advance(c) buffer(c);get(c)
 #define token(c,t) unget(c);return t
-#define iswid(c) (c >= 0x0080 || iswalpha(c))
 
 #define id(c)\
 do { advance(c); }\
-while(iswid(c) || iswdigit(c))
+while(isalpha(c) || isdigit(c))
 
 #define digit(c)\
 do { advance(c); }\
-while(iswdigit(c))
+while(isdigit(c))
 
 #define floatexp(c)\
 {\
@@ -23,7 +22,7 @@ while(iswdigit(c))
 	{\
 		wchar sgn = c;\
 		get(c);\
-		if(iswdigit(c))\
+		if(isdigit(c))\
 		{\
 			buffer(L'e');\
 			buffer(sgn);\
@@ -33,7 +32,7 @@ while(iswdigit(c))
 		unget(c);\
 		c = sgn;\
 	}\
-	else if(iswdigit(c))\
+	else if(isdigit(c))\
 	{\
 		buffer(L'e');\
 		digit(c);\
@@ -61,11 +60,11 @@ Token Parser::scan() {
     mText.clear();
     wchar c;
 	get(c);
-    if (iswid(c)) {
+    if (isalpha(c)) {
         id(c);
         token(c, SYMBOL);
     }
-    if (iswdigit(c)) {
+    if (isdigit(c)) {
         digit(c);
         if (c == L'.')
             floatdot(c)
@@ -83,10 +82,9 @@ Token Parser::scan() {
             if (c == L'\n')
 			newline(c)
 			token(c, SPACE);
-            }
-        return EOI;
-    }
-    break;
+		}
+	}
+	break;
     case L'"': {
         while ((get(c)) && c != L'"') {
             if (c == L'\\') {

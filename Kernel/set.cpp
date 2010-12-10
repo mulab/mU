@@ -1,4 +1,3 @@
-#include <mU/Common.h>
 #include <mU/Kernel.h>
 
 namespace mU {
@@ -42,9 +41,9 @@ bool Kernel::set(const var& x, const Tuple& y, const var& z) {
         var c = eval(y[i]);
         Key* k;
         if (y[i].isObject() && y[i].object().type == $.Integer)
-            k = key(cast<Integer>(c).toUI());
+            k = key(c.cast<Integer>().toUI());
         else if (y[i].isObject() && y[i].object().type == $.String)
-            k = key(wstr(cast<String>(c).str.c_str()));
+            k = key(wstr(c.cast<String>().str.c_str()));
         else
             return false;
         if (i == y.size - 1)

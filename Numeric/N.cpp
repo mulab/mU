@@ -5,11 +5,11 @@ var N(Kernel& k, const var& x, uint n) {
 	if (x.isObject()) {
 		Real* r = new Real(n);
 		if (x.object().type == $.Integer) {
-			mpf_set_z(r->mpf, cast<Integer>(x).mpz);
+			mpf_set_z(r->mpf, x.cast<Integer>().mpz);
 			return r;
 		}
 		if (x.object().type == $.Rational) {
-			mpf_set_q(r->mpf, cast<Rational>(x).mpq);
+			mpf_set_q(r->mpf, x.cast<Rational>().mpq);
 			return r;
 		}
 		return x;
@@ -57,8 +57,8 @@ CAPI void CVALUE(System, N)(Kernel& k, var& r, Tuple& x) {
 			uint n = static_cast<uint>(toD(x[2].object()));
 			r = N(k, x[1], n);
 			/*
-			wcout << L"Prec:" << mpf_get_prec(cast<Real>(r).mpf) 
-				<< L':'	<< LOG_10_2 * mpf_get_prec(cast<Real>(r).mpf)
+			wcout << L"Prec:" << mpf_get_prec(r->mpf) 
+				<< L':'	<< LOG_10_2 * mpf_get_prec(r->mpf)
 				<< endl;
 				*/
 		}

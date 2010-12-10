@@ -1,4 +1,3 @@
-#include <mU/Common.h>
 #include <mU/Kernel.h>
 
 namespace mU {

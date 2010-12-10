@@ -110,7 +110,7 @@ struct MatchE {
 					return false;
 				var c = mKernel.value(arg(0));
 				if (c.isObject() && c.object().type == $.Match) {
-					if (cast<Match>(c)(mKernel, result, *x)) {
+					if (c.cast<Match>()(mKernel, result, *x)) {
 						++x;
 						if (next(x, 1))
 							return true;
@@ -121,14 +121,15 @@ struct MatchE {
 			}
 			break;
 		case CMatch::UNORDER: {
-				CMatch::Unorder& c = cast<CMatch::Unorder>(arg(0));
-				std::multiset<var> certains;
+				CMatch::Unorder& c = arg(0).cast<CMatch::Unorder>();
+				typedef std::multiset<var> MSet;
+				MSet certains;
 				Pos x0 = x;
 				while (!x.empty()) {
 					certains.insert(*x);
 					++x;
 				}
-				std::multiset<var>::const_iterator
+				MSet::const_iterator
 					iter = c.certains.begin();
 				while (iter != c.certains.end()) {
 					if (certains.erase(*iter) == 0)
@@ -175,7 +176,7 @@ struct MatchE {
 				++mCode;
 				mArg += 1;
 				for (uint i = 0; i < c.tuple().size; ++i) {
-					MatchE m(mKernel, cast<CMatch>(c.tuple()[i]), this);
+					MatchE m(mKernel, c.tuple()[i].cast<CMatch>(), this);
 					if (m.match(x))
 						return true;
 				}
@@ -187,7 +188,7 @@ struct MatchE {
 		case CMatch::MATCH: {
 				if (x.empty())
 					return false;
-				if (cast<Match>(arg(0))(mKernel, result, *x)) {
+				if (arg(0).cast<Match>()(mKernel, result, *x)) {
 					++x;
 					if (next(x, 1))
 						return true;

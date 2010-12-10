@@ -2,11 +2,19 @@
 
 using namespace mU;
 
+CAPI void VALUE(Apply)(Kernel& k, var& r, Tuple& x) {
+	if (x.size == 3 && x[2].isTuple()) {
+		Tuple* t = x[2].tuple().clone();
+		t->tuple[0] = x[1];
+		r = k.rewrite(t);
+		r = k.value(r.tuple());
+	}
+}
 CAPI bool ASSIGN(List)(Kernel& k, const Tuple& x, const var& y) {
     if (!x[0].isSymbol())
         return false;
     bool flag = true;
-    if (y.head() == $.List) {
+    if (y.isTuple($.List)) {
         for (uint i = 1; i < x.size && flag; ++i)
             flag = k.assign(x[i], y.tuple()[std::min(i, y.tuple().size - 1)]);
     } else {
@@ -29,10 +37,16 @@ CAPI void VALUE(Map)(Kernel& k, var& r, Tuple& x) {
 		r = t;
 	}
 }
-CAPI void VALUE(Apply)(Kernel& k, var& r, Tuple& x) {
-	if (x.size == 3 && x[2].isTuple()) {
-		Tuple* t = x[2].tuple().clone();
-		t->tuple[0] = x[1];
+CAPI void VALUE(Postfix)(Kernel& k, var& r, Tuple& x) {
+	if (x.size == 3) {
+		Tuple* t = tuple(x[2], x[1]);
+		r = k.rewrite(t);
+		r = k.value(r.tuple());
+	}
+}
+CAPI void VALUE(Prefix)(Kernel& k, var& r, Tuple& x) {
+	if (x.size == 3) {
+		Tuple* t = tuple(x[1], x[2]);
 		r = k.rewrite(t);
 		r = k.value(r.tuple());
 	}

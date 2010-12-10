@@ -7,36 +7,36 @@ var Cast(Kernel& k, const var& x, sym type) {
 		if (x.object().type == $.Integer) {
 			if (type == $.Rational) {
 				Rational* r = new Rational();
-				mpq_set_z(r->mpq, cast<Integer>(x).mpz);
+				mpq_set_z(r->mpq, x.cast<Integer>().mpz);
 				return r;
 			}
 			if (type == $.Real) {
 				Real* r = new Real();
-				mpf_set_z(r->mpf, cast<Integer>(x).mpz);
+				mpf_set_z(r->mpf, x.cast<Integer>().mpz);
 				return r;
 			}
 		}
 		if (x.object().type == $.Rational) {
 			if (type == $.Integer) {
 				Integer* r = new Integer();
-				mpz_set_q(r->mpz, cast<Rational>(x).mpq);
+				mpz_set_q(r->mpz, x.cast<Rational>().mpq);
 				return r;
 			}
 			if (type == $.Real) {
 				Real* r = new Real();
-				mpf_set_q(r->mpf, cast<Rational>(x).mpq);
+				mpf_set_q(r->mpf, x.cast<Rational>().mpq);
 				return r;
 			}
 		}
 		if (x.object().type == $.Real) {
 			if (type == $.Integer) {
 				Integer* r = new Integer();
-				mpz_set_f(r->mpz, cast<Real>(x).mpf);
+				mpz_set_f(r->mpz, x.cast<Real>().mpf);
 				return r;
 			}
 			if (type == $.Rational) {
 				Rational* r = new Rational();
-				mpq_set_f(r->mpq, cast<Real>(x).mpf);
+				mpq_set_f(r->mpq, x.cast<Real>().mpf);
 				return r;
 			}
 		}

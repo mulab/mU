@@ -2,6 +2,21 @@
 
 using namespace mU;
 
+CAPI void VALUE(And)(Kernel& k, var& r, Tuple& x) {
+	bool flag = true;
+	for (uint i = 1; i < x.size; ++i) {
+		x[i] = k.eval(x[i]);
+		if (x[i] == $.True)
+			continue;
+		if (x[i] == $.False) {
+			r = $.False;
+			return;
+		}
+		flag = false;
+	}
+	if (flag)
+		r = $.True;
+}
 CAPI void VALUE(For)(Kernel& k, var& r, Tuple& x) {
 	if (x.size == 5) {
 		for (k.eval(x[1]);
@@ -20,36 +35,6 @@ CAPI void VALUE(For)(Kernel& k, var& r, Tuple& x) {
 		}
 	}
 }
-CAPI void VALUE(While)(Kernel& k, var& r, Tuple& x) {
-	if (x.size == 3) {
-		while (k.eval(x[1]) == $.True) {
-			r = k.eval(x[2]);
-			if (r.isTuple() && r.tuple()[0].isSymbol()) {
-				sym h = r.tuple()[0].symbol();
-				if (h == $.Return) 
-					return;
-				if (h == $.Break)
-					break;
-				if (h == $.Continue)
-					continue;
-			}
-		}
-	}
-}
-CAPI void VALUE(Serial)(Kernel& k, var& r, Tuple& x) {
-	for (uint i = 1; i < x.size; ++i) {
-		r = k.eval(x[i]);
-		if (r.isTuple() && r.tuple()[0].isSymbol()) {
-			sym h = r.tuple()[0].symbol();
-			if (h == $.Return) {
-				r = r.tuple().size == 1 ? null : r.tuple()[1];
-				return;
-			}
-			if (h == $.Break || h == $.Continue)
-				break;
-		}
-	}
-}
 CAPI void VALUE(If)(Kernel& k, var& r, Tuple& x) {
 	if (x.size >= 3) {
 		if (x[1] == $.True) {
@@ -62,20 +47,17 @@ CAPI void VALUE(If)(Kernel& k, var& r, Tuple& x) {
 		} 
 	}
 }
-CAPI void VALUE(And)(Kernel& k, var& r, Tuple& x) {
-	bool flag = true;
-	for (uint i = 1; i < x.size; ++i) {
-		x[i] = k.eval(x[i]);
-		if (x[i] == $.True)
-			continue;
-		if (x[i] == $.False) {
+CAPI void VALUE(Not)(Kernel& k, var& r, Tuple& x) {
+	if (x.size == 2) {
+		if (x[1] == $.True) {
 			r = $.False;
 			return;
 		}
-		flag = false;
-	}
-	if (flag)
-		r = $.True;
+		if (x[1] == $.False) {
+			r = $.True;
+			return;
+		}
+	}	
 }
 CAPI void VALUE(Or)(Kernel& k, var& r, Tuple& x) {
 	bool flag = true;
@@ -92,15 +74,33 @@ CAPI void VALUE(Or)(Kernel& k, var& r, Tuple& x) {
 	if (flag)
 		r = $.False;
 }
-CAPI void VALUE(Not)(Kernel& k, var& r, Tuple& x) {
-	if (x.size == 2) {
-		if (x[1] == $.True) {
-			r = $.False;
-			return;
+CAPI void VALUE(Serial)(Kernel& k, var& r, Tuple& x) {
+	for (uint i = 1; i < x.size; ++i) {
+		r = k.eval(x[i]);
+		if (r.isTuple() && r.tuple()[0].isSymbol()) {
+			sym h = r.tuple()[0].symbol();
+			if (h == $.Return) {
+				r = r.tuple().size == 1 ? null : r.tuple()[1];
+				return;
+			}
+			if (h == $.Break || h == $.Continue)
+				break;
 		}
-		if (x[1] == $.False) {
-			r = $.True;
-			return;
+	}
+}
+CAPI void VALUE(While)(Kernel& k, var& r, Tuple& x) {
+	if (x.size == 3) {
+		while (k.eval(x[1]) == $.True) {
+			r = k.eval(x[2]);
+			if (r.isTuple() && r.tuple()[0].isSymbol()) {
+				sym h = r.tuple()[0].symbol();
+				if (h == $.Return) 
+					return;
+				if (h == $.Break)
+					break;
+				if (h == $.Continue)
+					continue;
+			}
 		}
-	}	
+	}
 }

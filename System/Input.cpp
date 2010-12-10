@@ -31,7 +31,7 @@ CAPI void VALUE(Input)(Kernel& k, var& r, Tuple& x) {
 		return;
 	}
 	if (x.size == 2 && x[1].isObject($.String)) {
-		if (!Input(k, r, cast<String>(x[1]).toS()))
+		if (!Input(k, r, x[1].cast<String>().toS()))
 			r = $.Fail;
 	}
 }

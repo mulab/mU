@@ -97,11 +97,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Ecl\Ecl.cpp" />
     <ClCompile Include="Interface.cpp" />
     <ClCompile Include="MatchC.cpp" />
     <ClCompile Include="MatchE.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Include\mU\Interface\Ecl.h" />
     <ClInclude Include="Match.h" />
     <ClInclude Include="..\Include\mU\Interface.h" />
   </ItemGroup>

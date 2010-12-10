@@ -107,12 +107,15 @@
     <ClCompile Include="rewrite.cpp" />
     <ClCompile Include="set.cpp" />
     <ClCompile Include="symbol.cpp" />
+    <ClCompile Include="utils.cpp" />
     <ClCompile Include="value.cpp" />
     <ClCompile Include="var.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Include\mU\Common.h" />
     <ClInclude Include="..\Include\mU\Kernel.h" />
+    <ClInclude Include="..\Include\mU\Object.h" />
+    <ClInclude Include="..\Include\mU\utils.h" />
     <ClInclude Include="..\Include\mU\var.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

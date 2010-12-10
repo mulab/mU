@@ -25,8 +25,8 @@ bool OutputAppend(Kernel& k, const var& x, wcs s) {
 using namespace mU;
 
 CAPI void METHOD(Output, 2)(Kernel& k, var& r, Tuple& x, var self, sym local) {
-	r = boolean(Output(k, x[1], cast<String>(x[2]).toS()));
+	r = boolean(Output(k, x[1], x[2].cast<String>().toS()));
 }
 CAPI void METHOD(OutputAppend, 2)(Kernel& k, var& r, Tuple& x, var self, sym local) {
-	r = boolean(OutputAppend(k, x[1], cast<String>(x[2]).toS()));
+	r = boolean(OutputAppend(k, x[1], x[2].cast<String>().toS()));
 }

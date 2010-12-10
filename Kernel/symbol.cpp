@@ -67,7 +67,7 @@ void Kernel::destroy(sym x) {
     if (!x || x->ref() > 1)
         return;
     clear(x);
-    const_cast<Symbol*>(x)->destroy();
+    const_cast<Symbol*>(x)->discard();
 }
 void Kernel::clear(sym x) {
     // TODO: ClearAll清除context下所有symbol

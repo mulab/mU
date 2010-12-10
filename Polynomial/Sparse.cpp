@@ -4,7 +4,7 @@ namespace mU {
 namespace Polynomial {
 Exponent& exponent(const Tuple& x) {
 	if (isSparse(x))
-		return cast<Exponent>(x[x.size - 1]);
+		return x[x.size - 1].cast<Exponent>();
 	Exponent* e = new Exponent(x.size - 2);
 	for (uint i = 0; i < x.size - 2; ++i)
 		e->exponent[i] = i;

@@ -14,6 +14,9 @@
 
 namespace mU {
 API string cstr(wcs);
+inline string cstr(const wstring& x) {
+	return cstr(x.c_str());
+}
 API string cstr(const var&);
 API string cpath(const char*);
 API void* cload(const char*);

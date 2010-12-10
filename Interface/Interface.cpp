@@ -1,6 +1,9 @@
 #include <mU/Kernel.h>
 #include <mU/Interface.h>
-#ifndef _WIN32
+#ifdef _WIN32
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
+#else
 #include <dlfcn.h>
 #endif
 #ifdef _MSC_VER
@@ -12,7 +15,7 @@ string cstr(wcs x) {
     return string(x, x + wcslen(x)).c_str();
 }
 string cstr(const var& x) {
-    return cstr(cast<String>(x).toS());
+    return cstr(x.cast<String>().toS());
 }
 string cpath(const char* x) {
 #ifdef _WIN32

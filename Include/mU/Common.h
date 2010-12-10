@@ -1,5 +1,5 @@
 #pragma once
-#include "var.h"
+#include "Object.h"
 #include <gmp.h>
 #ifdef _MSC_VER
 #pragma comment(lib,"../Lib/gmp.lib")
@@ -9,6 +9,10 @@ namespace mU {
 struct Enum {
     API static bool Inited;
     API static void Init();
+
+	sym PrimaryName[Primary::size + 1];
+	sym
+	Null, Symbol, Key, Object, Tuple;
 
     std::tr1::unordered_set<sym> Attributes;
     sym
@@ -21,42 +25,26 @@ struct Enum {
     sym
     Optional, Condition, PatternTest, Blank, Pattern, Rule, RuleDelayed,
 	Production, Alternatives;
+	
+	std::tr1::unordered_set<sym> Objects;
+	sym
+    Integer, Rational, Real, String,
+	Value, Assign, Method, Delayed, Match;
 
-    sym
-    Null, Symbol, Key, Object, Tuple, True, False, Infinity,
-    Value, Assign, Method, Delayed, Match,
-	Integer, Rational, Real, String,
-    Fail, Self, List, Sequence, Serial, Interface,
+	sym
+    True, False, Infinity, Fail, Function,
+	Self, List, Sequence, Serial, Interface,
     Slot, Return, Continue, Break, Set, Map,
     Plus, Minus, Times, Power, Sqrt, Radical;
 } API extern $;
-// TODO: 需要改成静态数组?
 inline sym primary(const var& x) {
-    switch (x.primary()) {
-    case Primary::Null:
-        return $.Null;
-    case Primary::Symbol:
-        return $.Symbol;
-    case Primary::Key:
-        return $.Key;
-    case Primary::Object:
-        return $.Object;
-    case Primary::Tuple:
-        return $.Tuple;
-    }
-    return 0;
+    return $.PrimaryName[x.primary()];
 }
 inline sym boolean(bool x) {
     return x ? $.True : $.False;
 }
 inline sym kind(const Key& x) {
-    switch (x.kind()) {
-    case Key::String:
-        return $.String;
-    case Key::Integer:
-        return $.Integer;
-    }
-    return 0;
+	return x.kind() ? $.Integer : $.String;
 }
 template <class Iter>
 inline Tuple* list(uint size, Iter begin, const var& h = $.List) {
@@ -87,42 +75,39 @@ inline bool isNumber(const var& x) {
 	return x.isObject() && isNumber(x.object());
 }
 
-class Kernel;
-
-//重载assign实现f[x1]=y,f[x1][x2]=y等
-//重载value实现f[x1],f[x1][x2]等
-struct Assign : public Object {
-    Assign() : Object($.Assign) {}
-    virtual bool operator()(Kernel& k, const Tuple& x, const var& y) {
-        return false;
-    }
-};
-
-struct Value : public Object {
-    Value() : Object($.Value) {}
-    virtual var operator()(Kernel& k, Tuple& x) {
-        return &x;
-    }
-};
-
-struct Method : public Object {
-    Method() : Object($.Method) {}
-    virtual var operator()(Kernel& k) {
-        return null;
-    }
-};
-
-class Delayed : public Object {
-public:
-    Delayed(const var& $data) : Object($.Delayed), data($data) {}
-    var data;
-};
-
-class Match : public Object {
-public:
-	Match() : Object($.Match) {}
-	virtual bool operator()(Kernel& k, var& r, const var& x) {
-		return false;
+struct Pos {
+	Pos* prev;
+	const var* ptr;
+	const var* end;
+	Pos(const Tuple& x, Pos* y) : ptr(x.tuple), end(x.tuple + x.size), prev(y) {}
+	Pos(const var& x, Pos* y) : ptr(&x), end((&x) + 1), prev(y) {}
+	uint size() const {
+		return end - ptr;
+	}
+	bool empty() const {
+		return size() == 0;
+	}
+	const var& operator*() const {
+		return *ptr;
+	}
+	const var* operator->() const {
+		return ptr;
+	}
+	Pos& operator++() {
+		++ptr;
+		return *this;
+	}
+	Pos& operator+=(uint n) {
+		ptr += n;
+		return *this;
+	}
+	Pos& operator--() {
+		--ptr;
+		return *this;
+	}
+	Pos& operator-=(uint n) {
+		ptr -= n;
+		return *this;
 	}
 };
 
@@ -139,14 +124,18 @@ public:
     virtual ~Integer() {
         mpz_clear(mpz);
     }
-    virtual int compare(const Object& x) const {
-        return mpz_cmp(mpz, static_cast<const Integer&>(x).mpz);
-    }
     virtual Integer* clone() const {
         Integer* r = new Integer();
         mpz_set(r->mpz, mpz);
         return r;
     }
+	virtual int compare(const Object& x) const {
+		return mpz_cmp(mpz, x.cast<Integer>().mpz);
+	}
+	virtual size_t hash() const {
+		return static_cast<size_t>(mpz_get_ui(mpz));
+	}
+	API virtual void print(wostream&) const;
     Integer() : Object($.Integer) {
         mpz_init(mpz);
     }
@@ -186,14 +175,18 @@ public:
     virtual ~Rational() {
         mpq_clear(mpq);
     }
-    virtual int compare(const Object& x) const {
-        return mpq_cmp(mpq, static_cast<const Rational&>(x).mpq);
-    }
     virtual Rational* clone() const {
         Rational* r = new Rational();
         mpq_set(r->mpq, mpq);
         return r;
     }
+	virtual int compare(const Object& x) const {
+		return mpq_cmp(mpq, x.cast<Rational>().mpq);
+	}
+	virtual size_t hash() const {
+		return static_cast<size_t>(mpq_get_d(mpq));
+	}
+	API virtual void print(wostream&) const;
     Rational() : Object($.Rational) {
         mpq_init(mpq);
     }
@@ -234,14 +227,18 @@ public:
     virtual ~Real() {
         mpf_clear(mpf);
     }
-    virtual int compare(const Object& x) const {
-        return mpf_cmp(mpf, static_cast<const Real&>(x).mpf);
-    }
     virtual Real* clone() const {
         Real* r = new Real(mpf_get_prec(mpf));
         mpf_set(r->mpf, mpf);
         return r;
     }
+	virtual int compare(const Object& x) const {
+		return mpf_cmp(mpf, x.cast<Real>().mpf);
+	}
+	virtual size_t hash() const {
+		return static_cast<size_t>(mpf_get_ui(mpf));
+	}
+	API virtual void print(wostream&) const;
     Real(uint n = 0) : Object($.Real) {
         mpf_init2(mpf, n ? static_cast<uint>(LOG_2_10 * n) : 
 			mpf_get_default_prec());
@@ -282,22 +279,22 @@ public:
 
 inline double toD(const Object& x) {
 	if (x.type == $.Integer)
-		return static_cast<const Integer&>(x).toD();
+		return x.cast<Integer>().toD();
 	if (x.type == $.Rational)
-		return static_cast<const Rational&>(x).toD();
+		return x.cast<Rational>().toD();
 	if (x.type == $.Real)
-		return static_cast<const Real&>(x).toD();
+		return x.cast<Real>().toD();
 	return 0.0;
 }
 inline int cmpD(const Object& x, double a, double b = 1.0) {
 	if (x.type == $.Integer)
-		return mpz_cmp_si(static_cast<const Integer&>(x).mpz, 
+		return mpz_cmp_si(x.cast<Integer>().mpz, 
 		static_cast<long>(a / b));
 	if (x.type == $.Rational)
-		return mpq_cmp_si(static_cast<const Rational&>(x).mpq, static_cast<long>(a), 
+		return mpq_cmp_si(x.cast<Rational>().mpq, static_cast<long>(a), 
 		static_cast<long>(b));
 	if (x.type == $.Real)
-		return mpf_cmp_d(static_cast<const Real&>(x).mpf, a / b);
+		return mpf_cmp_d(x.cast<Real>().mpf, a / b);
 	return 0;
 }
 
@@ -311,14 +308,18 @@ inline int cmpD(const Object& x, double a, double b = 1.0) {
 class String : public Object {
 public:
     wstring str;
-    virtual int compare(const Object& x) const {
-        return str.compare(static_cast<const String&>(x).str);
-    }
     virtual String* clone() const {
         String* r = new String();
         r->str = str;
         return r;
     }
+	virtual int compare(const Object& x) const {
+		return str.compare(static_cast<const String&>(x).str);
+	}
+	virtual size_t hash() const {
+		return std::hash<wstring>()(str);
+	}
+	API virtual void print(wostream&) const;
     String() : Object($.String) {}
     String(wcs x) : Object($.String) {
         str.assign(x);
@@ -326,11 +327,51 @@ public:
     String(const wstring& x) : Object($.String) {
         str.assign(x);
     }
-    uint toUI() const {
-        return wcs2uint(wstr(str.c_str()));
-    }
-    wcs toS() const {
-        return str.c_str();
-    }
+	wcs toS() const {
+		return str.c_str();
+	}
+};
+
+class Tag : public Object {
+public:
+	explicit Tag(sym $type, const var& $data) : Object($type), data($data) {}
+	var data;
+};
+template <class T>
+inline var tag(const T& x) {
+	return x.cast<Tag>().data;
+}
+
+class Kernel;
+
+//重载assign实现f[x1]=y,f[x1][x2]=y等
+//重载value实现f[x1],f[x1][x2]等
+struct Assign : public Object {
+	Assign() : Object($.Assign) {}
+	virtual bool operator()(Kernel& k, const Tuple& x, const var& y) {
+		return false;
+	}
+};
+
+struct Value : public Object {
+	Value() : Object($.Value) {}
+	virtual var operator()(Kernel& k, Tuple& x) {
+		return &x;
+	}
+};
+
+struct Method : public Object {
+	Method() : Object($.Method) {}
+	virtual var operator()(Kernel& k) {
+		return null;
+	}
+};
+
+class Match : public Object {
+public:
+	Match() : Object($.Match) {}
+	virtual bool operator()(Kernel& k, var& r, const var& x) {
+		return false;
+	}
 };
 }

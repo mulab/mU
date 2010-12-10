@@ -1,6 +1,16 @@
-#include <mU/var.h>
+#include <mU/Object.h>
 
 namespace mU {
+Tuple* tuple(uint n) {
+    if (n == 0)
+        return 0;
+	size_t m = sizeof(Tuple) + (n - 1) * sizeof(var);
+    Tuple* r = reinterpret_cast<Tuple*>(new char[m]);
+    memset(r, 0, m);
+    r->id = Primary::Tuple;
+    r->size = n;
+    return r;
+}
 std::tr1::unordered_set<wstring> wstrs;
 std::tr1::unordered_map<sym, wcs> names;
 std::tr1::unordered_map<sym, Context> contexts;
@@ -22,11 +32,11 @@ wcs Symbol::name() const {
         return iter->second;
     return 0;
 }
-int Symbol::compare(sym x) const {
+long Symbol::compare(sym x) const {
     if (!this)
-        return x ? -1 : 0;
+        return x ? -1L : 0L;
     if (!x)
-        return 1;
+        return 1L;
     int r = context->compare(x->context);
     if (r)
         return r;
@@ -68,11 +78,29 @@ bool Symbol::set(wcs x, const var& y) const {
         contexts[this].erase(wcs2uint(x));
     return true;
 }
+wstring Symbol::toS(sym x) const {
+	wstring s;
+	if (x == this)
+		return s;
+	if (context) {
+		s += context->toS(x);
+		s += _W('`');
+	}
+	wcs c = name();
+	if (c)
+		s += c;
+	else {
+		wostringstream oss;
+		oss << static_cast<const void*>(this);
+		s += oss.str();
+	}
+	return s;
+}
 void Key::ruin(Var* x) {
     delete static_cast<Key*>(x);
 }
 void Object::ruin(Var* x) {
-    delete static_cast<Object*>(x);
+	delete static_cast<Object*>(x);
 }
 void Tuple::ruin(Var* x) {
     Tuple* t = static_cast<Tuple*>(x);
@@ -88,14 +116,23 @@ void(* const ruin[size])(Var*) = {
     Tuple::ruin
 };
 }
-bool var::isTuple(const var& x) const {
-	return isTuple() && tuple()[0] == x;
+void Symbol::print(wostream& o) const {
+	mU::print(toS(), o);
 }
-bool var::isTuple(sym x) const {
-	return isTuple() && tuple()[0] == x;
-}
-Tuple& var::tuple() const {
-    return static_cast<Tuple&>(*ptr);
+void Key::print(wostream& o) const {
+	if (key) {
+		switch (kind()) {
+		case Key::String: {
+			o << _W('#');
+			mU::print(toS(), o);
+		}
+		break;
+		case Key::Integer:
+			o << _W('#') << toUI();
+			break;
+		}
+	} else
+		o << _W('#');
 }
 var var::head() const {
     switch (primary()) {
@@ -119,56 +156,122 @@ var var::clone() const {
     }
     return *this;
 }
-int var::compare(const var& x) const {
-    int r = primary() - x.primary();
+long var::compare(const var& x) const {
+    long r = primary() - x.primary();
     if (r)
         return r;
     switch (primary()) {
     case Primary::Symbol:
         return symbol()->compare(x.symbol());
     case Primary::Key: {
-        int r = key().kind() - x.key().kind();
+        long r = key().kind() - x.key().kind();
         if (r)
             return r;
     }
-    return key().key - x.key().key;
+    return static_cast<long>(key().key) - static_cast<long>(x.key().key);
     case Primary::Object: {
-        int r = object().type->compare(x.object().type);
+        long r = object().type->compare(x.object().type);
         if (r)
             return r;
     }
     return object().compare(x.object());
-    case Primary::Tuple: {
-        int r = tuple()[0].compare(x.tuple()[0]);
-        if (r)
-            return r;
-        if (r = static_cast<int>(tuple().size) - static_cast<int>(x.tuple().size))
-            return r;
-        for (uint i = 1; i < tuple().size; ++i)
-            if (r = tuple()[i].compare(x.tuple()[i]))
-                break;
-        return r;
-    }
-    break;
+    case Primary::Tuple:
+		return tuple().compare(x.tuple());
     }
     return 0;
 }
-bool var::depend(const var& x) const {
-	if (compare(x)) {
-		if (isTuple()) {
-			for (uint i = 0; i < tuple().size; ++i)
-				if (tuple()[i].depend(x))
-					return true;
-		}
+bool var::equal(const var& x) const {
+	if (primary() != x.primary())
 		return false;
+	switch (primary()) {
+	case Primary::Symbol:
+		return symbol() == x.symbol();
+	case Primary::Key:
+		return key().key == x.key().key;
+	case Primary::Object:
+		if (object().type != x.object().type)
+			return false;
+		return object().equal(x.object());
+	case Primary::Tuple:
+		return tuple().equal(x.tuple());
 	}
+	// Primary::Null
 	return true;
+}
+size_t var::hash() const {
+	switch (primary()) {
+	case Primary::Symbol:
+		return reinterpret_cast<size_t>(symbol());
+	case Primary::Key:
+		return static_cast<size_t>(key().key);
+	case Primary::Object:
+		return object().hash();
+	case Primary::Tuple:
+		return tuple().hash();
+	}
+	return 0;
+}
+void var::print(wostream& o) const {
+	switch (primary()) {
+	case Primary::Symbol:
+		symbol()->print(o);
+		return;
+	case Primary::Key:
+		key().print(o);
+		return;
+	case Primary::Object:
+		object().print(o);
+		return;
+	case Primary::Tuple:
+		tuple().print(o);
+		return;
+	}
 }
 Tuple* Tuple::clone() const {
     Tuple* r = mU::tuple(size);
     for (uint i = 0; i < size; ++i)
         r->tuple[i] = (*this)[i];
     return r;
+}
+long Tuple::compare(const Tuple& x) const {
+	long r = tuple[0].compare(x.tuple[0]);
+	if (r)
+		return r;
+	if (r = static_cast<long>(size) - static_cast<long>(x.size))
+		return r;
+	for (uint i = 1; i < size; ++i)
+		if (r = tuple[i].compare(x.tuple[i]))
+			break;
+	return r;
+}
+bool Tuple::equal(const Tuple& x) const {
+	if (size != x.size)
+		return false;
+	for (uint i = 0; i < size; ++i)
+		if (!tuple[i].equal(x.tuple[i]))
+			return false;
+	return true;
+}
+size_t Tuple::hash() const {
+	size_t _Val = 2166136261U;
+	size_t _First = 0;
+	size_t _Last = size;
+
+	for(; _First < _Last; ++_First)
+		_Val = 16777619U * _Val ^ tuple[_First].hash();
+	return (_Val);
+}
+void Tuple::print(wostream& o) const {
+	tuple[0].print(o);
+	o << L'[';
+	if (size > 1) {
+		tuple[1].print(o);
+		for (uint i = 2; i < size; ++i) {
+			o << L',';
+			tuple[i].print(o);
+		}
+	}
+	o << L']';
 }
 Key* key(wcs x) {
     std::pair<std::tr1::unordered_map<uint, var>::iterator, bool>
@@ -184,22 +287,12 @@ Key* key(uint x) {
         r.first->second = new Key((x << 1) + 1);
     return static_cast<Key*>(r.first->second.ptr);
 }
-Tuple* tuple(uint n) {
-    if (n == 0)
-        return 0;
-	size_t m = sizeof(Tuple) + (n - 1) * sizeof(var);
-    Tuple* r = reinterpret_cast<Tuple*>(new char[m]);
-    memset(r, 0, m);
-    r->id = Primary::Tuple;
-    r->size = n;
-    return r;
-}
 /*
 #ifndef _MSC_VER
-size_t wcslen(const wchar* x) {
-	size_t n = 0;
-	while(x[n++]);
-	return n;
+size_t wcslen(wcs s) {
+	wcs eos = s;
+	while( *eos++ ) ;
+	return( (size_t)(eos - s - 1) );
 }
 std::basic_istream<wchar> wcin(new std::stdio_istreambuf(stdin));
 std::basic_ostream<wchar> wcout(new std::stdio_ostreambuf(stdout));

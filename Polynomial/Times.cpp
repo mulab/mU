@@ -10,16 +10,17 @@ var Times(Kernel& k, const Tuple& x) {
 	std::vector<var> r;
 	uint pos = 1;
 	if (isNumber(x[pos])) {
-		var c = x[pos];
-		for (++pos; pos < x.size && isNumber(x[pos]); ++pos)
-			c = Number::Times(k, c.object(), x[pos].object());
+		var c = new Integer(1L);
+		for (; pos < x.size && isNumber(x[pos]); ++pos)
+			Number::mul(c, c.object(), x[pos].object());
 		if(c.isObject($.Rational))
-			mpq_canonicalize(cast<Rational>(c).mpq);
+			mpq_canonicalize(c.cast<Rational>().mpq);
 		if (pos == x.size || !cmpD(c.object(), 0.0))
 			return c;
 		if (cmpD(c.object(), 1.0))
 			r.push_back(c);
 	}
+	typedef std::multimap<var, var> MMap;
 	MMap mmap;
 	for (; pos < x.size; ++pos) {
 		var b = x[pos], e;
@@ -79,9 +80,12 @@ var Times(Kernel& k, const Tuple& x) {
 var Times(Kernel& k, const var& x, const var& y) {
 	if (!x || !y)
 		return null;
-	if (x.isObject() && y.isObject())
-		return Number::Times(k, x.object(), y.object());
-	var r = tuple($.Times, x, y);
+	var r;
+	if (x.isObject() && y.isObject()) {
+		Number::mul(r, x.object(), y.object());
+		return r;
+	}
+	r = tuple($.Times, x, y);
 	r = k.flatten($.Times, r.tuple());
 	std::sort(r.tuple().tuple + 1, r.tuple().tuple + r.tuple().size);
 	return Times(k, r.tuple());

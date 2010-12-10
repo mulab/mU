@@ -1,4 +1,3 @@
-#include <mU/Common.h>
 #include <mU/Kernel.h>
 
 namespace mU {
@@ -19,6 +18,12 @@ var Kernel::get(sym x, const Key& y) {
     }
     return $.Fail;
 }
+var Kernel::get(const Object& x, const Key& y) const {
+	if (y.kind() == Key::String) {
+		return x.type->get(y.toS());
+	}
+	return $.Fail;
+}
 var Kernel::get(const Tuple& x, const Key& y) {
     if (y.kind() == Key::Integer) {
         uint i = y.toUI();
@@ -38,7 +43,7 @@ var Kernel::get(const var& x, const Key& y) {
     case Primary::Symbol:
         return get(x.symbol(), y);
     case Primary::Object:
-        return x.object().type->get(y.toS());
+        return get(x.object(), y);
     case Primary::Tuple:
         return get(x.tuple(), y);
     }
@@ -51,8 +56,8 @@ var Kernel::get(const var& x, const Tuple& y) {
             t->tuple[0] = get(x, y[0].key());
             var r = rewrite(t);
             return value(r.tuple());
-        } else
-            return $.Fail;
+        }
+        return $.Fail;
     }
     var r = x;
     for (uint i = 1; i < y.size && r != $.Fail; ++i) {
@@ -60,9 +65,9 @@ var Kernel::get(const var& x, const Tuple& y) {
         Key* k;
         if (c.isObject()) {
 			if (c.object().type == $.Integer)
-				k = key(cast<Integer>(c).toUI());
+				k = key(c.cast<Integer>().toUI());
 			else if (c.object().type == $.String)
-				k = key(wstr(cast<String>(c).toS()));
+				k = key(wstr(c.cast<String>().toS()));
 			else
 				return $.Fail;
 		} else
@@ -73,13 +78,5 @@ var Kernel::get(const var& x, const Tuple& y) {
             r = slot(r, *k);
     }
     return r;
-}
-void Kernel::beginSelf(const var& x) {
-    mSelf.push_back(x);
-    owns[$.Self] = x;
-}
-void Kernel::endSelf() {
-    mSelf.pop_back();
-    owns[$.Self] = mSelf.back();
 }
 }
