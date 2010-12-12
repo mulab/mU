@@ -1,6 +1,5 @@
 #pragma once
 #include "Interface.h"
-#include "Kernel.h"
 
 #undef API
 #ifdef _MSC_VER

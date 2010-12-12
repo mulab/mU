@@ -26,13 +26,8 @@
 #include <algorithm>
 #include <functional>
 #include <iterator>
-#ifdef _MSC_VER
 #include <unordered_set>
 #include <unordered_map>
-#else
-#include <tr1/unordered_set>
-#include <tr1/unordered_map>
-#endif
 
 #undef CAPI
 #undef API
@@ -51,11 +46,17 @@
 #endif
 
 namespace mU {
-//#ifdef _MSC_VER
+typedef signed long sint;
+#ifndef _WIN32
+#define uint another_uint_type
+#endif
+typedef unsigned long uint;
+// #ifdef _MSC_VER
 typedef wchar_t wchar;
 typedef wint_t wint;
 #define __W(x) L ## x
 #define _W(x) __W(x)
+using std::wcscmp;
 using std::wcslen;
 using std::wcin;
 using std::wcout;
@@ -68,6 +69,7 @@ typedef char16_t wchar;
 typedef uint_least16_t wint;
 #define __W(x) u ## x
 #define _W(x) __W(x)
+API int wcscmp(const wchar*, const wchar*);
 API size_t wcslen(const wchar*);
 API extern std::basic_istream<wchar> wcin;
 API extern std::basic_ostream<wchar> wcout;
@@ -76,12 +78,6 @@ API extern std::basic_ostream<wchar> wclog;
 #endif
 */
 typedef const wchar* wcs;
-typedef signed long sint;
-#ifndef _WIN32
-#define uint another_uint_type
-#endif
-typedef unsigned long uint;
-
 using std::string;
 typedef std::basic_string<wchar> wstring;
 using std::istream;
@@ -102,14 +98,13 @@ using std::ofstream;
 typedef std::basic_ofstream<wchar> wofstream;
 using std::fstream;
 typedef std::basic_fstream<wchar> wfstream;
-
 using std::cin;
 using std::cout;
 using std::cerr;
-
 using std::ios;
 typedef std::basic_ios<wchar> wios;
 using std::endl;
+using namespace std::placeholders;
 
 class Var;
 namespace Primary {
@@ -126,16 +121,16 @@ API extern void(* const ruin[size])(Var*);
 }
 
 class var;
-class Symbol;
-class Key;
 class Object;
+class Key;
+class Symbol;
 class Tuple;
 API Tuple* tuple(uint);
 class Var {
 	friend class var;
-	friend class Symbol;
-	friend class Key;
 	friend class Object;
+	friend class Key;
+	friend class Symbol;	
 	friend class Tuple;
 	friend API Tuple* tuple(uint);
     uint id;
@@ -174,178 +169,6 @@ public:
 	}
 };
 
-inline uint wcs2uint(wcs x) {
-    return reinterpret_cast<uint>(x);
-}
-inline wcs uint2wcs(uint x) {
-    return reinterpret_cast<wcs>(x);
-}
-API extern std::tr1::unordered_set<wstring> wstrs;
-inline wcs wstr(wcs x) {
-    return wstrs.insert(x).first->c_str();
-}
-#define WSTR(x) wstr(_W(#x))
-typedef const Symbol* sym;
-API extern std::tr1::unordered_map<sym, wcs> names;
-API extern sym root, sys;
-class Symbol : public Var {
-public:
-	API static void ruin(Var*);
-    sym context;
-    explicit Symbol(sym $context = root) : Var(Primary::Symbol), context($context) {}
-	API wcs name() const;
-    API long compare(sym) const;
-    API sym clone(wcs = 0) const;
-    API sym symbol(wcs) const;
-#define SYM(x,y) x->symbol(WSTR(y))
-#define SYS(x) SYM(sys,x)
-    API var get(wcs) const;
-    API bool set(wcs, const var&) const;
-    API wstring toS(sym = 0) const;
-	API void print(wostream& o = wcout) const;
-private:
-    ~Symbol() {}
-}; 
-
-class Key : public Var {
-public:
-    API static void ruin(Var*);
-    uint key;
-    enum Kind {
-        String,
-        Integer
-    };
-    explicit Key(uint $key) : Var(Primary::Key), key($key) {}
-    Kind kind() const {
-        return static_cast<Kind>(key & 1);
-    }
-	wcs toS() const {
-        return uint2wcs(key);
-    }
-	uint toUI() const {
-        return (key >> 1);
-    }
-	operator bool() const {
-		return key != 0;
-	}
-	API void print(wostream& o = wcout) const;
-private:
-    ~Key() {}
-};
-
-class var {
-public:
-    Var* ptr;
-    var() : ptr(0) {}
-    var(const Var* $ptr) : ptr($ptr ? const_cast<Var*>($ptr)->copy() : 0) {}
-    var(const var& x) : ptr(x.ptr ? x.ptr->copy() : 0) {}
-    var& operator =(const Var* x) {
-        if (x)
-			const_cast<Var*>(x)->pass(ptr);
-		else
-			ptr = 0;
-        return *this;
-    }
-    var& operator =(const var& x) {
-		if (x.ptr)
-			x.ptr->pass(ptr);
-		else
-			ptr = 0;
-        return *this;
-    }
-    ~var() {
-        if (ptr) ptr->destroy();
-    }
-    uint ref() const {
-        return ptr ? ptr->ref() : 0;
-    }
-    Primary::Type primary() const {
-        return ptr ? ptr->primary() : Primary::Null;
-    }
-    bool isSymbol() const {
-        return primary() == Primary::Symbol;
-    }
-    bool isKey() const {
-        return primary() == Primary::Key;
-    }
-	bool isKey(Key::Kind x) const {
-		return isKey() && key().kind() == x;
-	}
-    bool isObject() const {
-        return primary() == Primary::Object;
-    }
-	bool isObject(sym) const;
-    bool isTuple() const {
-        return primary() == Primary::Tuple;
-    }
-	bool isTuple(const var&) const;
-	bool isTuple(sym) const;
-	template <class T>
-	T& cast() const {
-		return ptr->cast<T>();
-	}
-    sym symbol() const {
-        return static_cast<sym>(ptr);
-    }
-    Key& key() const {
-        return cast<Key>();
-    }
-    Object& object() const;
-    Tuple& tuple() const;
-    API var head() const;
-    API var clone() const;
-    API long compare(const var&) const;
-	API bool equal(const var&) const;
-    API size_t hash() const;
-	API void print(wostream& o = wcout) const;
-	operator bool() const {
-        return ptr != 0;
-    }
-    bool operator<(const var& $other) const {
-        return this->compare($other) < 0;
-    }
-    bool operator<=(const var& $other) const {
-        return this->compare($other) <= 0;
-    }
-    bool operator==(const var& $other) const {
-        return equal($other);
-    }
-    bool operator==(sym $other) const {
-        return ptr == $other;
-    }
-    bool operator!=(const var& $other) const {
-        return !equal($other);
-    }
-    bool operator!=(sym $other) const {
-        return ptr != $other;
-    }
-    bool operator>(const var& $other) const {
-        return this->compare($other) > 0;
-    }
-    bool operator>=(const var& $other) const {
-        return this->compare($other) >= 0;
-    }
-};
-API extern const var null;
-} 
-
-namespace std {
-#ifndef _MSC_VER
-namespace tr1 {
-#endif
-template<>
-class hash<mU::var>	: public unary_function<mU::var, size_t> {
-public:
-	size_t operator()(const mU::var& x) const {
-		return x.hash();
-	}
-};
-#ifndef _MSC_VER
-}
-#endif
-}
-
-namespace mU {
 inline bool islower(wchar x) {
 	return x > 96 && x < 123;
 }
@@ -377,16 +200,195 @@ inline void print(wcs x, wostream& o = wcout) {
 inline void print(const wstring& x, wostream& o = wcout) {
 	print(x.c_str(), o);
 }
+class Key : public Var {
+public:
+	API static void ruin(Var*);
+	uint key;
+	enum Kind {
+		Null = -1,
+		String,
+		Integer
+	};
+	explicit Key(uint $key) : Var(Primary::Key), key($key) {}
+	API long compare(const Key&) const;
+	Kind kind() const {
+		return key ? static_cast<Kind>(key & 1) : Null;
+	}
+	wcs toS() const {
+		return reinterpret_cast<wcs>(key);
+	}
+	uint toUI() const {
+		return (key >> 1);
+	}
+	operator bool() const {
+		return key != 0;
+	}
+	API void print(wostream& o = wcout) const;
+private:
+	~Key() {}
+};
+inline wostream& operator<<(wostream& o, const Key& x) {
+	x.print(o);
+	return o;
+}
+
+API extern std::unordered_set<wstring> wstrs;
+inline wcs wstr(wcs x) {
+	return wstrs.insert(x).first->c_str();
+}
+inline wcs wstr(const wstring& x) {
+	return wstr(x.c_str());
+}
+#define WSTR(x) wstr(_W(#x))
+typedef const Symbol* sym;
+API extern std::unordered_map<sym, wcs> names;
+API extern sym root, sys;
+class Symbol : public Var {
+public:
+	API static void ruin(Var*);
+    sym context;
+    explicit Symbol(sym $context = root) : Var(Primary::Symbol), context($context) {}
+	API wcs name() const;
+    API sym clone(wcs = 0) const;
+	API long compare(sym) const;
+    API sym symbol(wcs) const;
+#define SYM(x,y) x->symbol(WSTR(y))
+#define SYS(x) SYM(sys,x)
+    API var get(wcs) const;
+    API bool set(wcs, const var&) const;
+    API wstring toS(sym = 0) const;
+	API void print(wostream& o = wcout) const;
+private:
+    ~Symbol() {}
+};
+inline wostream& operator<<(wostream& o, sym x) {
+	x->print(o);
+	return o;
+}
+
+class var {
+public:
+    Var* ptr;
+    var() : ptr(0) {}
+    var(const Var* $ptr) : ptr($ptr ? const_cast<Var*>($ptr)->copy() : 0) {}
+    var(const var& x) : ptr(x.ptr ? x.ptr->copy() : 0) {}
+    var& operator =(const Var* x) {
+        if (x)
+			const_cast<Var*>(x)->pass(ptr);
+		else
+			ptr = 0;
+        return *this;
+    }
+    var& operator =(const var& x) {
+		if (x.ptr)
+			x.ptr->pass(ptr);
+		else
+			ptr = 0;
+        return *this;
+    }
+    ~var() {
+        if (ptr) ptr->destroy();
+    }
+    uint ref() const {
+        return ptr ? ptr->ref() : 0;
+    }
+    Primary::Type primary() const {
+        return ptr ? ptr->primary() : Primary::Null;
+    }
+	struct ahead {
+		API bool operator()(const var&, const var&) const;
+	};
+	bool isObject() const {
+		return primary() == Primary::Object;
+	}
+	bool isObject(sym) const;
+    bool isKey() const {
+        return primary() == Primary::Key;
+    }
+	bool isKey(Key::Kind x) const {
+		return isKey() && key().kind() == x;
+	}
+	bool isSymbol() const {
+		return primary() == Primary::Symbol;
+	}
+    bool isTuple() const {
+        return primary() == Primary::Tuple;
+    }
+	bool isTuple(const var&) const;
+	bool isTuple(sym) const;
+	template <class T>
+	T& cast() const {
+		return ptr->cast<T>();
+	}
+    sym symbol() const {
+        return static_cast<sym>(ptr);
+    }
+    Key& key() const {
+        return cast<Key>();
+    }
+    Object& object() const;
+    Tuple& tuple() const;
+    API var head() const;
+    API var clone() const;
+	API long compare(const var&) const;
+	API bool equal(const var&) const;
+    API size_t hash() const;
+	API void print(wostream& o = wcout) const;
+	operator bool() const {
+        return ptr != 0;
+    }
+    bool operator<(const var& $other) const {
+        return this->compare($other) < 0;
+    }
+    bool operator<=(const var& $other) const {
+        return this->compare($other) <= 0;
+    }
+    bool operator==(const var& $other) const {
+        return equal($other);
+    }
+    bool operator==(sym $other) const {
+        return ptr == $other;
+    }
+    bool operator!=(const var& $other) const {
+        return !equal($other);
+    }
+    bool operator!=(sym $other) const {
+        return ptr != $other;
+    }
+    bool operator>(const var& $other) const {
+        return this->compare($other) > 0;
+    }
+    bool operator>=(const var& $other) const {
+        return this->compare($other) >= 0;
+    }
+};
 inline wostream& operator<<(wostream& o, const var& x) {
 	x.print(o);
 	return o;
 }
-typedef std::tr1::unordered_map<uint, var> Context;
-API extern std::tr1::unordered_map<sym, Context> contexts;
-API extern std::tr1::unordered_map<uint, var> keys;
+API extern const var null;
+} 
+
+namespace std {
+template<>
+inline size_t 
+hash<mU::var>::operator()(
+#ifdef _MSC_VER
+const mU::var&
+#else
+mU::var
+#endif
+x) const {
+	return x.hash();
+}
+}
+
+namespace mU {
+API extern std::unordered_map<uint, var> keys;
 API Key* key(wcs);
 API Key* key(uint);
-
+typedef std::unordered_map<uint, var> Context;
+API extern std::unordered_map<sym, Context> contexts;
 class Tuple : public Var {
 public:
     API static void ruin(Var*);
@@ -406,6 +408,10 @@ public:
 private:
     ~Tuple() {}
 };
+inline wostream& operator<<(wostream& o, const Tuple& x) {
+	x.print(o);
+	return o;
+}
 inline bool var::isTuple(const var& x) const {
 	return isTuple() && tuple()[0] == x;
 }

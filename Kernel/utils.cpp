@@ -75,15 +75,20 @@ bool shell(wcs x) {
 }
 wstring mbs2wcs(const char* x) {
 	// wcstombs(r, x, strlen(x));
-	wostringstream oss;
+	/*wostringstream oss;
 	oss << x;
 	return oss.str();
+	*/
+	return wstring(x, x + strlen(x));
 }
 string wcs2mbs(wcs x) {
 	// wcstombs(r, x, wcslen(x));
+	/*
 	ostringstream oss;
 	oss << x;
 	return oss.str();
+	*/
+	return string(x, x + wcslen(x));
 }
 void _fdebugf(FILE * fp, const char * funcname, const char * filename, const int line, char *fmt, ...) {
 	char buf[1024];

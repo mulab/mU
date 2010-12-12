@@ -1,13 +1,9 @@
-#include <mU/Kernel.h>
 #include <mU/Interface.h>
 #ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 #else
 #include <dlfcn.h>
-#endif
-#ifdef _MSC_VER
-#pragma comment(lib,"Kernel.lib")
 #endif
 
 namespace mU {
@@ -122,7 +118,7 @@ bool cmethod(Kernel& k, void* m, const Tuple& x) {
     string s = cname(h.symbol()) + "Method" + csig(x);
     void* ptr = csym(m, s.c_str());
     if (ptr)
-        return set(k, x, new CMethod(reinterpret_cast<CMethod::Ptr>(ptr)));
+        return k.assign(x, new CMethod(reinterpret_cast<CMethod::Ptr>(ptr)));
     return false;
 }
 bool cinterface(Kernel& k, void* m, const Tuple& x) {

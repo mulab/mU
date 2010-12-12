@@ -77,7 +77,7 @@ CAPI void VALUE(Module)(Kernel& k, var& r, Tuple& x) {
 }
 CAPI void VALUE(With)(Kernel& k, var& r, Tuple& x) {
 	if (x.size == 3 && x[1].isTuple($.List)) {
-		typedef std::tr1::unordered_map<var, var> UMap;
+		typedef std::unordered_map<var, var> UMap;
 		UMap m;
 		for (uint i = 1; i < x[1].tuple().size; ++i) {
 			var c = x[1].tuple()[i];

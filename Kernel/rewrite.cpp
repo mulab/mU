@@ -5,7 +5,7 @@ Tuple* Kernel::rewrite(Tuple* x) {
     Tuple *r = 0;
     x->tuple[0] = eval(x->tuple[0]);
     if (x->tuple[0].isSymbol()) {
-        std::tr1::unordered_map<sym, Attribute>::const_iterator
+        std::unordered_map<sym, Attribute>::const_iterator
 			iter = attributes.find(x->tuple[0].symbol());
         if (iter != attributes.end()) {
 			r = x;
@@ -17,11 +17,12 @@ Tuple* Kernel::rewrite(Tuple* x) {
                         r->tuple[i] = eval(r->tuple[i]);
                 }
             }
-//             if (!iter->second.count($.SequenceHold))
-//                 if ((x = flatten($.Sequence, *r)) != r) {
-//                     r->discard();
-//                     r = x;
-//                 }
+            /*if (!iter->second.count($.SequenceHold))
+                if ((x = flatten($.Sequence, *r)) != r) {
+                    r->discard();
+                    r = x;
+                }
+				*/
             if (iter->second.count($.Flat))
                 if ((x = flatten(r->tuple[0].symbol(), *r)) != r) {
                     r->discard();
@@ -30,7 +31,7 @@ Tuple* Kernel::rewrite(Tuple* x) {
             if (iter->second.count($.Orderless))
                 std::sort(r->tuple + 1, r->tuple + r->size);
             if (iter->second.count($.Listable))
-                if ((x = thread(*r)) != r) {
+                if ((x = spread(*r)) != r) {
                     r->discard();
                     r = x;
                 }
@@ -40,14 +41,15 @@ Tuple* Kernel::rewrite(Tuple* x) {
 		r = x;
         for (uint i = 1; i < r->size; ++i)
             r->tuple[i] = eval(r->tuple[i]);
-//         if ((x = flatten($.Sequence, *r)) != r) {
-//             r->discard();
-//             r = x;
-//         }
+        /*if ((x = flatten($.Sequence, *r)) != r) {
+            r->discard();
+            r = x;
+        }
+		*/
     }
     return r;
 }
-Tuple* Kernel::thread(const Tuple& x) {
+Tuple* Kernel::spread(const Tuple& x) {
     uint m = 0;
     for (uint i = 1; i < x.size; ++i)
         if (x[i].isTuple() && x[i].tuple()[0] == $.List)

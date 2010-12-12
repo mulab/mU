@@ -19,6 +19,10 @@ CAPI void VALUE(FreeQ)(Kernel& k, var& r, Tuple& x) {
 	if (x.size == 3)
 		r = boolean(FreeQ(x[1], x[2]));
 }
+CAPI void VALUE(Hash)(Kernel& k, var& r, Tuple& x) {
+	if (x.size == 2)
+		r = new Integer((uint)x[1].hash());
+}
 CAPI void VALUE(Order)(Kernel& k, var& r, Tuple& x) {
 	if (x.size == 3) {
 		int c = x[1].compare(x[2]);

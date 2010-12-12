@@ -79,10 +79,8 @@ void add(var &r, const Object& x, const Object& y) {
 				mpf_get_prec(x.cast<Real>().mpf), 
 				mpf_get_prec(y.cast<Real>().mpf)));
 			else
-				r = new Real(std::min(x.cast<Real>().prec(), 
-				y.cast<Real>().prec()));
-			mpf_add(r.cast<Real>().mpf, x.cast<Real>().mpf, 
-				y.cast<Real>().mpf);
+				r = new Real(std::min(x.cast<Real>().prec(), y.cast<Real>().prec()));
+			mpf_add(r.cast<Real>().mpf, x.cast<Real>().mpf, y.cast<Real>().mpf);
 			return;
 		}
 	}

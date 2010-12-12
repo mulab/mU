@@ -2,7 +2,7 @@
 
 namespace mU {
 var Attributes(Kernel& k, sym x) {
-	std::tr1::unordered_map<sym, Kernel::Attribute>::const_iterator
+	std::unordered_map<sym, Kernel::Attribute>::const_iterator
 		iter = k.attributes.find(x);
 	if (iter != k.attributes.end())
 		return mU::list(iter->second.size(), iter->second.begin());
@@ -12,6 +12,14 @@ var Attributes(Kernel& k, sym x) {
 
 using namespace mU;
 
+CAPI void VALUE(Address)(Kernel& k, var& r, Tuple& x) {
+	if (x.size == 2) {
+		wostringstream oss;
+		oss << static_cast<const void*>(x[1].ptr);
+		r = new String(oss.str());
+		return;
+	}
+}
 CAPI void VALUE(Attributes)(Kernel& k, var& r, Tuple& x) {
 	if (x.size == 2 && x[1].isSymbol()) {
 		r = Attributes(k, x[1].symbol());
@@ -37,7 +45,7 @@ CAPI bool ASSIGN(Attributes)(Kernel& k, const Tuple& x, const var& y) {
 }
 CAPI void VALUE(ClearAttributes)(Kernel& k, var& r, Tuple& x) {
 	if (x.size == 3 && x[1].isSymbol()) {
-		std::tr1::unordered_map<sym, Kernel::Attribute>::iterator
+		std::unordered_map<sym, Kernel::Attribute>::iterator
 			iter = k.attributes.find(x[1].symbol());
 		if (iter == k.attributes.end())
 			return;

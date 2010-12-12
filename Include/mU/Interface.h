@@ -1,16 +1,5 @@
 #pragma once
-#include "Common.h"
-
-#undef API
-#ifdef _MSC_VER
-#ifdef INTERFACE_EXPORTS
-#define API __declspec(dllexport)
-#else
-#define API __declspec(dllimport)
-#endif
-#else
-#define API
-#endif
+#include "Kernel.h"
 
 namespace mU {
 API string cstr(wcs);
@@ -32,13 +21,6 @@ API bool cvalue(Kernel&, void*, sym);
 API bool cmethod(Kernel&, void*, const Tuple&);
 API bool cinterface(Kernel&, void*, const Tuple&);
 
-/*!
-* \brief
-* C赋值函数
-*
-* \remarks
-* CAssign
-*/
 class CAssign : public Assign {
 public:
     typedef bool(*Ptr)(Kernel&, const Tuple&, const var&);
@@ -51,19 +33,11 @@ protected:
 };
 #define CASSIGN(p,f) p##_##f##_##Assign
 
-/*!
-* \brief
-* C求值函数
-*
-* \remarks
-* CValue
-*/
 struct CValue : public Value {
 public:
     typedef void(*Ptr)(Kernel&, var&, Tuple&);
     CValue(Ptr $ptr) : ptr($ptr) {}
     virtual var operator()(Kernel& k, Tuple& x) {
-        // 直接返回var则warning c4190
         var r = &x;
         ptr(k, r, x);
         return r;
@@ -73,13 +47,6 @@ protected:
 };
 #define CVALUE(p,f) p##_##f##_##Value
 
-/*!
-* \brief
-* C方法
-*
-* \remarks
-* CMethod
-*/
 class CMethod : public Method {
 public:
     //(Kernel& k, var& r, Tuple& x, var self, sym local)
@@ -90,11 +57,4 @@ protected:
     Ptr ptr;
 };
 #define CMETHOD(p,f,sig) p##_##f##_##Method##sig
-
-class CMatch;
-API Match* matchC(Kernel&, const var&);
-API Match* ruleC(Kernel&, const var&, const var&);
-API Match* testC(Kernel&, const var&, const var&);
-API Match* listC(Kernel&, const Tuple&);
-API bool set(Kernel&, const Tuple&, const var&);
 }

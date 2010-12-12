@@ -12,21 +12,21 @@ struct Enum {
 
 	sym PrimaryName[Primary::size + 1];
 	sym
-	Null, Symbol, Key, Object, Tuple;
+	Null, Object, Key, Symbol, Tuple;
 
-    std::tr1::unordered_set<sym> Attributes;
+    std::unordered_set<sym> Attributes;
     sym
     Constant, Flat, HoldAll, HoldAllComplete, HoldFirst,
     HoldRest, Listable, Locked, NHoldAll, NHoldFirst,
     NHoldRest, NumericFunction, OneIdentity, Orderless, Protected,
     ReadProtected, SequenceHold, Stub, Temporary;
 
-    std::tr1::unordered_set<sym> Patterns;
+    std::unordered_set<sym> Patterns;
     sym
     Optional, Condition, PatternTest, Blank, Pattern, Rule, RuleDelayed,
 	Production, Alternatives;
 	
-	std::tr1::unordered_set<sym> Objects;
+	std::unordered_set<sym> Objects;
 	sym
     Integer, Rational, Real, String,
 	Value, Assign, Method, Delayed, Match;
@@ -44,7 +44,13 @@ inline sym boolean(bool x) {
     return x ? $.True : $.False;
 }
 inline sym kind(const Key& x) {
-	return x.kind() ? $.Integer : $.String;
+	switch (x.kind()) {
+	case  Key::String:
+		return $.String;
+	case Key::Integer:
+		return $.Integer;
+	}
+	return $.Null;
 }
 template <class Iter>
 inline Tuple* list(uint size, Iter begin, const var& h = $.List) {
@@ -74,7 +80,9 @@ inline bool isNumber(const Object& x) {
 inline bool isNumber(const var& x) {
 	return x.isObject() && isNumber(x.object());
 }
-
+inline bool lessPrimary(const var& x, const var& y) {
+	return x.primary() < y.primary();
+}
 struct Pos {
 	Pos* prev;
 	const var* ptr;
@@ -111,13 +119,7 @@ struct Pos {
 	}
 };
 
-/*!
-* \brief
-* 整数
-*
-* \remarks
-* mpz_t
-*/
+API size_t mpz_hash(mpz_srcptr);
 class Integer : public Object {
 public:
     mpz_t mpz;
@@ -133,7 +135,7 @@ public:
 		return mpz_cmp(mpz, x.cast<Integer>().mpz);
 	}
 	virtual size_t hash() const {
-		return static_cast<size_t>(mpz_get_ui(mpz));
+		return mpz_hash(mpz);
 	}
 	API virtual void print(wostream&) const;
     Integer() : Object($.Integer) {
@@ -162,13 +164,7 @@ public:
     }
 };
 
-/*!
-* \brief
-* 有理数
-*
-* \remarks
-* mpq_t
-*/
+API size_t mpq_hash(mpq_srcptr);
 class Rational : public Object {
 public:
     mpq_t mpq;
@@ -184,7 +180,7 @@ public:
 		return mpq_cmp(mpq, x.cast<Rational>().mpq);
 	}
 	virtual size_t hash() const {
-		return static_cast<size_t>(mpq_get_d(mpq));
+		return mpq_hash(mpq);
 	}
 	API virtual void print(wostream&) const;
     Rational() : Object($.Rational) {
@@ -213,14 +209,7 @@ public:
 
 #define LOG_2_10 3.3219280948873623478703194294894
 #define LOG_10_2 0.3010299956639811952137388947245
-
-/*!
-* \brief
-* 实数
-*
-* \remarks
-* mpf_t
-*/
+API size_t mpf_hash(mpf_srcptr);
 class Real : public Object {
 public:
     mpf_t mpf;
@@ -228,7 +217,7 @@ public:
         mpf_clear(mpf);
     }
     virtual Real* clone() const {
-        Real* r = new Real(mpf_get_prec(mpf));
+        Real* r = new Real(prec());
         mpf_set(r->mpf, mpf);
         return r;
     }
@@ -236,7 +225,7 @@ public:
 		return mpf_cmp(mpf, x.cast<Real>().mpf);
 	}
 	virtual size_t hash() const {
-		return static_cast<size_t>(mpf_get_ui(mpf));
+		return mpf_hash(mpf);
 	}
 	API virtual void print(wostream&) const;
     Real(uint n = 0) : Object($.Real) {
@@ -276,7 +265,6 @@ public:
         return mpf_get_d(mpf);
     }
 };
-
 inline double toD(const Object& x) {
 	if (x.type == $.Integer)
 		return x.cast<Integer>().toD();
@@ -298,20 +286,11 @@ inline int cmpD(const Object& x, double a, double b = 1.0) {
 	return 0;
 }
 
-/*!
-* \brief
-* 字符串
-*
-* \remarks
-* wstring
-*/
 class String : public Object {
 public:
     wstring str;
     virtual String* clone() const {
-        String* r = new String();
-        r->str = str;
-        return r;
+        return new String(str);
     }
 	virtual int compare(const Object& x) const {
 		return str.compare(static_cast<const String&>(x).str);
@@ -336,42 +315,5 @@ class Tag : public Object {
 public:
 	explicit Tag(sym $type, const var& $data) : Object($type), data($data) {}
 	var data;
-};
-template <class T>
-inline var tag(const T& x) {
-	return x.cast<Tag>().data;
-}
-
-class Kernel;
-
-//重载assign实现f[x1]=y,f[x1][x2]=y等
-//重载value实现f[x1],f[x1][x2]等
-struct Assign : public Object {
-	Assign() : Object($.Assign) {}
-	virtual bool operator()(Kernel& k, const Tuple& x, const var& y) {
-		return false;
-	}
-};
-
-struct Value : public Object {
-	Value() : Object($.Value) {}
-	virtual var operator()(Kernel& k, Tuple& x) {
-		return &x;
-	}
-};
-
-struct Method : public Object {
-	Method() : Object($.Method) {}
-	virtual var operator()(Kernel& k) {
-		return null;
-	}
-};
-
-class Match : public Object {
-public:
-	Match() : Object($.Match) {}
-	virtual bool operator()(Kernel& k, var& r, const var& x) {
-		return false;
-	}
 };
 }

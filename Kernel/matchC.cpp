@@ -1,5 +1,4 @@
-#include <mU/Kernel.h>
-#include "Match.h"
+#include <mU/Match.h>
 
 namespace mU {
 namespace {
@@ -40,10 +39,10 @@ struct MatchC {
 		mMatch->args.push_back(r);
 		for (uint i = 1; i < x.size; ++i) {
 			if (isCertain(x[i]))
-				r->certains.insert(x[i]);
+				r->mset.insert(x[i]);
 			else
 				compile(x[i]);
-		}		
+		}
 	}
 	void sequence(const var& x) {
 		mMatch->codes.push_back(CMatch::SEQUENCE);
@@ -53,12 +52,12 @@ struct MatchC {
 		mMatch->codes.push_back(CMatch::RULE);
 		mMatch->args.push_back(x);
 	}
-	void list(const Tuple& x) {
-		mMatch->codes.push_back(CMatch::LIST);
+	void serial(const Tuple& x) {
+		mMatch->codes.push_back(CMatch::SERIAL);
 		Tuple* r = tuple(x.size - 1);
 		mMatch->args.push_back(r);
 		for (uint i = 1; i < x.size; ++i)
-			r->tuple[i - 1] = matchC(mKernel, x[i]);		
+			r->tuple[i - 1] = cmatch(mKernel, x[i]);		
 	}
 	void match(const Match& x) {
 		mMatch->codes.push_back(CMatch::MATCH);
@@ -78,7 +77,7 @@ struct MatchC {
 				}
 			} else {
 				if (h == $.Alternatives) {
-					list(x);
+					serial(x);
 					return;
 				}
 				if (h == $.Production) {
@@ -117,7 +116,7 @@ struct MatchC {
 			mFlat.push(0);
 			mMatch->codes.push_back(CMatch::PUSH);
 			terminal(h);
-			std::tr1::unordered_map<sym, Kernel::Attribute>::const_iterator
+			std::unordered_map<sym, Kernel::Attribute>::const_iterator
 				iter = mKernel.attributes.find(h.symbol());
 			if (iter != mKernel.attributes.end()) {
 				if (iter->second.count($.Flat))
@@ -159,31 +158,26 @@ struct MatchC {
 	}
 };
 }
-Match* matchC(Kernel& k, const var& x) {
+Match* cmatch(Kernel& k, const var& x) {
 	MatchC m(k);
 	m.compile(x);
 	return m.mMatch;
 }
-Match* ruleC(Kernel& k, const var& x, const var& y) {
+Match* crule(Kernel& k, const var& x, const var& y) {
 	MatchC m(k);
 	m.compile(x);
 	m.rule(y);
 	return m.mMatch;
 }
-Match* testC(Kernel& k, const var& x, const var& y) {
+Match* ctest(Kernel& k, const var& x, const var& y) {
 	MatchC m(k);
 	m.compile(x);
 	m.test(y);
 	return m.mMatch;
 }
-Match* listC(Kernel& k, const Tuple& x) {
+Match* cserial(Kernel& k, const Tuple& x) {
 	MatchC m(k);
-	m.list(x);
+	m.serial(x);
 	return m.mMatch;
-}
-bool set(Kernel& k, const Tuple& x, const var& y) {
-	if (isCertain(x))
-		return k.assign(x, y);
-	return k.rule(x, y ? ruleC(k, &x, y) : reinterpret_cast<const Match*>(0));
 }
 }

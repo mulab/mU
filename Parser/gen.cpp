@@ -1,5 +1,9 @@
 #include <mU/Kernel.h>
 #include <mU/Parser.h>
+#ifdef _MSC_VER
+#pragma comment(lib,"Kernel.lib")
+#endif
+#include <mU/utils.h>
 
 namespace mU {
 var Parser::eval() {
@@ -7,24 +11,18 @@ var Parser::eval() {
     while (mLookahead != EOI) {
         try {
             gen(parse());
-        } catch (std::exception& e) {
-            wcerr
-            << L"Parse:"
-            << e.what()	<< L"#("
-            << lineno << L','
-            << column << L')' << endl;
-            return r;
+        } catch (std::exception&) {
+            kernel.logging(__FUNCTIONW__) << _W("Parse error at line ") << lineno 
+				<< _W(" column ") << column << _W(".") << endl;
+            throw;
         }
         try {
             r = kernel.eval(code());
-        } catch (std::exception& e) {
-            wcerr
-            << L"Eval:"
-            << e.what()	<< L"#("
-            << lineno << L','
-            << column << L')' << endl;
+        } catch (std::exception&) {
+			kernel.logging(__FUNCTIONW__) << _W("Eval error at line ") << lineno 
+				<< _W(" column ") << column << _W(".") << endl;
 			kernel.start();
-            return r;
+			throw;
         }
     }
     return r;
@@ -210,7 +208,19 @@ void Parser::gen(uint m) {
         }
 			break;
 		case instr_key: {
-			emit(key(uint2wcs(0)));
+			emit(key(reinterpret_cast<wcs>(0)));
+        }
+			break;
+        }
+        break;
+	case tag_dollar:
+        switch (n.value) {
+        case -1: {
+            emit(kernel.symbol(mNote[m]));
+		}
+			break;
+       case instr_symbol: {
+			emit(kernel.context());
         }
 			break;
         }

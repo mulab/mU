@@ -1,20 +1,50 @@
 #include <mU/Object.h>
 
 namespace mU {
-Tuple* tuple(uint n) {
-    if (n == 0)
-        return 0;
-	size_t m = sizeof(Tuple) + (n - 1) * sizeof(var);
-    Tuple* r = reinterpret_cast<Tuple*>(new char[m]);
-    memset(r, 0, m);
-    r->id = Primary::Tuple;
-    r->size = n;
-    return r;
+void Key::ruin(Var* x) {
+	delete static_cast<Key*>(x);
 }
-std::tr1::unordered_set<wstring> wstrs;
-std::tr1::unordered_map<sym, wcs> names;
-std::tr1::unordered_map<sym, Context> contexts;
-std::tr1::unordered_map<uint, var> keys;
+long Key::compare(const Key& x) const {
+	long r = kind() - x.kind();
+	if (r)
+		return r;
+	switch (kind()) {
+	case Key::Integer:
+		return toUI() - x.toUI();
+	case Key::String:
+		return wcscmp(toS(), x.toS());
+	}
+	return 0;
+}
+void Key::print(wostream& o) const {
+	o << _W('#');
+	switch (kind()) {
+	case Key::Integer:
+		o << toUI();
+		break;
+	case Key::String:
+		mU::print(toS(), o);
+		break;
+	}
+}
+std::unordered_map<uint, var> keys;
+Key* key(wcs x) {
+	std::pair<std::unordered_map<uint, var>::iterator, bool>
+		r =	keys.insert(std::make_pair(reinterpret_cast<uint>(x), null));
+	if (r.second)
+		r.first->second = new Key(reinterpret_cast<uint>(x));
+	return static_cast<Key*>(r.first->second.ptr);
+}
+Key* key(uint x) {
+	std::pair<std::unordered_map<uint, var>::iterator, bool>
+		r = keys.insert(std::make_pair((x << 1) + 1, null));
+	if (r.second)
+		r.first->second = new Key((x << 1) + 1);
+	return static_cast<Key*>(r.first->second.ptr);
+}
+std::unordered_set<wstring> wstrs;
+std::unordered_map<sym, wcs> names;
+std::unordered_map<sym, Context> contexts;
 sym root = 0, sys;
 const var null(0);
 void Symbol::ruin(Var* x) {
@@ -26,34 +56,43 @@ void Symbol::ruin(Var* x) {
     delete r;
 }
 wcs Symbol::name() const {
-    std::tr1::unordered_map<sym, wcs>::const_iterator
+    std::unordered_map<sym, wcs>::const_iterator
     iter = names.find(this);
     if (iter != names.end())
         return iter->second;
     return 0;
 }
-long Symbol::compare(sym x) const {
-    if (!this)
-        return x ? -1L : 0L;
-    if (!x)
-        return 1L;
-    int r = context->compare(x->context);
-    if (r)
-        return r;
-    return reinterpret_cast<long>(this) - reinterpret_cast<long>(x);
-}
 sym Symbol::clone(wcs w) const {
     sym r = new Symbol(this);
     if (w) {
         names[r] = w;
-        contexts[this][wcs2uint(w)] = r;
+        contexts[this][reinterpret_cast<uint>(w)] = r;
     } else
         contexts[this][reinterpret_cast<uint>(r)] = r;
     return r;
 }
+long Symbol::compare(sym x) const {
+	if (!this)
+		return x ? -1L : 0L;
+	if (!x)
+		return 1L;
+	int r = context->compare(x->context);
+	if (r)
+		return r;
+	wcs a = name();
+	wcs b = x->name();
+	if (!a)
+		return b ? -1L : 0L;
+	if (!b)
+		return 1L;
+	return wcscmp(a, b);
+}
+void Symbol::print(wostream& o) const {
+	mU::print(toS(), o);
+}
 sym Symbol::symbol(wcs x) const {
     std::pair<Context::iterator, bool>
-    r = contexts[this].insert(std::make_pair(wcs2uint(x), null));
+    r = contexts[this].insert(std::make_pair(reinterpret_cast<uint>(x), null));
     if (!r.second)
         return r.first->second.isSymbol() ? r.first->second.symbol() : 0;
     sym t = clone(x);
@@ -61,11 +100,11 @@ sym Symbol::symbol(wcs x) const {
     return t;
 }
 var Symbol::get(wcs x) const {
-    std::tr1::unordered_map<sym, Context>::const_iterator
+    std::unordered_map<sym, Context>::const_iterator
     iter = contexts.find(this);
     if (iter != contexts.end()) {
         Context::const_iterator
-        iter2 = iter->second.find(wcs2uint(x));
+        iter2 = iter->second.find(reinterpret_cast<uint>(x));
         if (iter2 != iter->second.end())
             return iter2->second;
     }
@@ -73,9 +112,9 @@ var Symbol::get(wcs x) const {
 }
 bool Symbol::set(wcs x, const var& y) const {
     if (y)
-        contexts[this][wcs2uint(x)] = y;
+        contexts[this][reinterpret_cast<uint>(x)] = y;
     else
-        contexts[this].erase(wcs2uint(x));
+        contexts[this].erase(reinterpret_cast<uint>(x));
     return true;
 }
 wstring Symbol::toS(sym x) const {
@@ -96,17 +135,8 @@ wstring Symbol::toS(sym x) const {
 	}
 	return s;
 }
-void Key::ruin(Var* x) {
-    delete static_cast<Key*>(x);
-}
 void Object::ruin(Var* x) {
 	delete static_cast<Object*>(x);
-}
-void Tuple::ruin(Var* x) {
-    Tuple* t = static_cast<Tuple*>(x);
-    for (uint i = 0; i < t->size; ++i)
-        t->tuple[i].~var();
-    delete reinterpret_cast<char*>(x);
 }
 namespace Primary {
 void(* const ruin[size])(Var*) = {
@@ -116,23 +146,29 @@ void(* const ruin[size])(Var*) = {
     Tuple::ruin
 };
 }
-void Symbol::print(wostream& o) const {
-	mU::print(toS(), o);
-}
-void Key::print(wostream& o) const {
-	if (key) {
-		switch (kind()) {
-		case Key::String: {
-			o << _W('#');
-			mU::print(toS(), o);
-		}
-		break;
-		case Key::Integer:
-			o << _W('#') << toUI();
-			break;
-		}
-	} else
-		o << _W('#');
+bool var::ahead::operator()(const var& x, const var& y) const {
+   long r = x.primary() - y.primary();
+    if (r)
+        return r < 0;
+    switch (x.primary()) {
+    case Primary::Object:
+        if (x.object().type == y.object().type)
+			return x.object().compare(y.object()) < 0;
+		return x.object().type < y.object().type;
+	case Primary::Key:
+	case Primary::Symbol:
+		return x.ptr < y.ptr;
+    case Primary::Tuple: {
+		r = x.tuple().size - y.tuple().size;
+		if (r)
+			return r < 0;
+		for (uint i = 0; i < x.tuple().size; ++i)
+			if ((*this)(x.tuple()[i], y.tuple()[i]))
+				return true;
+	}
+		return false;						 
+    }
+    return 0;	
 }
 var var::head() const {
     switch (primary()) {
@@ -163,18 +199,14 @@ long var::compare(const var& x) const {
     switch (primary()) {
     case Primary::Symbol:
         return symbol()->compare(x.symbol());
-    case Primary::Key: {
-        long r = key().kind() - x.key().kind();
-        if (r)
-            return r;
-    }
-    return static_cast<long>(key().key) - static_cast<long>(x.key().key);
+    case Primary::Key:
+        return key().compare(x.key());
     case Primary::Object: {
         long r = object().type->compare(x.object().type);
         if (r)
             return r;
     }
-    return object().compare(x.object());
+		return object().compare(x.object());
     case Primary::Tuple:
 		return tuple().compare(x.tuple());
     }
@@ -227,6 +259,12 @@ void var::print(wostream& o) const {
 		return;
 	}
 }
+void Tuple::ruin(Var* x) {
+	Tuple* t = static_cast<Tuple*>(x);
+	for (uint i = 0; i < t->size; ++i)
+		t->tuple[i].~var();
+	delete reinterpret_cast<char*>(x);
+}
 Tuple* Tuple::clone() const {
     Tuple* r = mU::tuple(size);
     for (uint i = 0; i < size; ++i)
@@ -237,7 +275,7 @@ long Tuple::compare(const Tuple& x) const {
 	long r = tuple[0].compare(x.tuple[0]);
 	if (r)
 		return r;
-	if (r = static_cast<long>(size) - static_cast<long>(x.size))
+	if (r = size - x.size)
 		return r;
 	for (uint i = 1; i < size; ++i)
 		if (r = tuple[i].compare(x.tuple[i]))
@@ -253,42 +291,49 @@ bool Tuple::equal(const Tuple& x) const {
 	return true;
 }
 size_t Tuple::hash() const {
-	size_t _Val = 2166136261U;
-	size_t _First = 0;
-	size_t _Last = size;
+	size_t r = 2166136261U;
+	const var* iter = tuple;
+	const var* end = tuple + size;
 
-	for(; _First < _Last; ++_First)
-		_Val = 16777619U * _Val ^ tuple[_First].hash();
-	return (_Val);
+	while (iter < end) {
+		r = 16777619U * r ^ iter->hash();
+		++iter;
+	}
+	return r;
 }
 void Tuple::print(wostream& o) const {
 	tuple[0].print(o);
-	o << L'[';
+	o << _W('[');
 	if (size > 1) {
 		tuple[1].print(o);
 		for (uint i = 2; i < size; ++i) {
-			o << L',';
+			o << _W(',');
 			tuple[i].print(o);
 		}
 	}
-	o << L']';
+	o << _W(']');
 }
-Key* key(wcs x) {
-    std::pair<std::tr1::unordered_map<uint, var>::iterator, bool>
-		r =	keys.insert(std::make_pair(wcs2uint(x), null));
-    if (r.second)
-        r.first->second = new Key(wcs2uint(x));
-    return static_cast<Key*>(r.first->second.ptr);
-}
-Key* key(uint x) {
-    std::pair<std::tr1::unordered_map<uint, var>::iterator, bool>
-		r = keys.insert(std::make_pair((x << 1) + 1, null));
-    if (r.second)
-        r.first->second = new Key((x << 1) + 1);
-    return static_cast<Key*>(r.first->second.ptr);
+Tuple* tuple(uint n) {
+	if (n == 0)
+		return 0;
+	size_t m = sizeof(Tuple) + (n - 1) * sizeof(var);
+	Tuple* r = reinterpret_cast<Tuple*>(new char[m]);
+	memset(r, 0, m);
+	r->id = Primary::Tuple;
+	r->size = n;
+	return r;
 }
 /*
 #ifndef _MSC_VER
+int wcscmp(wcs a, wcs b) {
+	int r;
+	while (*a && *b)
+		if (r = *a - *b)
+			return r;
+	if (!*a)
+		return *b ? -1L : 0L;
+	return *b;
+}
 size_t wcslen(wcs s) {
 	wcs eos = s;
 	while( *eos++ ) ;

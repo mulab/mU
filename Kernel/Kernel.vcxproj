@@ -101,8 +101,11 @@
     <ClCompile Include="Common.cpp" />
     <ClCompile Include="eval.cpp" />
     <ClCompile Include="get.cpp" />
+    <ClCompile Include="Interface.cpp" />
     <ClCompile Include="Kernel.cpp" />
     <ClCompile Include="match.cpp" />
+    <ClCompile Include="matchC.cpp" />
+    <ClCompile Include="matchE.cpp" />
     <ClCompile Include="print.cpp" />
     <ClCompile Include="rewrite.cpp" />
     <ClCompile Include="set.cpp" />
@@ -113,7 +116,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Include\mU\Common.h" />
+    <ClInclude Include="..\Include\mU\Interface.h" />
     <ClInclude Include="..\Include\mU\Kernel.h" />
+    <ClInclude Include="..\Include\mU\Match.h" />
     <ClInclude Include="..\Include\mU\Object.h" />
     <ClInclude Include="..\Include\mU\utils.h" />
     <ClInclude Include="..\Include\mU\var.h" />

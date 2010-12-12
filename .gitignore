@@ -2,8 +2,6 @@
 /Debug
 /Function/Debug
 /Function/Release
-/Interface/Debug
-/Interface/Release
 /ipch
 /Lib
 /mU/Release
@@ -34,7 +32,6 @@
 /Combinatorics/.svn
 /Include/.svn
 /Include/mU/.svn
-/Interface/.svn
 /Kernel/.svn
 /mU/.svn
 /Number/.svn
@@ -47,3 +44,5 @@
 /build
 *.project
 *.cproject
+/Link/.svn
+/Link/Ecl/.svn

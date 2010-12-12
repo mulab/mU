@@ -1,11 +1,9 @@
-#include <mU/Kernel.h>
-#include <mU/Parser.h>
 #include <mU/Interface.h>
+#include <mU/Parser.h>
 #include <mU/utils.h>
 #ifdef _MSC_VER
 #pragma comment(lib,"Kernel.lib")
 #pragma comment(lib,"Parser.lib")
-#pragma comment(lib,"Interface.lib")
 #endif
 
 using namespace mU;
@@ -28,21 +26,32 @@ inline void newline() {
 }
 inline void open(Parser& p, wifstream& f, const char* s) {
 	f.open(s);
-	if (f) {
+	if (!f)
+		return;
+	try {
 		p.start(f);
 		p.eval();
-		f.close();
+	} catch (std::exception& e) {
+		wcerr << _W("Error occurred while eval ") << s << _W(", ")
+			<< e.what() << _W("...") << endl;
 	}
+	f.close();
 }
 int main(int argc, char *argv[]) {
-	setlocale(LC_ALL, "");
-	wcin.imbue(std::locale(""));
-	wcout.imbue(std::locale(""));
+#ifdef _MSC_VER
+	try {
+		setlocale(LC_ALL, "");
+		wcin.imbue(std::locale(""));
+		wcout.imbue(std::locale(""));
+	} catch (std::exception& e) {
+		wcerr << _W("Error occurred while set locale, ") << e.what() << _W("...") << endl;
+	}
+#endif
 	// wcerr.rdbuf(0);
 
 	Kernel k;
 	if (!cinstall(k, "system")) {
-    	wcerr << _W("system library not found, quit...") << endl;
+    	wcerr << _W("System library not found, quit...") << endl;
         return -1;
     }
 
@@ -92,7 +101,6 @@ int main(int argc, char *argv[]) {
             prompt();
             continue;
         }
-        buf.clear();
         try {
             r = k.eval(p.code());
             if (r) {
@@ -100,10 +108,11 @@ int main(int argc, char *argv[]) {
                 r = null;
             }
         } catch (std::exception& e) {
-            wcerr << _W("Error occurred while eval!") << endl;
-			wcerr << e.what() << endl;
+            wcerr << _W("Error occurred while eval ") << buf << _W(", ")
+				<< e.what() << _W("...") << endl;
 			k.start();
         }
+		buf.clear();
         prompt();
     }
     return 0;

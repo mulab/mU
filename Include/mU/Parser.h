@@ -25,7 +25,7 @@ public:
 
 	enum Tag {
 		tag_invalid = -1, tag_sequence, tag_expression, tag_suffix, tag_primary,
-		tag_brace, tag_backquote, tag_symbol, tag_blank, tag_pound
+		tag_brace, tag_backquote, tag_symbol, tag_blank, tag_pound, tag_dollar
 	};
 	API void start(wistream&);
 	API uint sequence(Token = COMMA);
@@ -37,6 +37,7 @@ public:
     API uint symbol();
 	API uint blank();
 	API uint pound();
+	API uint dollar();
     API uint parse();
 	
 	uint lineno;
@@ -65,8 +66,8 @@ protected:
         int value;
     };
     std::vector<Node> mNode;
-    std::tr1::unordered_map<uint, std::vector<uint> > mChild;
-    std::tr1::unordered_map<uint, wcs> mNote;
+    std::unordered_map<uint, std::vector<uint> > mChild;
+    std::unordered_map<uint, wcs> mNote;
     std::vector<uint> mOper;
     std::vector<uint> mOprn;
     struct Frame {

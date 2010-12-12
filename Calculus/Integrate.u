@@ -7,9 +7,8 @@ Begin[`Integrate]
 `A[f_ + g_, x_] :> `A[f, x] + `A[g, x],
 `A[a_ f_, x_] :> (a) `A[f, x] /; FreeQ[a, x],
 `A[a_, x_] :> a x /; FreeQ[a, x],
-`A[1/x_,x_]:=Log[x],
-`A[x_^n_, x_] :> x^(1 + n)/(1 + n) /; FreeQ[n, x],
-`A[E^x_, x_] :> E^x,
+`A[x_^n_, x_] :> If[n === -1, Log[x], x^(1 + n)/(1 + n)] /; FreeQ[n, x],
+`A[System`E^x_, x_] :> System`E^x,
 `A[a_^x_, x_] :> a^x/Log[a] /; FreeQ[a, x],
 `A[Sin[x_], x_] :> -Cos[x],
 `A[Cos[x_], x_] :> Sin[x],
@@ -33,7 +32,6 @@ Begin[`Integrate]
 `A[Tanh[x_], x_] :> Log[Cosh[x]],
 `A[Coth[x_], x_] :> Log[Sinh[x]],
 `A[Csch[x_], x_] :> -Log[2 Cosh[x/2]] + Log[2 Sinh[x/2]],
-`A[1/(1 - x_^2), x_] :> 1/2 Log[-1 - x] - 1/2 Log[-1 + x],
 `A[Sqrt[b_ + a_ x_], x_] :> (2 (b + a x)^(3/2))/(3 a) /; FreeQ[{a, b}, x],
 `A[x_ Sqrt[b_ + a_ x_], x_] :> (2 Sqrt[b + a x] (-2 b^2 + a b x + 3 a^2 x^2))/(15 a^2) /; FreeQ[{a, b}, x],
 `A[Sqrt[x_ + Sqrt[x_]], x_] :> 1/12 Sqrt[Sqrt[x] + x] (-3 + 2 Sqrt[x] + 8 x) + 1/8 Log[1 + 2 Sqrt[x] + 2 Sqrt[Sqrt[x] + x]],
@@ -41,7 +39,7 @@ Begin[`Integrate]
 `A[f_[a_ x_ + b_], x_] :> `A[f[a x + b],a x + b] / a /; FreeQ[{a, b}, x]
 }
 
-`Rules = ListC@@`Rules
+`Rules = CSerial@@`Rules
 Integrate[f_,x_] := `A[f, x] //. `Rules
 
 End[]

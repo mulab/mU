@@ -1,9 +1,10 @@
+#include <mU/utils.h>
 #include <mU/Grammar.h>
 #include <mU/System.h>
 
 namespace mU {
 bool Output(Kernel& k, const var& x, wcs s) {
-	wofstream f(cstr(s).c_str());
+	wofstream f(wcs2mbs(s).c_str());
 	if (f) {
 		println(k, x, f);
 		f.close();
@@ -12,7 +13,7 @@ bool Output(Kernel& k, const var& x, wcs s) {
 	return false;
 }
 bool OutputAppend(Kernel& k, const var& x, wcs s) {
-	wofstream f(cstr(s).c_str(),ios::app);
+	wofstream f(wcs2mbs(s).c_str(), ios::app);
 	if (f) {
 		println(k, x, f);
 		f.close();

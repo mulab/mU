@@ -98,7 +98,7 @@ expression
 ;
 */
 void Parser::shift(Frame &s) {
-    std::tr1::unordered_map<Token, uint>::const_iterator iter;
+    std::unordered_map<Token, uint>::const_iterator iter;
     switch (s.mode) {
     case -1://#.
     case -2://prefix.
@@ -213,7 +213,7 @@ bool Parser::compare(Frame &s) {
     if (grammar.oper[s.op].prec < grammar.oper[mOper.back()].prec) 
 		return true;
     if (grammar.oper[s.op].prec == grammar.oper[mOper.back()].prec)
-		return grammar.oper[s.op].rassoc;
+		return grammar.oper[s.op].left;
     return false;
 }
 uint Parser::expression() {
@@ -314,6 +314,8 @@ uint Parser::primary() {
         return blank();
 	case POUND:
 		return pound();
+	case DOLLAR:
+		return dollar();
     }
     //SPACE -> null
     //解释要与null打印同步
@@ -416,7 +418,7 @@ uint Parser::blank() {
 
 /*
 pound
-: [pound] POUND INTEGER?
+: [pound] POUND (INTEGER | STRING | SYMBOL)?
 ;
 */
 uint Parser::pound() {
@@ -428,6 +430,7 @@ uint Parser::pound() {
 		note(r[0], mText);
 		accept();
 		break;
+	case STRING:
 	case SYMBOL:
 		r[0] = node(tag_pound, -2);
 		note(r[0], mText);
@@ -436,6 +439,29 @@ uint Parser::pound() {
 	default:
 		skip();
 		r[0] = node(tag_pound, instr_key);
+		break;
+	}
+	return r[0];
+}
+
+/*
+dollar
+: [dollar] DOLLAR (STRING | SYMBOL)?
+;
+*/
+uint Parser::dollar() {
+	uint r[2];
+	mLookahead = scan();
+	switch (mLookahead) {
+	case STRING:
+	case SYMBOL:
+		r[0] = node(tag_dollar, -1);
+		note(r[0], mText);
+		accept();
+		break;
+	default:
+		skip();
+		r[0] = node(tag_dollar, instr_symbol);
 		break;
 	}
 	return r[0];

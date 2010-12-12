@@ -1,4 +1,4 @@
-#include <mU/Kernel.h>
+#include <mU/Match.h>
 
 namespace mU {
 bool Kernel::assign(sym x, const var& y) {
@@ -9,8 +9,6 @@ bool Kernel::assign(sym x, const var& y) {
     return true;
 }
 bool Kernel::assign(const Key& x, const var& y) {
-	if (!x)
-		return false;
     switch (x.kind()) {
     case Key::String:
         return set(local(), x, y);
@@ -26,38 +24,31 @@ bool Kernel::assign(const Key& x, const var& y) {
     return false;
 }
 bool Kernel::assign(const Tuple& x, const var& y) {
-    var h = x[0];
+    var h = eval(x[0]);
     while (h.isTuple())
         h = h.tuple()[0];
     if (h.isSymbol()) {
-        std::tr1::unordered_map<sym, var>::const_iterator
+        std::unordered_map<sym, var>::const_iterator
         iter = assigns.find(h.symbol());
         if (iter != assigns.end())
             return iter->second.cast<Assign>()(*this, x, y);
-        if (y)
-            certains[h.symbol()][&x] = y;
-        else
-            certains[h.symbol()].erase(&x); 
+		var t = x.clone();
+		t = rewrite(&t.tuple());
+        if (y) {
+			if (isCertain(t))
+				certains[h.symbol()][t] = y;
+			else
+				matches[h.symbol()][t] = crule(*this, t, y);
+		}
+        else {
+			if (isCertain(t))
+				certains[h.symbol()].erase(t);
+			else
+				matches[h.symbol()].erase(t);
+		}
         return true;
     }
     return false;
-}
-bool Kernel::rule(const Tuple& x, const Match* y) {
-	var h = x[0];
-	while (h.isTuple())
-		h = h.tuple()[0];
-	if (h.isSymbol()) {
-		std::tr1::unordered_map<sym, var>::const_iterator
-			iter = assigns.find(h.symbol());
-		if (iter != assigns.end())
-			return iter->second.cast<Assign>()(*this, x, y);
-		if (y)
-			matches[h.symbol()][&x] = y;
-		else
-			matches[h.symbol()].erase(&x);
-		return true;
-	}
-	return false;
 }
 bool Kernel::assign(const var& x, const var& y) {
     switch (x.primary()) {

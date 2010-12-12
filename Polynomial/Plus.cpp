@@ -12,19 +12,20 @@ var Plus(Kernel& k, const Tuple& x) {
 		return x[1];
     std::vector<var> r;
 	uint pos = 1;
-    if (isNumber(x[pos])) {
-        var c = new Integer(0L);
-		for (; pos < x.size && isNumber(x[pos]); ++pos)
+    if (isNumber(x[1])) {
+		uint end = 2;
+		while (end < x.size && x[end].isObject())
+			++end;
+		var c = x[1].clone();
+		for (pos = 2; pos < end && isNumber(x[pos].object()); ++pos)
             Number::add(c, c.object(), x[pos].object());
         if(c.isObject($.Rational))
 			mpq_canonicalize(c.cast<Rational>().mpq);
-        if (pos == x.size)
-			return c;
-        if (cmpD(c.object(), 0.0))
-            r.push_back(c);
+		if (cmpD(c.object(), 0.0))
+			r.push_back(c);
     }
-	typedef std::multimap<var, var> MMap;
-	MMap mmap;
+	typedef std::unordered_map<var, std::vector<var> > UMap;
+	UMap map;
     for (; pos < x.size; ++pos) {
         var b = x[pos], e;
 		if (b == $.Infinity)
@@ -49,14 +50,19 @@ var Plus(Kernel& k, const Tuple& x) {
                 e = new Integer(1L);
         } else
             e = new Integer(1L);
-        mmap.insert(std::make_pair(b,e));
+        map[b].push_back(e);
     }
-	MMap::const_iterator iter = mmap.begin();
-	while (iter != mmap.end()) {
-		var b = iter->first, e = iter->second;
-		MMap::const_iterator end = mmap.upper_bound(b);
-		for (++iter; iter != end; ++iter)
-			Number::add(e, e.object(),iter->second.object());
+	UMap::const_iterator iter = map.begin();
+	while (iter != map.end()) {
+		var b = iter->first;
+		const std::vector<var>& v = iter->second;
+		var e = v[0];
+		for (uint i = 1; i < v.size(); ++i)
+			Number::add(e, e.object(), v[i].object());
+		++iter;
+		/*std::for_each(++v.begin(), v.end(), std::bind(Number::add, e, e.object(), 
+			std::bind(&var::object, _1)));
+			*/
 		double ed = toD(e.object());
 		if (ed != 0.0) {
 			if (ed != 1.0) {
@@ -91,7 +97,7 @@ var Plus(Kernel& k, const var& x, const var& y) {
 	}
 	r = tuple($.Plus, x, y);
     r = k.flatten($.Plus, r.tuple());
-	std::sort(r.tuple().tuple + 1, r.tuple().tuple + r.tuple().size);
+	std::sort(r.tuple().tuple + 1, r.tuple().tuple + r.tuple().size, lessPrimary);
     return Plus(k, r.tuple());
 }
 }

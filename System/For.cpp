@@ -41,10 +41,17 @@ CAPI void VALUE(If)(Kernel& k, var& r, Tuple& x) {
 			r = k.eval(x[2]);
 			return;
 		}
-		if (x[1] == $.False && x.size >= 4) {
-			r = k.eval(x[3]);
+		if (x[1] == $.False) {
+			if (x.size >= 4)
+				r = k.eval(x[3]);
+			else
+				r = null;
 			return;
-		} 
+		}
+		if (x.size >= 5) {
+			r = k.eval(x[4]);
+			return;
+		}	
 	}
 }
 CAPI void VALUE(Not)(Kernel& k, var& r, Tuple& x) {
@@ -57,7 +64,7 @@ CAPI void VALUE(Not)(Kernel& k, var& r, Tuple& x) {
 			r = $.True;
 			return;
 		}
-	}	
+	}
 }
 CAPI void VALUE(Or)(Kernel& k, var& r, Tuple& x) {
 	bool flag = true;

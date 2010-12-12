@@ -54,6 +54,15 @@
     <ClCompile Include="utils.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="matchC.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="matchE.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Include\mU\Common.h">
@@ -69,6 +78,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\Include\mU\Object.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\mU\Match.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Include\mU\Interface.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

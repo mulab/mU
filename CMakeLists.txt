@@ -8,7 +8,6 @@ set(EXECUTABLE_OUTPUT_PATH ..)
 set(LIBRARY_OUTPUT_PATH ..)
 
 add_subdirectory(Combinatorics)
-add_subdirectory(Interface)
 add_subdirectory(Kernel)
 add_subdirectory(mU)
 add_subdirectory(Number)

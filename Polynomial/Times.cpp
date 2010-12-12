@@ -9,19 +9,22 @@ var Times(Kernel& k, const Tuple& x) {
 		return x[1];
 	std::vector<var> r;
 	uint pos = 1;
-	if (isNumber(x[pos])) {
-		var c = new Integer(1L);
-		for (; pos < x.size && isNumber(x[pos]); ++pos)
+	if (isNumber(x[1])) {
+		uint end = 2;
+		while (end < x.size && x[end].isObject())
+			++end;
+		var c = x[1].clone();
+		for (pos = 2; pos < end && isNumber(x[pos]); ++pos)
 			Number::mul(c, c.object(), x[pos].object());
 		if(c.isObject($.Rational))
 			mpq_canonicalize(c.cast<Rational>().mpq);
-		if (pos == x.size || !cmpD(c.object(), 0.0))
+		if (!cmpD(c.object(), 0.0))
 			return c;
 		if (cmpD(c.object(), 1.0))
 			r.push_back(c);
 	}
-	typedef std::multimap<var, var> MMap;
-	MMap mmap;
+	typedef std::unordered_map<var, std::vector<var> > UMap;
+	UMap map;
 	for (; pos < x.size; ++pos) {
 		var b = x[pos], e;
 		if (b == $.Infinity) {
@@ -35,17 +38,15 @@ var Times(Kernel& k, const Tuple& x) {
 			e = t[2];
 		} else
 			e = new Integer(1L);
-		mmap.insert(std::make_pair(b,e));
+		map[b].push_back(e);
 	}
-	MMap::const_iterator iter = mmap.begin();
-	while (iter != mmap.end()) {
-		var b = iter->first, e = iter->second;
-		MMap::const_iterator end = mmap.upper_bound(b);
-		std::vector<var> v(1, e);
-		for (++iter; iter != end; ++iter)
-			v.push_back(iter->second);
-		std::sort(v.begin(), v.end());
-		e = mU::list(v.size(), v.begin(), $.Plus);
+	UMap::const_iterator iter = map.begin();
+	while (iter != map.end()) {
+		var b = iter->first;
+		const std::vector<var>& v = iter->second;
+		var e = mU::list(v.size(), v.begin(), $.Plus);
+		++iter;
+		std::sort(e.tuple().tuple + 1, e.tuple().tuple + e.tuple().size, lessPrimary);
 		e = Plus(k, e.tuple());
 		if (isNumber(e)) {
 			double ed = toD(e.object());
@@ -87,7 +88,7 @@ var Times(Kernel& k, const var& x, const var& y) {
 	}
 	r = tuple($.Times, x, y);
 	r = k.flatten($.Times, r.tuple());
-	std::sort(r.tuple().tuple + 1, r.tuple().tuple + r.tuple().size);
+	std::sort(r.tuple().tuple + 1, r.tuple().tuple + r.tuple().size, lessPrimary);
 	return Times(k, r.tuple());
 }
 }

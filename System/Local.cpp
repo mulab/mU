@@ -23,7 +23,8 @@ CAPI void VALUE(BeginLocal)(Kernel& k, var& r, Tuple& x) {
 	}
 }
 CAPI void VALUE(EndLocal)(Kernel& k, var& r, Tuple& x) {
-	if (k.mLocal.size() > 1)
+	if (k.mLocal.size() > 1) {
 		k.endLocal();
-	r = k.local();
+		r = k.local();
+	}
 }

@@ -2,11 +2,36 @@
 #include "Common.h"
 
 namespace mU {
-class Match;
+class Kernel;
+struct Assign : public Object {
+	Assign() : Object($.Assign) {}
+	virtual bool operator()(Kernel& k, const Tuple& x, const var& y) {
+		return false;
+	}
+};
+struct Value : public Object {
+	Value() : Object($.Value) {}
+	virtual var operator()(Kernel& k, Tuple& x) {
+		return &x;
+	}
+};
+
+struct Method : public Object {
+	Method() : Object($.Method) {}
+	virtual var operator()(Kernel& k) {
+		return null;
+	}
+};
+class Match : public Object {
+public:
+	Match() : Object($.Match) {}
+	virtual bool operator()(Kernel& k, var& r, const var& x) {
+		return false;
+	}
+};
 // Rewriting Engine + Rule Database + Pattern Matcher
 class Kernel {
 public:
-    // 重要系统栈,对用户表现为stack,但debug时需要能查看内部,所以用vector
     std::vector<sym> mContext;
     std::vector<std::list<sym> > mContextPath;
 	std::vector<sym> mLocal;
@@ -17,14 +42,21 @@ public:
 
 	// symbol & context
     API sym symbol(wcs);
+	inline sym symbol(const wstring& x) {
+		return symbol(x.c_str());
+	}
     sym& context() {
         return mContext.back();
     }
 	sym context() const {
 		return mContext.back();
 	}
-    API bool beginContext(sym);
-    API bool endContext();
+	void beginContext(sym x) {
+		mContext.push_back(x);
+	}
+	void endContext() {
+		mContext.pop_back();
+	}
     std::list<sym>& contextPath() {
         return mContextPath.back();
     }
@@ -66,23 +98,40 @@ public:
 	API void print(const Tuple&, wostream& = wcout) const;
 	API void print(const var&, wostream& = wcout) const;
 	wostream* log;
-	wostream& logging(wcs);
-	Kernel& operator<<(Kernel& (*pf)(Kernel&)) {
-		return pf(*this);
+	API Kernel& logging(wcs);
+	inline Kernel& logging(const wstring& x) {
+		return logging(x.c_str());
 	}
-	template <class T>
-	Kernel& operator<<(const T& x) {
+	Kernel& operator<<(sym x) {
 		print(x, *log);
 		return *this;
 	}
+	Kernel& operator<<(const Object& x) {
+		print(x, *log);
+		return *this;
+	}
+	Kernel& operator<<(const Tuple& x) {
+		print(x, *log);
+		return *this;
+	}
+	Kernel& operator<<(const var& x) {
+		print(x, *log);
+		return *this;
+	}
+	template <class T>
+	Kernel& operator<<(const T& x) {
+		*log << x;
+		return *this;
+	}
+	Kernel& operator<<(Kernel& (*pf)(Kernel&)) {
+		return pf(*this);
+	}
 
     // Rules Database
-
-    // Attribute控制求值过程,顺序等
-    typedef std::tr1::unordered_set<sym> Attribute;
-    std::tr1::unordered_map<sym, Attribute> attributes;
+    typedef std::unordered_set<sym> Attribute;
+    std::unordered_map<sym, Attribute> attributes;
     API Tuple* rewrite(Tuple*);
-    API Tuple* thread(const Tuple&);
+    API Tuple* spread(const Tuple&);
     API Tuple* flatten(sym, const Tuple&) const;
 
 	API bool match(var&, const var&, Match&);
@@ -102,16 +151,15 @@ public:
 	}
 
     // Rule
-	std::tr1::unordered_map<sym, var> owns;
-	// typedef std::map<var, var> UMap;
-	typedef std::tr1::unordered_map<var, var> UMap;
-	std::tr1::unordered_map<sym, UMap> certains;
+	std::unordered_map<sym, var> owns;
+	typedef std::unordered_map<var, var> UMap;
+	std::unordered_map<sym, UMap> certains;
 	typedef std::map<var, var> Map;
-	std::tr1::unordered_map<sym, Map> matches;
+	std::unordered_map<sym, Map> matches;
 	
 	// Interface
-	std::tr1::unordered_map<sym, var> assigns;
-    std::tr1::unordered_map<sym, var> values;
+	std::unordered_map<sym, var> assigns;
+    std::unordered_map<sym, var> values;
 
     // assign
     API bool assign(sym, const var&);
@@ -187,7 +235,6 @@ public:
     API var eval(const var&);
 	API var lazy(const var&);
 
-	// TODO: 其他内核变量改用Symbol Value控制
 	uint recursion;
 	uint depth;
 };

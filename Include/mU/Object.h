@@ -25,6 +25,10 @@ public:
 		o << _W('`') << static_cast<const void*>(this);
 	}
 };
+inline wostream& operator<<(wostream& o, const Object& x) {
+	x.print(o);
+	return o;
+}
 inline bool var::isObject(sym x) const {
 	return isObject() && object().type == x;
 }

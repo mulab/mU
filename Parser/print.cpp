@@ -4,7 +4,7 @@
 namespace mU {
 void Grammar::print(Kernel& k, wostream& o, wchar x) const {
     /*if (x >= 0x0080) {
-        std::tr1::unordered_map<wint, uint>::const_iterator
+        std::unordered_map<wint, uint>::const_iterator
         iter = unicode.find((wint)x);
         if (iter != unicode.end()) {
             o << L"\\[" << character[iter->second].named << L']';
@@ -65,21 +65,16 @@ void Grammar::print(Kernel& k, wostream& o, const Key& x) const {
 		o << _W('#');
 }
 void Grammar::print(Kernel& k, wostream& o, const Object& x) const {
-	if (x.type == $.Integer || x.type == $.Rational || x.type == $.Real) {
-		x.print(o);
-		return;
-	}
     if (x.type == $.String) {
         print(k, o, x.cast<String>().str.c_str());
         return;
     }
 	if (x.type == $.Delayed) {
 		o << _W('&');
-		print(k, o, tag(x));
+		print(k, o, x.cast<Tag>().data);
 		return;
 	}
-    print(k, o, x.type);
-	o << _W('`') << static_cast<const void*>(&x);
+	x.print(o);
 }
 void Grammar::print(Kernel& k, wostream& o, const var& x, uint y) const {
     switch (x.primary()) {
@@ -132,7 +127,7 @@ void Grammar::print(Kernel& k, wostream& o, const Tuple& x, uint y) const {
                     print(k, o, x[1].symbol());
                     return;
                 }
-                std::tr1::unordered_map<sym, uint>::const_iterator iter = postfixSymbol.find(h);
+                std::unordered_map<sym, uint>::const_iterator iter = postfixSymbol.find(h);
                 if (iter != postfixSymbol.end()) {
 					const Oper &op = oper[iter->second];
                     if (op.prec < y) {
@@ -161,11 +156,11 @@ void Grammar::print(Kernel& k, wostream& o, const Tuple& x, uint y) const {
                     return;
                 }
             } else if (x.size > 2) {
-                std::tr1::unordered_map<sym, uint>::const_iterator iter = infixSymbol.find(h);
+                std::unordered_map<sym, uint>::const_iterator iter = infixSymbol.find(h);
                 if (iter != infixSymbol.end()) {
                     const Oper &op = oper[iter->second];
                     if (op.prec < y) o << L'(';
-                    print(k, o, x[1], op.rassoc ? op.prec : op.prec + 1);
+                    print(k, o, x[1], op.left ? op.prec : op.prec + 1);
 					if (x.size == 3) {
 						if (h == $.Pattern && x[2].head() == $.Blank) {
 							print(k, o, x[2]);

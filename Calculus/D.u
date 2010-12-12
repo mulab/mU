@@ -50,7 +50,7 @@ A[(f_)[g__], x_] :> MultiA[f,g,x] /; Head[g]==List && FreeQ[Heads, f]
 }
 
 (*Evaluate[Rules/.Dispatch[RuleDelayed->SetDelayed,A->D]]*)
-Rules = ListC@@Rules
+Rules = CSerial@@Rules
 D[f_, x_] := A[f, x] //. Rules
 
 End[]

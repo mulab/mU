@@ -4,7 +4,7 @@ namespace mU {
 sym Kernel::symbol(wcs x) {
     Context& ctx = contexts[context()];
     std::pair<Context::iterator, bool>
-    r = ctx.insert(std::make_pair(wcs2uint(x), null));
+    r = ctx.insert(std::make_pair(reinterpret_cast<uint>(x), null));
     if (!r.second)
         return r.first->second.isSymbol() ? r.first->second.symbol() : 0;
     for (std::list<sym>::const_iterator
@@ -14,7 +14,7 @@ sym Kernel::symbol(wcs x) {
             continue;
         Context& m = contexts[*iter];
         Context::const_iterator iterm =
-            m.find(wcs2uint(x));
+            m.find(reinterpret_cast<uint>(x));
         if (iterm != m.end()) {
             ctx.erase(r.first);
             return iterm->second.isSymbol() ? iterm->second.symbol() : 0;
@@ -23,18 +23,6 @@ sym Kernel::symbol(wcs x) {
     sym t = context()->clone(x);
     r.first->second = t;
     return t;
-}
-bool Kernel::beginContext(sym x) {
-    if (!x->name())
-        return false;
-    mContext.push_back(x);
-    return true;
-}
-bool Kernel::endContext() {
-    if (mContext.size() == 1)
-        return false;
-    mContext.pop_back();
-    return true;
 }
 bool Kernel::beginPackage(sym x) {
     if (!x->name())

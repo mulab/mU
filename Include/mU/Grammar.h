@@ -14,13 +14,13 @@
 
 namespace mU {
 enum Token {
-	SYMBOL, INTEGER, FLOAT, STRING, BLANK, POUND,
+	SYMBOL, INTEGER, FLOAT, STRING, BLANK, DOLLAR, POUND,
 	PTR_OP, INC_OP, DEC_OP, LEFT_OP, RIGHT_OP, RIGHT_GT, LE_OP, GE_OP, EQ_OP, NE_OP,
 	BOOL_AND_OP, BOOL_OR_OP, ADD_ASSIGN, SUB_ASSIGN, MUL_ASSIGN, DIV_ASSIGN, MOD_ASSIGN,
 	LPAREN, RPAREN, LBRACKET, RBRACKET, LBRACE, RBRACE, PERIOD, COMMA, COLON, SEMICOLON,
 	QUESTIONMARK, PLUS, MINUS, STAR, SLASH, ASSIGN, AND_OP, OR_OP, BANG, TILDE, TILDE_TILDE,
 	PERCENT, CIRCUMFLEX, GT_OP, LT_OP, COLON_ASSIGN, POW_ASSIGN, POW_COLON_ASSIGN, COLON_GT,
-	SLASH_PERIOD, SLASH_SEMICOLON, DOLLAR, AT, SLASH_SLASH, AT_AT, ASSIGN_EQ, ASSIGN_PERIOD,
+	SLASH_PERIOD, SLASH_SEMICOLON, AT, SLASH_SLASH, AT_AT, ASSIGN_EQ, ASSIGN_PERIOD,
 	SLASH_SLASH_PERIOD, ASSIGN_NE, QUOTE, BACKQUOTE, SLASH_AT, SLASH_SLASH_AT, SPACE, LT_GT, ASSIGN_GT,
 	NEWLINE, EOI = -1
 };
@@ -30,7 +30,7 @@ struct Grammar {
     API static void Init();
     API Grammar();	
 
-	std::tr1::unordered_set<Token> end;
+	std::unordered_set<Token> end;
 	struct Char {
 		wint unicode;
 		wcs named;
@@ -38,8 +38,8 @@ struct Grammar {
 		unicode(_unicode), named(_named) {}
 	};
 	std::vector<Char> character;
-	std::tr1::unordered_map<wint, uint> unicode;
-	std::tr1::unordered_map<wstring, uint> named;
+	std::unordered_map<wint, uint> unicode;
+	std::unordered_map<wstring, uint> named;
 
 	struct Oper {
 		Token token;
@@ -49,14 +49,14 @@ struct Grammar {
 		//默认为infix
 		bool postfix;
 		bool prefix;
-		bool rassoc;
+		bool left;
 		Oper(Token, wcs, wcs, bool = false, bool = false, bool = false);
 	};
     uint prec;
     std::vector<Oper> oper;
     std::vector<sym> operSymbol;
-    std::tr1::unordered_map<sym, uint> postfixSymbol, prefixSymbol, infixSymbol;
-	std::tr1::unordered_map<Token, uint> postfixToken, prefixToken, infixToken;
+    std::unordered_map<sym, uint> postfixSymbol, prefixSymbol, infixSymbol;
+	std::unordered_map<Token, uint> postfixToken, prefixToken, infixToken;
 	uint operCOLON, operPERIOD, operPLUS, operSTAR;
 	
 	API void print(Kernel&, wostream&, wchar) const;
@@ -75,11 +75,10 @@ inline void println(Kernel& k, const var& x, wostream& o = wcout) {
 }
 
 #ifndef _MSC_VER
-namespace std { namespace tr1 {
+namespace std {
 template<>
-inline size_t
-hash<mU::Token>::operator()(mU::Token v) const {
-	   return static_cast<size_t>(v);
+inline size_t hash<mU::Token>::operator()(mU::Token x) const {
+	   return static_cast<size_t>(x);
 }
-}}
+}
 #endif

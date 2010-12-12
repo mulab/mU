@@ -22,7 +22,6 @@ Grammar::Grammar() {
 #define M(token,name,show,...) oper.push_back(Oper(token,_W(#name),_W(show),##__VA_ARGS__))
 	M(SEMICOLON, Serial, ";");
 	++prec;
-	M(DOLLAR, New, "$", false, true);
 	M(QUOTE, Unevaluated, "'", false, true);
 	M(AND_OP, Delayed, "&", false, true);
 	++prec;
@@ -86,6 +85,7 @@ Grammar::Grammar() {
     ++prec;
     M(PLUS, Plus, "+", false, true);
     M(MINUS, Minus, "-", false, true);
+	M(STAR, New, "*", false, true);
     ++prec;
     M(CIRCUMFLEX, Power, "^");
     ++prec;
@@ -140,6 +140,6 @@ Grammar::Grammar() {
 */
 }
 Grammar grammar;
-Grammar::Oper::Oper(Token $token, wcs $name, wcs $show, bool $postfix, bool $prefix, bool $rassoc) :
-token($token), name($name), show($show), prec(grammar.prec), postfix($postfix), prefix($prefix), rassoc($rassoc) {}
+Grammar::Oper::Oper(Token $token, wcs $name, wcs $show, bool $postfix, bool $prefix, bool $left) :
+token($token), name($name), show($show), prec(grammar.prec), postfix($postfix), prefix($prefix), left($left) {}
 }

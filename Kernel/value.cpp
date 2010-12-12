@@ -2,24 +2,27 @@
 
 namespace mU {
 var Kernel::value(sym x) {
-    std::tr1::unordered_map<sym, var>::const_iterator
+    std::unordered_map<sym, var>::const_iterator
     iter = owns.find(x);
 	if (iter != owns.end())
 		return lazy(iter->second);
     return x;
 }
 var Kernel::value(const Key& x) {
-    if (!x)
-        return self();
-    if (x.kind() == Key::Integer) {
-        if (self().isTuple()) {
-            uint i = x.toUI();
-            if (i < self().tuple().size)
-                return lazy(self().tuple()[i]);
-        }
-		return $.Fail;
-    }
-	return slot(local(), x);
+    switch (x.kind()) {
+	case  Key::Null:
+		return self();
+	case Key::String:
+		return slot(local(), x);
+	case Key::Integer:
+		if (self().isTuple()) {
+			uint i = x.toUI();
+			if (i < self().tuple().size)
+				return lazy(self().tuple()[i]);
+		}
+		break;
+	}
+	return $.Fail;
 }
 var Kernel::value(Tuple& x) {
     push(&x);
@@ -36,7 +39,7 @@ var Kernel::value(Tuple& x) {
             pop();
             return r;
         }
-        std::tr1::unordered_map<sym, var>::const_iterator
+        std::unordered_map<sym, var>::const_iterator
         iter = values.find(h.symbol());
         if (iter != values.end()) {
             pop();
@@ -58,7 +61,7 @@ var Kernel::value(const var& x) {
     return x;
 }
 bool Kernel::certain(var& r, sym h, const Tuple& x) {
-	std::tr1::unordered_map<sym, UMap>::const_iterator
+	std::unordered_map<sym, UMap>::const_iterator
 		iter = certains.find(h);
 	if (iter != certains.end()) {
 		UMap::const_iterator
@@ -71,7 +74,7 @@ bool Kernel::certain(var& r, sym h, const Tuple& x) {
 	return false;
 }
 bool Kernel::match(var& r, sym h, const Tuple& x) {
-	std::tr1::unordered_map<sym, Map>::const_iterator
+	std::unordered_map<sym, Map>::const_iterator
 		iter = matches.find(h);
 	if (iter != matches.end()) {
 		Map::const_iterator

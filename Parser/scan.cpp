@@ -112,14 +112,14 @@ Token Parser::scan() {
     break;
 #define M(x,y) case L##x:return y;
 #define C(a,b,x,y)case L##a:{get(c);if(c == L##b)return x;token(c,y);}break;
-    M(',', COMMA)M(';', SEMICOLON)
-    M('{', LBRACE)M('}', RBRACE)
-    M('[', LBRACKET)M(']', RBRACKET)
-    M('(', LPAREN)M(')', RPAREN)
-    M('\'', QUOTE)M('?', QUESTIONMARK)
-    M('.', PERIOD)M('#', POUND)
-    M('`', BACKQUOTE)M('$', DOLLAR)
-	M('_', BLANK)
+    M('`', BACKQUOTE)M('_', BLANK)
+	M(',', COMMA)M('$', DOLLAR)
+	M('{', LBRACE)M('[', LBRACKET)
+	M('(', LPAREN)M('.', PERIOD)
+	M('#', POUND)M('?', QUESTIONMARK)
+	M('\'', QUOTE)M('}', RBRACE)
+	M(']', RBRACKET)M(')', RPAREN)
+	M(';', SEMICOLON)
     C('&', '&', BOOL_AND_OP, AND_OP)
     C('|', '|', BOOL_OR_OP, OR_OP)
     C('!', '=', NE_OP, BANG)

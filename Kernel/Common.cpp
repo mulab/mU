@@ -40,6 +40,32 @@ bool isCertain(const Tuple& x) {
 			return false;
 	return true;
 }
+namespace {
+inline size_t abs(int x) {
+	return x < 0 ? -x : x;
+}
+inline size_t hash(mp_limb_t* begin, mp_limb_t* end) {
+	size_t r = 2166136261U;
+	while (begin < end) {
+		r = 16777619U * r ^ *begin;
+		++begin;
+	}
+	return r;
+}
+}
+size_t mpz_hash(mpz_srcptr x) {
+	return hash(x->_mp_d, x->_mp_d + abs(x->_mp_size));
+}
+size_t mpq_hash(mpq_srcptr x) {
+	size_t r = mpz_hash(mpq_numref(x));
+	r = 16777619U * r ^ mpz_hash(mpq_denref(x));
+	return r;
+}
+size_t mpf_hash(mpf_srcptr x) {
+	size_t r = hash(x->_mp_d, x->_mp_d + abs(x->_mp_size));
+	r = 16777619U * r ^ x->_mp_exp;
+	return r;
+}
 void Integer::print(wostream& o) const {
 	o << mpz_get_str(0, 10, cast<Integer>().mpz);
 }

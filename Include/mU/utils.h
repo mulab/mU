@@ -54,19 +54,17 @@ inline string wcs2mbs(const wstring& x) {
 #define __POS__0(x) "[" __FUNCTION__ "]" __FILE__ "(" #x ")"
 #define __POS__1(x) __POS__0(x)
 #define __POS__ __POS__1(__LINE__)
-#ifndef _STR2WSTR
-#define __STR2WSTR(str)    _W(str)
-#define _STR2WSTR(str)     __STR2WSTR(str)
-#define __FILEW__          _STR2WSTR(__FILE__)
-#define __FUNCTIONW__      _STR2WSTR(__FUNCTION__)
+#ifndef _MSC_VER
+// #define _STR2WSTR _W
+#define _STR2WSTR mbs2wcs
+#define __FILEW__ _STR2WSTR(__FILE__)
+#define __FUNCTIONW__ _STR2WSTR(__FUNCTION__)
+#define __FUNCSIG__ __PRETTY_FUNCTION__
 #endif
 #define __POSW__0(x) _STR2WSTR("[") __FUNCTIONW__ _STR2WSTR("]") __FILEW__ _STR2WSTR("(") _STR2WSTR(#x) _STR2WSTR(")")
 #define __POSW__1(x) __POSW__0(x)
 #define __POSW__ __POSW__1(__LINE__)
 
-#ifndef __FUNCSIG__
-#define __FUNCSIG__ __PRETTY_FUNCTION__
-#endif
 #ifdef NDEBUG
 #define fdebugf(fp, ...) ((void)0)
 #else

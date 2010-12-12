@@ -79,7 +79,7 @@ wchar Parser::read() {
                 mIn->get();
                 wstring t;
                 std::getline(*mIn, t, _W(']'));
-                std::tr1::unordered_map<wstring, uint>::const_iterator
+                std::unordered_map<wstring, uint>::const_iterator
                 iter = grammar.named.find(t);
                 if (iter != grammar.named.end()) {
                     column += t.size() + 3;

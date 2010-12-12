@@ -12,7 +12,7 @@ void Kernel::print(sym x, wostream& o) const {
 		std::find(contextPath().begin(),
 		contextPath().end(), c) ==
 		contextPath().end())
-		mU::print(c->toS(context()), o);
+		mU::print(x->toS(context()), o);
 	else {
 		wcs s = x->name();
 		if (s)
@@ -22,7 +22,7 @@ void Kernel::print(sym x, wostream& o) const {
 	}
 }
 void Kernel::print(const Object& x, wostream& o) const {
-	if (x.type == $.Integer || x.type == $.Rational || x.type == $.Real) {
+	if (isNumber(x)) {
 		x.print(o);
 		return;
 	}
@@ -37,15 +37,15 @@ void Kernel::print(const Object& x, wostream& o) const {
 }
 void Kernel::print(const Tuple& x, wostream& o) const {
     print(x[0], o);
-    o << L'[';
+    o << _W('[');
     if (x.size > 1) {
         print(x[1], o);
         for (uint i = 2; i < x.size; ++i) {
-            o << L',';
+            o << _W(',');
             print(x[i], o);
         }
     }
-    o << L']';
+    o << _W(']');
 }
 void Kernel::print(const var& x, wostream& o) const {
     switch (x.primary()) {
@@ -66,10 +66,10 @@ void Kernel::print(const var& x, wostream& o) const {
         return;
     }
 }
-wostream& Kernel::logging(wcs x) {
+Kernel& Kernel::logging(wcs x) {
 	*log << _W('[') << date() << _W("][");
 	mU::print(x, *log);
 	*log << _W("]: ");
-	return *log;
+	return *this;
 }
 }

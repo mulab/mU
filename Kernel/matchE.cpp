@@ -1,5 +1,4 @@
-#include <mU/Kernel.h>
-#include "Match.h"
+#include <mU/Match.h>
 
 namespace mU {
 namespace {
@@ -122,25 +121,24 @@ struct MatchE {
 			break;
 		case CMatch::UNORDER: {
 				CMatch::Unorder& c = arg(0).cast<CMatch::Unorder>();
-				typedef std::multiset<var> MSet;
-				MSet certains;
+				CMatch::Unorder::UMSet mset;
 				Pos x0 = x;
 				while (!x.empty()) {
-					certains.insert(*x);
+					mset.insert(*x);
 					++x;
 				}
-				MSet::const_iterator
-					iter = c.certains.begin();
-				while (iter != c.certains.end()) {
-					if (certains.erase(*iter) == 0)
+				CMatch::Unorder::UMSet::const_iterator
+					iter = c.mset.begin();
+				while (iter != c.mset.end()) {
+					if (mset.erase(*iter) == 0)
 						return false;
 					++iter;
 				}
-				if (certains.empty()) {
+				if (mset.empty()) {
 					if (next(x, 1))
 						return true;
 				} else {
-					Tuple* t = mU::tuple(certains.size(), certains.begin());
+					Tuple* t = mU::tuple(mset.size(), mset.begin());
 					var c = t;
 					x.ptr = t->tuple;
 					x.end = t->tuple + t->size;
@@ -171,7 +169,7 @@ struct MatchE {
 				return false;
 			}
 			break;
-		case CMatch::LIST: {
+		case CMatch::SERIAL: {
 				var c = arg(0);
 				++mCode;
 				mArg += 1;

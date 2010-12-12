@@ -1,4 +1,5 @@
 #include <mU/Kernel.h>
+#include <mU/utils.h>
 
 namespace mU {
 void Kernel::start() {
@@ -13,10 +14,12 @@ void Kernel::start() {
 }
 void Kernel::abort() {
 	logging(__FUNCTIONW__) << _W("Kernel abort.") << endl;
-	wcerr << _W("Stack dump: ") << endl;
-	for (uint i = 1; i < mStack.size(); ++i)
-		(*this) << mStack[i] << endl;
-    throw std::logic_error("");
+	if (mStack.size() > 1) {
+		wcerr << _W("Stack dump: ") << endl;
+		for (uint i = 1; i < mStack.size(); ++i)
+			(*this) << mStack[i] << endl;
+	}
+    throw std::logic_error("abort");
 }
 void Kernel::debug() {
     // TODO: 处理trace,debug,exception,semaphore,kill,yield,resume
@@ -42,7 +45,7 @@ var Kernel::eval(const var& x) {
 var Kernel::lazy(const var& x) {
 	if (x.isObject()) {
 		if (x.object().type == $.Delayed)
-			return eval(tag(x));
+			return eval(x.cast<Tag>().data);
 		if (x.object().type == $.Method)
 			return x.cast<Method>()(*this);
 	}
