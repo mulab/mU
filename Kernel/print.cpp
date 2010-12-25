@@ -1,5 +1,6 @@
-#include <mU/utils.h>
 #include <mU/Kernel.h>
+#include <mU/utils.h>
+#include <algorithm>
 
 namespace mU {
 void Kernel::print(sym x, wostream& o) const {

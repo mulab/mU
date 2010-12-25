@@ -1,33 +1,12 @@
 #pragma once
-#include <stdexcept>
+#include <cstdlib>
+#include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
-#include <fstream>
 #include <string>
-#include <cctype>
-#include <cwctype>
-#include <cwchar>
-#include <cstdio>
-#include <cstring>
-#include <cstdlib>
-#include <cstdarg>
-#include <cmath>
-#include <ctime>
-#include <cassert>
-#include <locale>
-#include <vector>
-#include <stack>
-#include <set>
-#include <map>
-#include <deque>
-#include <queue>
-#include <list>
-#include <algorithm>
-#include <functional>
-#include <iterator>
-#include <unordered_set>
 #include <unordered_map>
+#include <unordered_set>
 
 #undef CAPI
 #undef API
@@ -104,7 +83,6 @@ using std::cerr;
 using std::ios;
 typedef std::basic_ios<wchar> wios;
 using std::endl;
-using namespace std::placeholders;
 
 class Var;
 namespace Primary {
@@ -135,6 +113,7 @@ class Var {
 	friend API Tuple* tuple(uint);
     uint id;
     explicit Var(uint $id) : id($id) {}
+public:
     Var* copy() {
         id += Primary::size;
         return this;
@@ -150,7 +129,6 @@ class Var {
         if (id < Primary::size)
             Primary::ruin[id](this);
     }
-public:
 	void discard() {
 		if (id >= Primary::size)
 			id -= Primary::size;
@@ -181,16 +159,7 @@ inline bool isalpha(wchar x) {
 inline bool isdigit(wchar x) {
 	return x > 47 && x < 58;
 }
-inline void print(wchar x, wostream& o = wcout) {
-	if (isgraph(x) && isprint(x))
-		o << x;
-	else
-		o << L"\\:" << std::hex
-		<< ((x >> 12) & 0xF)
-		<< ((x >> 8) & 0xF)
-		<< ((x >> 4) & 0xF)
-		<< (x & 0xF);        
-}
+API void print(wchar, wostream& = wcout);
 inline void print(wcs x, wostream& o = wcout) {
 	if (!x)
 		return;

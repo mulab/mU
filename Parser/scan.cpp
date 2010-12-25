@@ -68,38 +68,38 @@ Token Parser::scan() {
         digit(c);
         if (c == L'.')
             floatdot(c)
-            else if (c == L'e')
+            else if (c == _W('e'))
                 floatexp(c)
                 token(c, INTEGER);
             }
     switch (c) {
-    case L'\n':
+    case _W('\n'):
         newline(c)
         break;
-    case L' ': {
-        while ((c = read()) && c == L' ');
+    case _W(' '): {
+        while ((c = read()) && c == _W(' '));
         if (c) {
-            if (c == L'\n')
+            if (c == _W('\n'))
 			newline(c)
 			token(c, SPACE);
 		}
 	}
 	break;
-    case L'"': {
-        while ((get(c)) && c != L'"') {
-            if (c == L'\\') {
+    case _W('"'): {
+        while ((get(c)) && c != _W('"')) {
+            if (c == _W('\\')) {
                 get(c);
                 switch (c) {
-                case L'"':
-                    buffer(L'"'); continue;
-                case L'\\':
-                    buffer(L'\\'); continue;
-                case L'n':
-                    buffer(L'\n'); continue;
-                case L't':
-                    buffer(L'\t'); continue;
+#define M(x) case _W(x):buffer(_W(x));continue;
+                M('"')
+				M('\\')
+				M('\n')
+				M('\t')
+#undef M
                 default:
-                    buffer(L'\\');buffer(c); continue;
+                    buffer(_W('\\'));
+					buffer(c);
+					continue;
                 }
             }
             buffer(c);
@@ -110,15 +110,44 @@ Token Parser::scan() {
             more();
     }
     break;
-#define M(x,y) case L##x:return y;
-#define C(a,b,x,y)case L##a:{get(c);if(c == L##b)return x;token(c,y);}break;
-    M('`', BACKQUOTE)M('_', BLANK)
-	M(',', COMMA)M('$', DOLLAR)
-	M('{', LBRACE)M('[', LBRACKET)
-	M('(', LPAREN)M('.', PERIOD)
-	M('#', POUND)M('?', QUESTIONMARK)
-	M('\'', QUOTE)M('}', RBRACE)
-	M(']', RBRACKET)M(')', RPAREN)
+	case _W('`'): {
+		if ((get(c)) && c == _W('`')) {
+			while (get(c)) {
+				if (c == _W('`')) {
+					get(c);
+					if (c == _W('`'))
+						break;
+					else {
+						buffer(_W('`'));
+						buffer(c);
+						continue;
+					}
+				}
+				buffer(c);
+			}
+			if (c)
+				return STRING;
+			else
+				more();
+		}
+		token(c, BACKQUOTE);
+    }
+    break;
+#define M(x,y) case _W(x):return y;
+#define C(a,b,x,y)case _W(a):{get(c);if(c == _W(b))return x;token(c,y);}break;
+	M('_', BLANK)
+	M(',', COMMA)
+	M('$', DOLLAR)
+	M('{', LBRACE)
+	M('[', LBRACKET)
+	M('(', LPAREN)
+	M('.', PERIOD)
+	M('#', POUND)
+	M('?', QUESTIONMARK)
+	M('\'', QUOTE)
+	M('}', RBRACE)
+	M(']', RBRACKET)
+	M(')', RPAREN)
 	M(';', SEMICOLON)
     C('&', '&', BOOL_AND_OP, AND_OP)
     C('|', '|', BOOL_OR_OP, OR_OP)
@@ -127,45 +156,51 @@ Token Parser::scan() {
     C('~', '~', TILDE_TILDE, TILDE)
     C('%', '=', MOD_ASSIGN, PERCENT)
     C('@', '@', AT_AT, AT)
-    case L':':
+    case _W(':'):
         get(c);
 		switch (c) {
-            M('=', COLON_ASSIGN)M('>', COLON_GT)
+            M('=', COLON_ASSIGN)
+			M('>', COLON_GT)
         }
         token(c, COLON);
-    case L'=':
+    case _W('='):
         get(c);
 		switch (c) {
-            M('>', ASSIGN_GT)M('.', ASSIGN_PERIOD)
+            M('>', ASSIGN_GT)
+			M('.', ASSIGN_PERIOD)
             C('=', '=', ASSIGN_EQ, EQ_OP)
-        case L'!': {
+        case _W('!'): {
             get(c);
-            if (c == L'=')
+            if (c == _W('='))
 				return ASSIGN_NE;
             unget(c);
-            token(L'!', ASSIGN);
+            token(_W('!'), ASSIGN);
         }
         break;
         }
         token(c, ASSIGN);
-    case L'-':
+    case _W('-'):
         get(c);
 		switch (c) {
-            M('=', SUB_ASSIGN)M('>', PTR_OP)
+            M('=', SUB_ASSIGN)
+			M('>', PTR_OP)
             M('-', DEC_OP)
         }
         token(c, MINUS);
-    case L'+':
+    case _W('+'):
         get(c);
 		switch (c) {
-            M('=', ADD_ASSIGN)M('+', INC_OP)
+            M('=', ADD_ASSIGN)
+			M('+', INC_OP)
         }
         token(c, PLUS);
-    case L'/':
+    case _W('/'):
         get(c);
 		switch (c) {
-            M('=', DIV_ASSIGN)M('.', SLASH_PERIOD)
-            M('@', SLASH_AT)M(';', SLASH_SEMICOLON)
+            M('=', DIV_ASSIGN)
+			M('.', SLASH_PERIOD)
+            M('@', SLASH_AT)
+			M(';', SLASH_SEMICOLON)
         case L'/':
             get(c);
 			switch (c) {
@@ -175,35 +210,38 @@ Token Parser::scan() {
             token(c, SLASH_SLASH);
         }
         token(c, SLASH);
-    case L'<':
+    case _W('<'):
         get(c);
 		switch (c) {
-            M('=', LE_OP)M('<', LEFT_OP)
+            M('=', LE_OP)
+			M('<', LEFT_OP)
             M('>', LT_GT)
         }
         token(c, LT_OP);
-    case L'>':
+    case _W('>'):
         get(c);
 		switch (c) {
             M('=', GE_OP)
             C('>', '>', RIGHT_GT, RIGHT_OP)
         }
         token(c, GT_OP);
-    case L'^':
+    case _W('^'):
         get(c);
 		switch (c) {
             M('=', POW_ASSIGN)
-        case L':': {
+        case _W(':'): {
             get(c);
             if (c == L'=')
 				return POW_COLON_ASSIGN;
             unget(c);
-            token(L':', CIRCUMFLEX);
+            token(_W(':'), CIRCUMFLEX);
         }
         break;
         }
         token(c, CIRCUMFLEX);
     }
+#undef C
+#undef M
     return EOI;
 }
 }

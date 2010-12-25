@@ -1,8 +1,9 @@
-#include <mU/Number.h>
 #include <mU/Polynomial.h>
-#ifdef _MSC_VER
-#pragma comment(lib,"Number.lib")
-#endif
+#include <mU/Number.h>
+#include <algorithm>
+/*#include <functional>
+using namespace std::placeholders;
+*/
 
 namespace mU {
 var Plus(Kernel& k, const Tuple& x) {

@@ -1,0 +1,87 @@
+<<"Embed/Java.u"
+
+Java`Init["-verbose:jni",
+"-Djava.class.path=D:\\Projects\\GeometryBoard\\bin;D:\\Projects\\GeometryBoard\\lib\\j3dcore.jar;D:\\Projects\\GeometryBoard\\lib\\j3dutils.jar;D:\\Projects\\GeometryBoard\\lib\\vecmath.jar",
+"-Djava.library.path=D:\\Projects\\GeometryBoard\\lib"]
+cls=Java`Class["java.lang.Integer"]
+cls@bitCount[100]
+
+Begin[System]
+
+Graphics2D
+Graphics3D
+GraphicsComplex
+PlotRange
+FlatSpace
+Shape
+Options
+Color3f
+Color255
+Axes
+AxesLabel
+GraphLabel
+Hue
+Mesh
+DoubleSurface
+Surface
+LightedSurface
+Polygon
+Line
+ColorfulLine
+PointList
+QuadArray
+TriangleArray
+Curve
+Minus
+
+Circle
+Rectangle
+
+End[]
+
+(*Begin[GeometryBoard]*)
+
+Main = Java`Class["Lconsole/Main;"]
+(*Main@main["Blah"["Blah1"]]*)
+Main@main[Null]
+CurrentShell = ((((Main@getMainFrame[])@getMainPanel[])@getDrawingTabbedPane[])@getCurrentPanel[])@getShell[]
+ModelOperations = Java`Class["Lutils/ModelOperations;"]
+
+(*
+Graphics2DClass=Java`Class["Lshell/model/Graphics2D;"]
+PlotExpr[x_]:=Block[...x...], x will be Fail!
+PlotExpr[$x_]:=Block[...$x...] will set x! 
+Module,With,Function will be fine.
+use lowercase variable without assign must start with $!
+
+PlotExpr[x_]:=(
+graphics2D=Java`New[Graphics2DClass,{CurrentShell,x}];
+document=graphics2D@$getDocument[];
+(*document@$writeToConsole[];*)
+CurrentShell@$setDocument[document];
+CurrentShell@$refresh[False])
+
+PlotFile[f_String]:=PlotExpr[<<f]
+*)
+
+(*PlotFile["Heart.txt"]*)
+
+(*End[]*)
+
+(*
+<<"../mU0/Embed/mU0.u"
+System`Plot=mU0`mU0[System`Plot]
+System`PolarPlot=mU0`mU0[System`PolarPlot]
+*)
+
+(*
+PlotExpr[Plot[{t^2-1,1-t^2},{t,-2,2}].mU[]]
+PlotExpr[Plot[{Sin[t],Cos[t]},{t,-5,5}].mU[]]
+PlotExpr[PolarPlot[1-Sin[t],{t,0,2 System`Pi}].mU[]]
+PlotExpr[Plot[Tan[t],{t,-2,5},Options[PlotRange->Auto]].mU[]]
+PlotExpr[PolarPlot[{Sin[3t],1},{t,0,2 System`Pi}].mU[]]
+*)
+
+document = ModelOperations@newGraphics[CurrentShell]
+ModelOperations@addPanel[document,<<"Heart.txt"]
+CurrentShell@$setDocument[document];CurrentShell@$refresh[False]

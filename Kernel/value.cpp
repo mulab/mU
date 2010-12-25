@@ -13,6 +13,9 @@ var Kernel::value(const Key& x) {
 	case  Key::Null:
 		return self();
 	case Key::String:
+		// mLocal[mLocal.size() - 1]
+		// mLocal[mLocal.size() - 2]
+		// ...?
 		return slot(local(), x);
 	case Key::Integer:
 		if (self().isTuple()) {
@@ -29,22 +32,28 @@ var Kernel::value(Tuple& x) {
     var h = x[0];
     while (h.isTuple())
         h = h.tuple()[0];
-    if (h.isSymbol()) {
-        var r;
-        if (certain(r, h.symbol(), x)) {
-            pop();
-            return r;
-        }
-        if (match(r, h.symbol(), x)) {
-            pop();
-            return r;
-        }
-        std::unordered_map<sym, var>::const_iterator
-        iter = values.find(h.symbol());
-        if (iter != values.end()) {
-            pop();
-            return iter->second.cast<Value>()(*this, x);
-        }
+	if (!h.isSymbol()) {
+		if (h.isObject())
+			h = h.object().type;
+		else {
+			pop();
+			return &x;
+		}
+	}
+    var r;
+    if (certain(r, h.symbol(), x)) {
+        pop();
+        return r;
+    }
+    if (match(r, h.symbol(), x)) {
+        pop();
+        return r;
+    }
+    std::unordered_map<sym, var>::const_iterator
+    iter = values.find(h.symbol());
+    if (iter != values.end()) {
+        pop();
+        return iter->second.cast<Value>()(*this, x);
     }
     pop();
     return &x;

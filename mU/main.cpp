@@ -57,13 +57,13 @@ int main(int argc, char *argv[]) {
 
 	Parser p(k);
 	wifstream f;
+	open(p, f, wcs2mbs(path() + _W("mU.ini")).c_str());
+    open(p, f, "mU.ini");
     if (argc > 1) {
         for (int i = 1; i < argc; ++i)
             open(p, f, argv[i]);
         return 0;
     }
-	open(p, f, wcs2mbs(path() + _W("mU.ini")).c_str());
-    open(p, f, "mU.ini");
     wcout <<
     std::setw(45) << _W("*         *    \n") <<
     std::setw(45) << _W("*         *    \n") <<

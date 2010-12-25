@@ -1,6 +1,6 @@
-#include <csignal>
-#include <mU/utils.h>
 #include "EclObject.h"
+#include <mU/utils.h>
+#include <csignal>
 
 namespace mU {
 cl_object EclObject::Pool;
@@ -121,20 +121,4 @@ void EclObject::print(wostream& o) const {
 	const char* s = ecl_base_string_pointer_safe(t);
 	o << mbs2wcs(s);
 }
-}
-
-using namespace mU;
-
-#undef ASSIGN
-#define ASSIGN(f) CASSIGN(Ecl_Object,f)
-#undef VALUE
-#define VALUE(f) CVALUE(Ecl_Object,f)
-#undef METHOD
-#define METHOD(f,sig) CMETHOD(Ecl_Object,f,sig)
-
-CAPI void METHOD(eval, 0)(Kernel& k, var& r, Tuple& x, var self, sym local) {
-	r = new EclObject(ecl_safe_eval(self.cast<EclObject>().obj));
-}
-CAPI void METHOD(mU, 0)(Kernel& k, var& r, Tuple& x, var self, sym local) {
-	r = from_ecl(self.cast<EclObject>().obj);
 }

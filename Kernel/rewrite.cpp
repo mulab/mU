@@ -1,4 +1,5 @@
 #include <mU/Kernel.h>
+#include <algorithm>
 
 namespace mU {
 Tuple* Kernel::rewrite(Tuple* x) {

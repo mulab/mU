@@ -2,7 +2,8 @@
 
 namespace mU {
 var N(Kernel& k, const var& x, uint n) {
-	if (x.isObject()) {
+	switch (x.primary()) {
+	case Primary::Object: {
 		Real* r = new Real(n);
 		if (x.object().type == $.Integer) {
 			mpf_set_z(r->mpf, x.cast<Integer>().mpz);
@@ -14,10 +15,10 @@ var N(Kernel& k, const var& x, uint n) {
 		}
 		return x;
 	}
-	if (x.isSymbol()) {
+	case Primary::Symbol:
+		// Constant?
 		return x;
-	}
-	if (x.isTuple()) {
+	case Primary::Tuple: {
 		var r;
 		Tuple* t = x.tuple().clone();
 		t->tuple[0] = N(k, t->tuple[0], n);
@@ -42,6 +43,7 @@ var N(Kernel& k, const var& x, uint n) {
 			r = t;
 		}
 		return k.eval(r);
+	}
 	}
 	return x;
 }

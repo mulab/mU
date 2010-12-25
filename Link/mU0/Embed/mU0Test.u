@@ -1,0 +1,25 @@
+(*
+Print[mU0`Eval["Path[]"]]
+Print[mU0`Eval["D[x,x]"]]
+Print[mU0`mU0[A`B].mU[]]
+Print[mU0`mU0[System`PrimeQ[1000]].eval[]]
+Print[mU0`Eval["Expand[(1-x)^50]"].mU[]]
+
+System`Expand = mU0`mU0[System`Expand]
+Print[Expand[(1-x)^10]]
+
+System`FactorInteger = mU0`mU0[System`FactorInteger]
+Print[FactorInteger[100!]]
+
+System`Factor = mU0`mU0[System`Factor]
+Print[Factor[x^105-1]]
+
+System`NextPrime = mU0`mU0[System`NextPrime]
+Print[NextPrime[1000]]
+
+System`PrimeQ = mU0`mU0[System`PrimeQ]
+Print[PrimeQ[1009]]
+
+System`Plot = mU0`mU0[System`Plot]
+Print[Plot[ArcSinh[x],{x,-10,10}]]
+*)

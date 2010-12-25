@@ -2,8 +2,9 @@
 #include "Object.h"
 #include <gmp.h>
 #ifdef _MSC_VER
-#pragma comment(lib,"../Lib/gmp.lib")
+#pragma comment(lib,"gmp")
 #endif
+API extern void (*__gmp_free_func)(void*, size_t);
 
 namespace mU {
 struct Enum {
@@ -16,26 +17,70 @@ struct Enum {
 
     std::unordered_set<sym> Attributes;
     sym
-    Constant, Flat, HoldAll, HoldAllComplete, HoldFirst,
-    HoldRest, Listable, Locked, NHoldAll, NHoldFirst,
-    NHoldRest, NumericFunction, OneIdentity, Orderless, Protected,
-    ReadProtected, SequenceHold, Stub, Temporary;
+    Constant, 
+	Flat, 
+	HoldAll, 
+	HoldAllComplete, 
+	HoldFirst,
+    HoldRest, 
+	Listable, 
+	Locked, 
+	NHoldAll, 
+	NHoldFirst,
+    NHoldRest, 
+	NumericFunction, 
+	OneIdentity, 
+	Orderless, 
+	Protected,
+    ReadProtected, 
+	SequenceHold, 
+	Stub, 
+	Temporary;
 
     std::unordered_set<sym> Patterns;
     sym
-    Optional, Condition, PatternTest, Blank, Pattern, Rule, RuleDelayed,
-	Production, Alternatives;
+    Alternatives,
+	Blank, 
+	Condition, 	
+	Optional, 
+	Pattern, 
+	PatternTest, 
+	Production, 
+	Rule, 
+	RuleDelayed;
 	
 	std::unordered_set<sym> Objects;
 	sym
-    Integer, Rational, Real, String,
-	Value, Assign, Method, Delayed, Match;
+    Integer, Rational, Real, String;
 
 	sym
-    True, False, Infinity, Fail, Function,
-	Self, List, Sequence, Serial, Interface,
-    Slot, Return, Continue, Break, Set, Map,
-    Plus, Minus, Times, Power, Sqrt, Radical;
+	Assign, 
+	Break, 
+	Continue, 
+	Delayed,
+	Fail, 
+	False, 
+	Function,
+	Infinity,
+	Interface,
+	List,
+	Map,
+	Match,
+	Method,
+	Minus, 
+	Plus,
+	Power, 
+	Radical,
+    Return, 	
+	Self, 
+	Sequence, 
+	Serial, 
+	Set,
+	Slot, 
+	Sqrt, 
+	Times,
+	True,
+	Value;
 } API extern $;
 inline sym primary(const var& x) {
     return $.PrimaryName[x.primary()];

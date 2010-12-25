@@ -1,4 +1,5 @@
 #include <mU/Match.h>
+#include <algorithm>
 
 namespace mU {
 namespace {

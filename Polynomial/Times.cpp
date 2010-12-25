@@ -1,5 +1,6 @@
-#include <mU/Number.h>
 #include <mU/Polynomial.h>
+#include <mU/Number.h>
+#include <algorithm>
 
 namespace mU {
 var Times(Kernel& k, const Tuple& x) {

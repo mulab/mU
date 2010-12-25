@@ -9,17 +9,17 @@ wchar Parser::read() {
         case -1:
         case WCHAR_MAX:
             return 0;
-        case L'\r':
+        case _W('\r'):
             mIn->get();
-        case L'\n':
+        case _W('\n'):
             ++lineno;
             column = 1;
-            return L'\n';
-        case L'\t':
+            return _W('\n');
+        case _W('\t'):
             column += 4;
-            return L' ';
-        case L'(':
-            if (mIn->peek() == L'*') {
+            return _W(' ');
+        case _W('('):
+            if (mIn->peek() == _W('*')) {
                 mIn->get();
                 int depth = 1;
                 int mode = 1;
@@ -28,30 +28,30 @@ wchar Parser::read() {
                     case -1:
                     case WCHAR_MAX:
                         more();
-                    case L'*':
+                    case _W('*'):
                         if (mode == 2)
                             mode = 0, ++depth;
                         ++column;
                         mode = 1;
                         break;
-                    case L'(':
+                    case _W('('):
                         ++column;
                         mode = 2;
                         break;
-                    case L')':
+                    case _W(')'):
                         if (mode == 1)
                             --depth;
                         ++column;
                         mode = 0;
                         break;
-                    case L'\r':
+                    case _W('\r'):
                         mIn->get();
-                    case L'\n':
+                    case _W('\n'):
                         ++lineno;
                         column = 1;
                         mode = 0;
                         break;
-                    case L'\t':
+                    case _W('\t'):
                         column += 4;
                         mode = 0;
                         break;
@@ -63,9 +63,9 @@ wchar Parser::read() {
                 return read();
             }
             break;
-        case L'\\':
+        case _W('\\'):
             switch (mIn->peek()) {
-            case L':': {
+            case _W(':'): {
                 wchar t[5];
                 wint u;
                 column += 6;
@@ -75,7 +75,7 @@ wchar Parser::read() {
                 return (wchar)u;
             }
             break;
-            case L'[': {
+            case _W('['): {
                 mIn->get();
                 wstring t;
                 std::getline(*mIn, t, _W(']'));
@@ -88,9 +88,9 @@ wchar Parser::read() {
                     error();
             }
             break;
-            case L'\r':
+            case _W('\r'):
                 mIn->get();
-            case L'\n': {
+            case _W('\n'): {
                 mIn->get();
                 ++lineno;
                 column = 1;

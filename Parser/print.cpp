@@ -1,5 +1,6 @@
 #include <mU/Kernel.h>
 #include <mU/Grammar.h>
+#include <algorithm>
 
 namespace mU {
 void Grammar::print(Kernel& k, wostream& o, wchar x) const {

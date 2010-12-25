@@ -14,6 +14,7 @@ var Kernel::get(sym x, const Key& y) {
                 if (r)
                     return value(r);
             }
+			// else x->context, x->context->context, ...?
         }
     }
     return $.Fail;

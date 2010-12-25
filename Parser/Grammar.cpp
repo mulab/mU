@@ -85,7 +85,7 @@ Grammar::Grammar() {
     ++prec;
     M(PLUS, Plus, "+", false, true);
     M(MINUS, Minus, "-", false, true);
-	M(STAR, New, "*", false, true);
+	M(PERCENT, New, "%", false, true);
     ++prec;
     M(CIRCUMFLEX, Power, "^");
     ++prec;

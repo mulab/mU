@@ -1,6 +1,16 @@
 #include <mU/Object.h>
 
 namespace mU {
+void print(wchar x, wostream& o) {
+	if (isgraph(x) && isprint(x))
+		o << x;
+	else
+		o << L"\\:" << std::hex
+		<< ((x >> 12) & 0xF)
+		<< ((x >> 8) & 0xF)
+		<< ((x >> 4) & 0xF)
+		<< (x & 0xF);
+}
 void Key::ruin(Var* x) {
 	delete static_cast<Key*>(x);
 }
@@ -151,11 +161,18 @@ bool var::ahead::operator()(const var& x, const var& y) const {
     if (r)
         return r < 0;
     switch (x.primary()) {
-    case Primary::Object:
-        if (x.object().type == y.object().type)
-			return x.object().compare(y.object()) < 0;
-		return x.object().type < y.object().type;
-	case Primary::Key:
+    case Primary::Object: {
+		r = reinterpret_cast<long>(x.object().type) - reinterpret_cast<long>(y.object().type);
+        if (r)
+			return r < 0;
+		return x.object().compare(y.object()) < 0;
+	}
+	case Primary::Key:  {
+		r = x.key().kind() - y.key().kind();
+        if (r)
+			return r < 0;
+		return x.key().key < y.key().key;
+	}
 	case Primary::Symbol:
 		return x.ptr < y.ptr;
     case Primary::Tuple: {

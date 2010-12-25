@@ -2,12 +2,12 @@
 #include <mU/Interface.h>
 #include <ecl/ecl.h>
 #ifdef _MSC_VER
-#pragma comment(lib,"ecl.lib")
+#pragma comment(lib,"ecl")
 #endif
 
 #undef API
 #ifdef _MSC_VER
-#if defined(linkecl_EXPORTS) || defined(LINKECL_EXPORTS)
+#if defined(ecllink_EXPORTS) || defined(ECLLINK_EXPORTS)
 #define API __declspec(dllexport)
 #else
 #define API __declspec(dllimport)

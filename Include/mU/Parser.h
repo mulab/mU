@@ -24,8 +24,17 @@ public:
 	void match(Token);
 
 	enum Tag {
-		tag_invalid = -1, tag_sequence, tag_expression, tag_suffix, tag_primary,
-		tag_brace, tag_backquote, tag_symbol, tag_blank, tag_pound, tag_dollar
+		tag_invalid = -1, 
+		tag_sequence, 
+		tag_expression, 
+		tag_suffix, 
+		tag_primary,
+		tag_brace, 
+		tag_backquote, 
+		tag_symbol, 
+		tag_blank, 
+		tag_pound, 
+		tag_dollar
 	};
 	API void start(wistream&);
 	API uint sequence(Token = COMMA);
@@ -47,7 +56,13 @@ public:
 	
 	enum Instr {
 		//字节码/Stack/FullForm/MX
-		instr_null, instr_symbol, instr_key, instr_integer, instr_float, instr_string, instr_tuple
+		instr_null, 
+		instr_symbol, 
+		instr_key, 
+		instr_integer, 
+		instr_float, 
+		instr_string, 
+		instr_tuple
 	};
 	API void gen(uint);
     API var code();

@@ -1,0 +1,16 @@
+CInstall["mu0embed"]
+
+(*Symbol[Null,"mU0"]*)
+mU0`mU0
+
+Begin[$mU0]
+
+CInterface["mu0embed",
+Value[mU0`mU0,`Eval,`Main,`Object],
+`mU[_`Object],
+`Read[_String,_],
+`Object`eval[],
+`Object`mU[]
+]
+
+End[]

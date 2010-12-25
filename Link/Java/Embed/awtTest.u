@@ -1,0 +1,21 @@
+frame = Java`New["java.awt.Frame", {"mU Java Console"}]
+console = Java`New["java.awt.TextArea",{}]
+buttons0pn = Java`New["java.awt.Panel",{}]
+execute0bt = Java`New["java.awt.Button", {"Execute"}]
+clear0bt = Java`New["java.awt.Button", {"Clear"}]
+exit0bt = Java`New["java.awt.Button", {"Exit"}]
+
+frame@setSize[600, 300]
+
+buttons0pn@add(execute0bt)
+buttons0pn@add(clear0bt)
+buttons0pn@add(exit0bt)
+
+BorderLayout = Java`Class["java.awt.BorderLayout"]
+
+frame@add[BorderLayout@NORTH, console]
+frame@add[BorderLayout@SOUTH, buttons0pn]
+frame@pack[]
+frame@show[]
+
+(* frame@hide[] *)
