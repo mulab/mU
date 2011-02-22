@@ -1,4 +1,5 @@
 #include <mU/Common.h>
+#include <cstring>
 #ifdef _MSC_VER
 void (*__gmp_free_func)(void*, size_t);
 #endif

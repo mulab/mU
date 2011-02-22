@@ -1,4 +1,6 @@
 #include <mU/utils.h>
+#include <cstdarg>
+#include <cstring>
 #include <gmp.h>
 
 #ifdef _MSC_VER

@@ -1,5 +1,6 @@
 #include <mU/Kernel.h>
 #include <mU/utils.h>
+#include <stdexcept>
 
 namespace mU {
 void Kernel::start() {

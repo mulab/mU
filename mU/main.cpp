@@ -1,6 +1,7 @@
 #include <mU/Interface.h>
 #include <mU/Parser.h>
 #include <mU/utils.h>
+#include <cstring>
 #ifdef _MSC_VER
 #pragma comment(lib,"Kernel.lib")
 #pragma comment(lib,"Parser.lib")
@@ -17,7 +18,7 @@ inline void prompt() {
     _W("mU") <<
 #endif
 #else
-    (wchar)956 <<
+    _W("mu") <<
 #endif
     _W("> ");
 }

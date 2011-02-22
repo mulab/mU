@@ -1,4 +1,5 @@
 #include <mU/Parser.h>
+#include <stdexcept>
 
 namespace mU {
 void Parser::start(wistream& in) {

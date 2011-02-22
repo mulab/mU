@@ -1,4 +1,5 @@
 #include <mU/Object.h>
+#include <cstring>
 
 namespace mU {
 void print(wchar x, wostream& o) {

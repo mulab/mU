@@ -1,5 +1,6 @@
 #pragma once
 #include "var.h"
+#include <vector>
 
 #undef API
 #ifdef _MSC_VER
