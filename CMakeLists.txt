@@ -17,14 +17,20 @@ set(CMAKE_CXX_FLAGS "-Wno-deprecated")
 set(EXECUTABLE_OUTPUT_PATH ..)
 set(LIBRARY_OUTPUT_PATH ..)
 
+set(CMAKE_SHARED_LIBRARY_PREFIX "")
+set(CMAKE_SHARED_LIBRARY_SUFFIX ".dll")
+set(CMAKE_SHARED_MODULE_PREFIX "")
+set(CMAKE_SHARED_MODULE_SUFFIX ".dll")
+    
+# FIXME: can we simply set the library type to SHARED?
+# issue 1: what's the difference between SHARED and MODULE on UNIX gcc
+#          and MinGW gcc?
+# issue 2: MODULEs can't be linked to other MODULEs, but we need to link
+#          Function.dll into Matrix.dll
 if(WIN32)
     set(PACKAGE_LIB_TYPE SHARED)
-    set(CMAKE_SHARED_LIBRARY_PREFIX "")
-    set(CMAKE_SHARED_LIBRARY_SUFFIX ".dll")
 elseif(UNIX)
-    set(PACKAGE_LIB_TYPE MODULE)
-    set(CMAKE_SHARED_MODULE_PREFIX "")
-    set(CMAKE_SHARED_MODULE_SUFFIX ".dll")
+    set(PACKAGE_LIB_TYPE MODULE) 
 else()
     message(FATAL_ERROR "building on an unsupported operating system")
 endif() 
