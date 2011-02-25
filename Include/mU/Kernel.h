@@ -4,8 +4,17 @@
 #ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+#ifdef _MSC_VER
+#define DLLMAIN_DECL
+#else
+#ifdef __MINGW32__
+#define DLLMAIN_DECL extern "C"
+#else
+#error "unknown toolchain"
+#endif
+#endif
 #define DLLMAIN(x)\
-BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved)\
+DLLMAIN_DECL BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved)\
 {\
 switch (ul_reason_for_call)\
 {\
