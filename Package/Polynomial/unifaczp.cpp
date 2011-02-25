@@ -1,6 +1,6 @@
 /**
 \file
-\brief æœ‰é™åŸŸZpä¸Šå¤šé¡¹å¼å› å­åˆ†è§£.
+\brief ÓĞÏŞÓòZpÉÏ¶àÏîÊ½Òò×Ó·Ö½â.
 */
 #include "common.h"
 
@@ -156,10 +156,10 @@ bool factor_compare(const poly_z & f,const poly_z & g)
 }
 
 /**
-\brief å¿«é€Ÿå¤šé¡¹å¼ç¯ä¸­å¹‚ç®—æ³•.
+\brief ¿ìËÙ¶àÏîÊ½»·ÖĞÃİËã·¨.
 \param f in Zp[x].
-\param n å¹‚æ¬¡æ•°.
-\param p ç‰¹å¾.
+\param n Ãİ´ÎÊı.
+\param p ÌØÕ÷.
 */
 void Power(poly_z & f,uint n,mpz_ptr p)
 {
@@ -190,11 +190,11 @@ void Power(poly_z & f,uint n,mpz_ptr p)
 }
 
 /**
-\brief å¿«é€Ÿå¤šé¡¹å¼æ¨¡ç¯ä¸­å¹‚ç®—æ³•.
+\brief ¿ìËÙ¶àÏîÊ½Ä£»·ÖĞÃİËã·¨.
 \param f in Zp[x].
-\param n å¹‚æ¬¡æ•°.
-\param g æ¨¡å¤šé¡¹å¼,in Zp[x].
-\param p ç‰¹å¾.
+\param n Ãİ´ÎÊı.
+\param g Ä£¶àÏîÊ½,in Zp[x].
+\param p ÌØÕ÷.
 */
 void PowerMod(poly_z & f,mpz_ptr n,const poly_z & g,mpz_ptr p)
 {
@@ -228,10 +228,10 @@ void PowerMod(poly_z & f,mpz_ptr n,const poly_z & g,mpz_ptr p)
 }
 
 /**
-\brief å¿«é€Ÿå¤šé¡¹å¼æ¨¡ç¯ä¸­pæ¬¡å¹‚ç®—æ³•.
+\brief ¿ìËÙ¶àÏîÊ½Ä£»·ÖĞp´ÎÃİËã·¨.
 \param f in Zp[x].
-\param g æ¨¡å¤šé¡¹å¼,in Zp[x].
-\param p ç‰¹å¾.
+\param g Ä£¶àÏîÊ½,in Zp[x].
+\param p ÌØÕ÷.
 */
 void PowerMod_Pth_Power(poly_z & f,const poly_z & g,mpz_ptr p)
 {
@@ -258,11 +258,11 @@ void PowerMod_Pth_Power(poly_z & f,const poly_z & g,mpz_ptr p)
 }
 
 /**
-\brief ä¸åŒæ¬¡å› å­åˆ†è§£.
+\brief ²»Í¬´ÎÒò×Ó·Ö½â.
 \param f in Zp[x], monic.
 \param p characteristic.
-\param disfactorlist è¿”å›çš„ä¸åŒæ¬¡å› å­
-\param deglist è¿”å›çš„å› å­æ¬¡æ•°
+\param disfactorlist ·µ»ØµÄ²»Í¬´ÎÒò×Ó
+\param deglist ·µ»ØµÄÒò×Ó´ÎÊı
 */
 void UniDisDegFacZp(std::vector<poly_z> & disfactorlist, std::vector<uint> & deglist,const poly_z & f,mpz_ptr p)
 {
@@ -301,10 +301,10 @@ void UniDisDegFacZp(std::vector<poly_z> & disfactorlist, std::vector<uint> & deg
 }
 
 /**
-\brief æœ‰é™åŸŸéšæœºå¤šé¡¹å¼ç”Ÿæˆ.
-\param deg_bound æ¬¡æ•°çš„ä¸Šç•Œ.
+\brief ÓĞÏŞÓòËæ»ú¶àÏîÊ½Éú³É.
+\param deg_bound ´ÎÊıµÄÉÏ½ç.
 \param p characteristic.
-\param r éšæœºå¤šé¡¹å¼,å…¶æ¬¡æ•°ä¸è¶…è¿‡deg_bound.
+\param r Ëæ»ú¶àÏîÊ½,Æä´ÎÊı²»³¬¹ıdeg_bound.
 */
 void UniRandomZp(poly_z & r,uint deg_bound,mpz_ptr p)
 {
@@ -321,11 +321,11 @@ void UniRandomZp(poly_z & r,uint deg_bound,mpz_ptr p)
 }
 
 /**
-\brief æœ‰é™åŸŸä¸ŠåŒæ¬¡å› å­åˆ†è§£.
+\brief ÓĞÏŞÓòÉÏÍ¬´ÎÒò×Ó·Ö½â.
 \param f in Zp[x], monic.
 \param p characteristic.
-\param d å„ä¸å¯çº¦å› å­çš„æ¬¡æ•°.
-\param eqlfactorlist fçš„åŒæ¬¡å› å­åˆ†è§£ç»“æœ
+\param d ¸÷²»¿ÉÔ¼Òò×ÓµÄ´ÎÊı.
+\param eqlfactorlist fµÄÍ¬´ÎÒò×Ó·Ö½â½á¹û
 */
 void UniEqlDegFacZp(std::vector<poly_z> & eqlfactorlist,const poly_z & f,mpz_ptr p,uint d)
 {
@@ -337,10 +337,10 @@ void UniEqlDegFacZp(std::vector<poly_z> & eqlfactorlist,const poly_z & f,mpz_ptr
 }
 
 /**
-\brief æ— å¹³æ–¹å› å­å¤šé¡¹å¼çš„åˆ†è§£.
-\param f æ— å¹³æ–¹å› å­å¤šé¡¹å¼, monic.
+\brief ÎŞÆ½·½Òò×Ó¶àÏîÊ½µÄ·Ö½â.
+\param f ÎŞÆ½·½Òò×Ó¶àÏîÊ½, monic.
 \param p characteristic.
-\return fçš„ä¸å¯çº¦å› å­åˆ†è§£\f$(f_1,f_2,\ldots,f_k)\f$.
+\return fµÄ²»¿ÉÔ¼Òò×Ó·Ö½â\f$(f_1,f_2,\ldots,f_k)\f$.
 */
 void UniFacZp_fsqfmonic(std::vector<poly_z> & faclist,const poly_z & f,mpz_ptr p)
 {
@@ -433,10 +433,10 @@ void UniSqrFreeDecomZp(const poly_z & f,std::vector<poly_z> & sqflist,mpz_ptr p)
 }
 
 /**
-\brief æœ‰é™åŸŸä¸Šå¤šé¡¹å¼å› å­åˆ†è§£.
+\brief ÓĞÏŞÓòÉÏ¶àÏîÊ½Òò×Ó·Ö½â.
 \param f in Zp[x].
 \param p characteristic.
-\todo æœ‰é™åŸŸæ— å¹³æ–¹åˆ†è§£
+\todo ÓĞÏŞÓòÎŞÆ½·½·Ö½â
 */
 void UniFacZp(const poly_z & f,mpz_ptr p,mpz_ptr b,std::vector<poly_z> & faclist,std::vector<uint> & exponents)
 {

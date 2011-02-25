@@ -1,5 +1,5 @@
 /** \file
-\brief 涓�鍏冩柟绋嬪疄锛堝锛夋牴闅旂
+\brief 一元方程实（复）根隔离
 */
 #include "common.h"
 

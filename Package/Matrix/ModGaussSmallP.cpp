@@ -2,10 +2,10 @@
 
 namespace mU {
 namespace Matrix {
-//ç”¨æ— ç¬¦å·æ•´å‹æ•°ç»„è¡¨ç¤ºçŸ©é˜µï¼Œæ˜¯æœ¬æ–‡ä»¶ä¸­å‡½æ•°çš„å¤„ç†å¯¹è±¡ã€‚
+//ÓÃÎŞ·ûºÅÕûĞÍÊı×é±íÊ¾¾ØÕó£¬ÊÇ±¾ÎÄ¼şÖĞº¯ÊıµÄ´¦Àí¶ÔÏó¡£
 typedef std::vector<std::vector<uint> > Mat;
-//åœ¨å‡½æ•°å¼€å§‹å‰åº”é€šè¿‡æ¨¡è¿ç®—å°†è¾“å…¥çŸ©é˜µè½¬æ¢æˆuintçŸ©é˜µè¾“å…¥ï¼Œä»è€Œæœ¬æ–‡ä»¶ä¸­çš„å‡½æ•°åªå¤„ç†uintå‹çŸ©é˜µã€‚
-//åˆ©ç”¨å¤§æ•´æ•°çŸ©é˜µMé€šè¿‡æ¨¡å°ç´ æ•°primeå¾—åˆ°å°æ•´æ•°çŸ©é˜µRï¼Œç”¨æ— ç¬¦å·æ•´å‹æ•°ç»„è¡¨ç¤ºã€‚
+//ÔÚº¯Êı¿ªÊ¼Ç°Ó¦Í¨¹ıÄ£ÔËËã½«ÊäÈë¾ØÕó×ª»»³Éuint¾ØÕóÊäÈë£¬´Ó¶ø±¾ÎÄ¼şÖĞµÄº¯ÊıÖ»´¦ÀíuintĞÍ¾ØÕó¡£
+//ÀûÓÃ´óÕûÊı¾ØÕóMÍ¨¹ıÄ£Ğ¡ËØÊıprimeµÃµ½Ğ¡ÕûÊı¾ØÕóR£¬ÓÃÎŞ·ûºÅÕûĞÍÊı×é±íÊ¾¡£
 void mMod(Mat &r,Var M,uint prime)
 {
 	size_t m=Size(M);
@@ -18,9 +18,9 @@ void mMod(Mat &r,Var M,uint prime)
 			r[i][j]=Z::Mod(Entry(M,i,j),prime);
 	}
 }
-//Mä¸€èˆ¬çŸ©é˜µ
-//Méå¥‡å¼‚ï¼Œåˆ™å¯¹Mè¿›è¡ŒPLUåˆ†è§£ï¼Œè¿”å›List{Au,p,norm},å…¶ä¸­Auå¯†é›†å­˜å‚¨LUåˆ†è§£çš„ç»“æœï¼Œè€Œpä¸ºç½®æ¢é˜µçš„ä¿¡æ¯ï¼Œnormå­˜å‚¨çŸ©é˜µèŒƒæ•°çš„ä¼°å€¼ï¼Œå¯¹äºç²¾ç¡®çŸ©é˜µï¼Œéå¥‡å¼‚åˆ™æ ‡è®°ä¸º1ï¼Œå¥‡å¼‚æƒ…å½¢æ ‡è®°ä¸º-1ã€‚
-//Må¥‡å¼‚ï¼Œç»§ç»­è¿›è¡ŒRow echelonçº¦åŒ–ã€‚
+//MÒ»°ã¾ØÕó
+//M·ÇÆæÒì£¬Ôò¶ÔM½øĞĞPLU·Ö½â£¬·µ»ØList{Au,p,norm},ÆäÖĞAuÃÜ¼¯´æ´¢LU·Ö½âµÄ½á¹û£¬¶øpÎªÖÃ»»ÕóµÄĞÅÏ¢£¬norm´æ´¢¾ØÕó·¶ÊıµÄ¹ÀÖµ£¬¶ÔÓÚ¾«È·¾ØÕó£¬·ÇÆæÒìÔò±ê¼ÇÎª1£¬ÆæÒìÇéĞÎ±ê¼ÇÎª-1¡£
+//MÆæÒì£¬¼ÌĞø½øĞĞRow echelonÔ¼»¯¡£
 //prime is prime.
 void mLU(Mat& Au,std::vector<uint>& pi,uint m,uint n,uint prime)
 {
@@ -71,8 +71,8 @@ void mLU(Mat& Au,std::vector<uint>& pi,uint m,uint n,uint prime)
 			std::swap(pi[i],pi[p[i]]);
 	}
 }
-//Auä¸ºä¼ å…¥çš„å¢å¹¿çŸ©é˜µã€‚
-//solutionéœ€é¢„å…ˆresizeæˆä¸ºm*pbå¤§å°çš„çŸ©é˜µã€‚
+//AuÎª´«ÈëµÄÔö¹ã¾ØÕó¡£
+//solutionĞèÔ¤ÏÈresize³ÉÎªm*pb´óĞ¡µÄ¾ØÕó¡£
 bool mLinearSolve(Mat& solution,Mat& M,Mat& b,uint m,uint pm,uint pb,uint prime)
 {
 	size_t n=pm+pb;
@@ -252,11 +252,11 @@ void mRowReduce(Mat& Au,uint m,uint n,uint prime)
 			}
 	}
 }
-//ç”¨NullSpaceçŸ©é˜µè¡¨ç¤ºé›¶ç©ºé—´çš„ä¸€ç»„åŸºï¼Œå…¶å¤§å°ç”±å‡½æ•°å†…éƒ¨å†³å®šã€‚
+//ÓÃNullSpace¾ØÕó±íÊ¾Áã¿Õ¼äµÄÒ»×é»ù£¬Æä´óĞ¡ÓÉº¯ÊıÄÚ²¿¾ö¶¨¡£
 void mNullSpace(Mat& solutions,Mat& Au,uint m,uint n,uint prime)
 {
 	mRowReduce(Au,m,n,prime);
-	if((m>=n)&&(Au[n-1][n-1]))//åˆ—ç‹¬ç«‹é˜µ
+	if((m>=n)&&(Au[n-1][n-1]))//ÁĞ¶ÀÁ¢Õó
 		return;
 	std::vector<int> ind(n+1),dep(n+1);
 	ind[0]=-1;
@@ -317,7 +317,7 @@ bool mInverse(Mat& R,Mat& M,uint n,uint prime)
 }
 uint mDet(Mat& Au,uint n,uint prime)
 {
-	bool sign=true;//è¡Œäº¤æ¢çš„å¥‡å¶æ€§
+	bool sign=true;//ĞĞ½»»»µÄÆæÅ¼ĞÔ
 	std::vector<int> p(n);
 	for(size_t i=0;i<n;++i)
 		p[i]=i;

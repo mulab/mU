@@ -12,7 +12,7 @@ var D(Var x,Var y)
 	map_t e;
 	e[TAG(Derivative)]=TAG($Derivative);
 	var r=Subs(e,x);
-	//å¼ºåˆ¶æ±‚å€¼ï¼Ÿè¦åŒ–ç®€
+	//Ç¿ÖÆÇóÖµ£¿Òª»¯¼ò
 	return Expand(Eval(Ex(TAG($D),Vec(r,y))));
 }
 
@@ -31,9 +31,9 @@ Wrap(D)
 				for (int i=0;i<n;i++)
 					r=D(r,At(para,0));
 			}
-			//å¤„ç†ç¬¦å·é˜¶çš„å¯¼æ•°ï¼Œæ— å…³åˆ™è¿”å›0
+			//´¦Àí·ûºÅ½×µÄµ¼Êı£¬ÎŞ¹ØÔò·µ»Ø0
 			else if (FreeQ(r,At(para,0))) return Int(0L);
-			//å¦åˆ™åŸæ ·è¿”å›
+			//·ñÔòÔ­Ñù·µ»Ø
 			else return 0;
 		}
 		else
@@ -90,7 +90,7 @@ Wrap2(Derivative)
 		return Ex(TAG(Function),Vec(r));
 }
 
-//\todo æœ€å¥½æ”¹ç”¨è„šæœ¬å†™
+//\todo ×îºÃ¸ÄÓÃ½Å±¾Ğ´
 Wrap($MultiD)
 {
 	var f=At(x,0);
@@ -125,7 +125,7 @@ void Initialize()
 	T(D)T($MultiD)
 #undef T
 #define T(x) Functionals[TAG(x)] = WRAP(x);
-	//\todo åˆ 
+	//\todo É¾
 	T(Derivative)T($Derivative)
 #undef T
 #define T(x,y) Attributes[TAG(x)].insert(y);

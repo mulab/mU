@@ -1,4 +1,12 @@
-#Wed Feb 09 21:33:17 CST 2011
+#Fri Feb 25 23:57:57 CST 2011
 eclipse.preferences.version=1
-encoding/<project>=UTF-8
-encoding/Projects=GB2312
+encoding//Projects/Differential/Differential.vcproj=GB2312
+encoding//Projects/Function/Function.vcproj=GB2312
+encoding//Projects/Graphics/Graphics.vcproj=GB2312
+encoding//Projects/Matrix/Matrix.vcproj=GB2312
+encoding//Projects/NumberTheory/NumberTheory.vcproj=GB2312
+encoding//Projects/Polynomial/Polynomial.vcproj=GB2312
+encoding//Projects/Stream/Stream.vcproj=GB2312
+encoding//Projects/mU/mU.vcproj=GB2312
+encoding/<project>=GBK
+encoding/Projects=UTF-8

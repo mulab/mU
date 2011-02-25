@@ -1,6 +1,6 @@
 /**
 \file
-\brief å¤šå…ƒå¤šé¡¹å¼GCD in Zp[X]
+\brief ¶àÔª¶àÏîÊ½GCD in Zp[X]
 */
 #include "common.h"
 
@@ -172,7 +172,7 @@ void MultiGcdZp_Dense_Interpolation(sparse_z & r,const sparse_z & f, const spars
 		m1=hv.deg(0);
 		size=hv.size();
 		if(m1>m)continue;
-		//æ­£åˆ™åŒ–
+		//ÕıÔò»¯
 		mpz_set(inverse,hv[size-1].coe);
 		mpz_invert(inverse,inverse,p);
 		for(uint i=0;i<size;++i)

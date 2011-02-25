@@ -33,9 +33,9 @@ void mMod(Var r,Var M,Var p)
 		}
 	}
 }
-//Mä¸€èˆ¬çŸ©é˜µ
-//Méå¥‡å¼‚ï¼Œåˆ™å¯¹Mè¿›è¡ŒPLUåˆ†è§£ï¼Œè¿”å›List{Au,p,norm},å…¶ä¸­Auå¯†é›†å­˜å‚¨LUåˆ†è§£çš„ç»“æœï¼Œè€Œpä¸ºç½®æ¢é˜µçš„ä¿¡æ¯ï¼Œnormå­˜å‚¨çŸ©é˜µèŒƒæ•°çš„ä¼°å€¼ï¼Œå¯¹äºç²¾ç¡®çŸ©é˜µï¼Œéå¥‡å¼‚åˆ™æ ‡è®°ä¸º1ï¼Œå¥‡å¼‚æƒ…å½¢æ ‡è®°ä¸º-1ã€‚
-//Må¥‡å¼‚ï¼Œç»§ç»­è¿›è¡ŒRow echelonçº¦åŒ–ã€‚
+//MÒ»°ã¾ØÕó
+//M·ÇÆæÒì£¬Ôò¶ÔM½øĞĞPLU·Ö½â£¬·µ»ØList{Au,p,norm},ÆäÖĞAuÃÜ¼¯´æ´¢LU·Ö½âµÄ½á¹û£¬¶øpÎªÖÃ»»ÕóµÄĞÅÏ¢£¬norm´æ´¢¾ØÕó·¶ÊıµÄ¹ÀÖµ£¬¶ÔÓÚ¾«È·¾ØÕó£¬·ÇÆæÒìÔò±ê¼ÇÎª1£¬ÆæÒìÇéĞÎ±ê¼ÇÎª-1¡£
+//MÆæÒì£¬¼ÌĞø½øĞĞRow echelonÔ¼»¯¡£
 //prime is prime.
 var mLU(Var M,Var prime)
 {
@@ -298,7 +298,7 @@ var mNullSpace(Var M,Var prime)
 	size_t m=Size(M);
 	size_t n=Size(At(M,0));
 	var Au=mRowReduce(M,prime);
-	if((m>=n)&&(Z::Sgn(Entry(Au,n-1,n-1))))//åˆ—ç‹¬ç«‹é˜µ
+	if((m>=n)&&(Z::Sgn(Entry(Au,n-1,n-1))))//ÁĞ¶ÀÁ¢Õó
 		return Vec();
 	std::vector<int> ind(n+1),dep(n+1);
 	ind[0]=-1;
@@ -354,7 +354,7 @@ var mDet(Var M,Var prime)
 {
 	var zero=Int(0L);
 	size_t n=Size(M);
-	bool sign=true;//è¡Œäº¤æ¢çš„å¥‡å¶æ€§
+	bool sign=true;//ĞĞ½»»»µÄÆæÅ¼ĞÔ
 	var Au;
 	mMod(Au,M,prime);
 	std::vector<sint> p(n);

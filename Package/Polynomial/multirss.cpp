@@ -1,6 +1,6 @@
 /**
 \file
-\brief 澶氬厓澶氶」寮弐ecursive-variable-sparse-degree-sparse representation
+\brief 多元多项式recursive-variable-sparse-degree-sparse representation
 */
 #include "common.h"
 

@@ -1,6 +1,6 @@
 /**
 \file
-\brief 澶氬厓澶氶」寮廏CD in Z[X]
+\brief 多元多项式GCD in Z[X]
 */
 #include "common.h"
 

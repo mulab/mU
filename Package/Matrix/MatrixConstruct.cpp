@@ -2,7 +2,7 @@
 
 namespace mU {
 namespace Matrix {
-var Drop(Var M,size_t i,size_t j)//鍘绘帀M鐨勭i琛屽拰绗琷鍒楋紙i锛宩鍧囦粠0寮�濮嬶級
+var Drop(Var M,size_t i,size_t j)//去掉M的第i行和第j列（i，j均从0开始）
 {
 	size_t m=Size(M);
 	size_t n=Size(At(M,0));

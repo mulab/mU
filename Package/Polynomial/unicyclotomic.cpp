@@ -1,5 +1,5 @@
 /** \file
-\brief åˆ†åœ†å¤šé¡¹å¼
+\brief ·ÖÔ²¶àÏîÊ½
 */
 #include "common.h"
 #include <cmath>
@@ -1393,10 +1393,10 @@ void uni_compose_z(poly_z & r,const poly_z & f,const poly_z & g)
 }
 
 /**
-\brief né˜¶åˆ†åœ†å¤šé¡¹å¼çš„ç”Ÿæˆ.
-\param n é˜¶æ•°.
-\param r æ•´ç³»æ•°né˜¶åˆ†åœ†å¤šé¡¹å¼.
-\note ç”¨åˆ°äº†FactorInteger.
+\brief n½×·ÖÔ²¶àÏîÊ½µÄÉú³É.
+\param n ½×Êı.
+\param r ÕûÏµÊın½×·ÖÔ²¶àÏîÊ½.
+\note ÓÃµ½ÁËFactorInteger.
 */
 void UniCyclotomicZ(poly_z & r,uint n)
 {
@@ -1423,12 +1423,12 @@ void UniCyclotomicZ(poly_z & r,uint n)
 }
 
 /**
-\brief åˆ†åœ†å¤šé¡¹å¼çš„æ£€æµ‹.
-\param f å¾…æ£€æµ‹çš„æ•´ç³»æ•°ä¸å¯çº¦å¤šé¡¹å¼.
-\retval é˜¶æ•°n è‹¥å…¶ä¸ºåˆ†åœ†å¤šé¡¹å¼.
-\retval 0 è‹¥å…¶éåˆ†åœ†å¤šé¡¹å¼.
-\note ä¸è®¡\f$\pm f\f$.
-\todo è¯•é™¤æ³•ä¸ç”Ÿæˆæ³•è°å¿«ï¼Ÿ
+\brief ·ÖÔ²¶àÏîÊ½µÄ¼ì²â.
+\param f ´ı¼ì²âµÄÕûÏµÊı²»¿ÉÔ¼¶àÏîÊ½.
+\retval ½×Êın ÈôÆäÎª·ÖÔ²¶àÏîÊ½.
+\retval 0 ÈôÆä·Ç·ÖÔ²¶àÏîÊ½.
+\note ²»¼Æ\f$\pm f\f$.
+\todo ÊÔ³ı·¨ÓëÉú³É·¨Ë­¿ì£¿
 */
 uint UniCyclotomicZQ_InversePhi(const poly_z & f)
 {
@@ -1464,12 +1464,12 @@ uint UniCyclotomicZQ_InversePhi(const poly_z & f)
 }
 
 /**
-\brief ä½ç§»åˆ†åœ†å¤šé¡¹å¼çš„æ£€æµ‹.
-\param f å¾…æ£€æµ‹çš„æ•´ç³»æ•°å¤šé¡¹å¼.
-\retval {} fä¸æ˜¯ä½ç§»åˆ†åœ†å¤šé¡¹å¼.
-\retval {n,g,h} fæ˜¯ä½ç§»åˆ†åœ†å¤šé¡¹å¼,ä¸”næ˜¯å…¶é˜¶æ•°,gæ˜¯ä¸€åˆ†åœ†å¤šé¡¹å¼,hæ˜¯ä¸€æ¬¡å› å­,f=g(h(x)).
-\note ä¸è®¡\f$\pm f\f$.
-\todo æ•´æ•°æ ¹æ±‚è§£å¯åŠ å¿«
+\brief Î»ÒÆ·ÖÔ²¶àÏîÊ½µÄ¼ì²â.
+\param f ´ı¼ì²âµÄÕûÏµÊı¶àÏîÊ½.
+\retval {} f²»ÊÇÎ»ÒÆ·ÖÔ²¶àÏîÊ½.
+\retval {n,g,h} fÊÇÎ»ÒÆ·ÖÔ²¶àÏîÊ½,ÇÒnÊÇÆä½×Êı,gÊÇÒ»·ÖÔ²¶àÏîÊ½,hÊÇÒ»´ÎÒò×Ó,f=g(h(x)).
+\note ²»¼Æ\f$\pm f\f$.
+\todo ÕûÊı¸ùÇó½â¿É¼Ó¿ì
 */
 uint UniShiftedCyclotomicZQ(poly_z & r,const poly_z & f)
 {

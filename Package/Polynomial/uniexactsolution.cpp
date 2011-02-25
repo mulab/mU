@@ -1,5 +1,5 @@
 /** \file
-\brief ä¸€å…ƒæ–¹ç¨‹ç²¾ç¡®è§£
+\brief Ò»Ôª·½³Ì¾«È·½â
 */
 #include "common.h"
 
@@ -124,10 +124,10 @@ void UniZRootZ_ByFactor(std::vector<mpz_ptr> & rootlist,const poly_z & f)
 }
 
 /**
-\brief æ•´ç³»æ•°å¤šé¡¹å¼çš„æ•´æ•°æ ¹(ä¸å«é‡æ•°).
-\param f æ•´ç³»æ•°å¤šé¡¹å¼.
-\return æ•´æ ¹çš„list.
-\note åˆ©ç”¨Zpä¸­çš„æ ¹.
+\brief ÕûÏµÊı¶àÏîÊ½µÄÕûÊı¸ù(²»º¬ÖØÊı).
+\param f ÕûÏµÊı¶àÏîÊ½.
+\return Õû¸ùµÄlist.
+\note ÀûÓÃZpÖĞµÄ¸ù.
 */
 void UniZRootZ_ByZp(std::vector<mpz_ptr> & rootlist,const poly_z & f)
 {
@@ -171,11 +171,11 @@ void UniZRootZ_ByZp(std::vector<mpz_ptr> & rootlist,const poly_z & f)
 }
 
 /**
-\brief æœ‰é™åŸŸFpä¸Šå¤šé¡¹å¼åœ¨Fpä¸­çš„æ ¹(ä¸å«é‡æ•°)
-\param f Fp[x]ä¸­å¤šé¡¹å¼
-\param p é˜¶æ•°
-\return æ ¹çš„é›†åˆ
-\note åˆ©ç”¨å› å­åˆ†è§£ç®—æ³•æ±‚è§£
+\brief ÓĞÏŞÓòFpÉÏ¶àÏîÊ½ÔÚFpÖĞµÄ¸ù(²»º¬ÖØÊı)
+\param f Fp[x]ÖĞ¶àÏîÊ½
+\param p ½×Êı
+\return ¸ùµÄ¼¯ºÏ
+\note ÀûÓÃÒò×Ó·Ö½âËã·¨Çó½â
 */
 void UniZpRootZp(std::vector<mpz_ptr> & rootlist,const poly_z & f,mpz_ptr p)
 {

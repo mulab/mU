@@ -1,6 +1,6 @@
 /**
 \file
-\brief å¤šå…ƒå¤šé¡¹å¼GroebneråŸº
+\brief ¶àÔª¶àÏîÊ½Groebner»ù
 */
 #include "common.h"
 

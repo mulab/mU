@@ -1,5 +1,5 @@
 /** \file 
-\brief ç´ æ€§æ£€æµ‹.
+\brief ËØĞÔ¼ì²â.
 */
 #include "common.h"
 #include "objects/integer.h"
@@ -50,11 +50,11 @@ namespace
 namespace Modules {
 namespace NumberTheory {
 
-/** \brief åˆ¤æ–­\f$n\f$æ˜¯å¦ä¸ºç´ æ•°.
-	\param n æ•´æ•°.
-	\retval >0 æ˜¯.
-	\retval 0 å¦.
-	\note ä½¿ç”¨Rabin-Millerå¼ºä¼ªç´ æ•°æ£€æµ‹.
+/** \brief ÅĞ¶Ï\f$n\f$ÊÇ·ñÎªËØÊı.
+	\param n ÕûÊı.
+	\retval >0 ÊÇ.
+	\retval 0 ·ñ.
+	\note Ê¹ÓÃRabin-MillerÇ¿Î±ËØÊı¼ì²â.
 */
 INT PrimeQ(VAR n) {
 	return mpz_probab_prime_p(PTR(n),10);

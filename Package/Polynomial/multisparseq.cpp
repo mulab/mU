@@ -1,6 +1,6 @@
 /**
 \file
-\brief å¤šå…ƒå¤šé¡¹å¼åŸºæœ¬å‡½æ•° in Q[x]
+\brief ¶àÔª¶àÏîÊ½»ù±¾º¯Êı in Q[x]
 */
 #include "common.h"
 

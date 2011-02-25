@@ -2,7 +2,7 @@
 
 namespace mU{
 namespace Matrix{
-var StrassenDMM(Var A,Var B,size_t m,size_t p,size_t n,size_t bound)//mä¸ºMè¡Œæ•°ï¼Œnä¸ºNåˆ—æ•°ï¼Œpä¸ºnè¡Œæ•°ï¼Œboundä¸ºé€’å½’ä¸‹ç•Œ
+var StrassenDMM(Var A,Var B,size_t m,size_t p,size_t n,size_t bound)//mÎªMĞĞÊı£¬nÎªNÁĞÊı£¬pÎªnĞĞÊı£¬boundÎªµİ¹éÏÂ½ç
 {		
 	if(m<=bound||n<=bound||p<=bound)
 		return Matrix::Dot(A,B);
@@ -81,7 +81,7 @@ var StrassenDMM(Var A,Var B,size_t m,size_t p,size_t n,size_t bound)//mä¸ºMè¡Œæ•
 }
 var StrassenMM(Var M,Var N)
 {
-	const size_t bound=64;//é€’å½’ä¸‹ç•Œ
+	const size_t bound=64;//µİ¹éÏÂ½ç
 	size_t m=Size(M),p=Size(N),n=Size(At(N,0));
 	if (m<bound || p<bound || n<bound)
 	{

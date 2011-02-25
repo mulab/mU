@@ -4,11 +4,11 @@ namespace mU{
 namespace Matrix{
 var LinearSolve(Var M, Var b)
 {
-	bool vect=false;//ç”¨æ¥åˆ¤æ–­bæ˜¯å¦ä¸ºä¸€ä¸ªæ¨ªå‘é‡
+	bool vect=false;//ÓÃÀ´ÅĞ¶ÏbÊÇ·ñÎªÒ»¸öºáÏòÁ¿
 	var b_normal;
 
-	//è‹¥bä¸ºæ¨ªå‘é‡ï¼Œå°†å®ƒè½¬åŒ–ä¸ºç«–å‘é‡ï¼Œæœ€åè¾“å‡ºçš„è§£å†è½¬åŒ–ä¸ºæ¨ªå‘ä¸¤ï¼Œ
-	//è¿™æ˜¯ä¸ºäº†ä¸Mathematicaç»Ÿä¸€
+	//ÈôbÎªºáÏòÁ¿£¬½«Ëü×ª»¯ÎªÊúÏòÁ¿£¬×îºóÊä³öµÄ½âÔÙ×ª»¯ÎªºáÏòÁ½£¬
+	//ÕâÊÇÎªÁËÓëMathematicaÍ³Ò»
 	if (!VecQ(At(b,0)))
 	{			
 		b_normal=Transpose(getMatrixFromVector(b));
@@ -27,7 +27,7 @@ var LinearSolve(Var M, Var b)
 	var zero=Rat(0.0);
 	
 
-	//Auä¸ºæ‹“å±•çŸ©é˜µ
+	//AuÎªÍØÕ¹¾ØÕó
 	for(size_t i=0;i<m;++i)
 	{
 		//flag[i]=true;
@@ -48,14 +48,14 @@ var LinearSolve(Var M, Var b)
 
 
 	
-	//æ‰“æ´
+	//´ò¶´
 	size_t row=0;
 	for(size_t col=0;col<pm;++col)
 	{
 		if(row==m-1)
 			break;
 		var temp;
-		bool fl=false;//è¡¨ç¤ºè‡³å°‘æ­¤åˆ—æœ‰ä¸€ä¸ªéé›¶å…ƒç´ 
+		bool fl=false;//±íÊ¾ÖÁÉÙ´ËÁĞÓĞÒ»¸ö·ÇÁãÔªËØ
 		for(size_t j=row;j<m;++j)
 		{
 			if(N::Sgn(Entry(Au,j,col))!=0)
@@ -68,7 +68,7 @@ var LinearSolve(Var M, Var b)
 		}
 		if(fl)
 		{
-			//å¯»æ‰¾æ­¤åˆ—æœ€å°éé›¶å…ƒ
+			//Ñ°ÕÒ´ËÁĞ×îĞ¡·ÇÁãÔª
 			for(size_t j=p[row];j<m;++j)
 			{
 				var c=N::Abs(Entry(Au,j,col));
@@ -79,13 +79,13 @@ var LinearSolve(Var M, Var b)
 				}
 			}
 
-			//åˆ¤æ–­æ˜¯å¦éœ€è¦è¿›è¡Œè¡Œå˜æ¢
+			//ÅĞ¶ÏÊÇ·ñĞèÒª½øĞĞĞĞ±ä»»
 			if(row!=p[row])
 				std::swap(At(Au,row),At(Au,p[row]));
 
 
 			
-			//æ‰“æ´
+			//´ò¶´
 			for(size_t k=row+1;k<m;++k)
 			{
 				if(N::Sgn(Entry(Au,k,col))!=0)
@@ -106,9 +106,9 @@ var LinearSolve(Var M, Var b)
 	}
 
 
-	//å‘ä¸Šæ‰“æ´
+	//ÏòÉÏ´ò¶´
 	var ele;
-	bool mark=false;//è¡¨ç¤ºæŸä¸€è¡Œæ˜¯å¦æœ‰éé›¶å…ƒ
+	bool mark=false;//±íÊ¾Ä³Ò»ĞĞÊÇ·ñÓĞ·ÇÁãÔª
 	int j;
 	for(int i=m-1;i>=0;--i)
 	{
@@ -122,11 +122,11 @@ var LinearSolve(Var M, Var b)
 		}
 		
 
-		//å¦‚æœæœ‰éé›¶å…ƒ
+		//Èç¹ûÓĞ·ÇÁãÔª
 		if(mark)
 		{
 			if(j>=pm)
-				return 0;//åˆ¤æ–­æ— è§£
+				return 0;//ÅĞ¶ÏÎŞ½â
 			else 
 			{
 				ele=Entry(Au,i,j);
@@ -149,7 +149,7 @@ var LinearSolve(Var M, Var b)
 	}
 
 
-	//ç»“æœè¾“å‡º
+	//½á¹ûÊä³ö
 	var solution=Vec(pm);
 	for(size_t i=0;i<pm;++i)
 		At(solution,i)=Vec(pb);
@@ -186,14 +186,14 @@ var LinearSolve(Var M, Var b)
 	}
 	return solution;
 }
-//Mä¸€èˆ¬çŸ©é˜µ
-//Méå¥‡å¼‚ï¼Œåˆ™å¯¹Mè¿›è¡ŒPLUåˆ†è§£ï¼Œè¿”å›List{Au,p,norm},å…¶ä¸­Auå¯†é›†å­˜å‚¨LUåˆ†è§£çš„ç»“æœï¼Œè€Œpä¸ºç½®æ¢é˜µçš„ä¿¡æ¯ï¼Œnormå­˜å‚¨çŸ©é˜µèŒƒæ•°çš„ä¼°å€¼ï¼Œå¯¹äºç²¾ç¡®çŸ©é˜µï¼Œéå¥‡å¼‚åˆ™æ ‡è®°ä¸º1ï¼Œå¥‡å¼‚æƒ…å½¢æ ‡è®°ä¸º-1ã€‚
-//Må¥‡å¼‚ï¼Œç»§ç»­è¿›è¡ŒRow echelonçº¦åŒ–ã€‚
+//MÒ»°ã¾ØÕó
+//M·ÇÆæÒì£¬Ôò¶ÔM½øĞĞPLU·Ö½â£¬·µ»ØList{Au,p,norm},ÆäÖĞAuÃÜ¼¯´æ´¢LU·Ö½âµÄ½á¹û£¬¶øpÎªÖÃ»»ÕóµÄĞÅÏ¢£¬norm´æ´¢¾ØÕó·¶ÊıµÄ¹ÀÖµ£¬¶ÔÓÚ¾«È·¾ØÕó£¬·ÇÆæÒìÔò±ê¼ÇÎª1£¬ÆæÒìÇéĞÎ±ê¼ÇÎª-1¡£
+//MÆæÒì£¬¼ÌĞø½øĞĞRow echelonÔ¼»¯¡£
 var qLU(Var M)
 {
 	size_t m=Size(M);
 	size_t n=Size(At(M,0));
-	//int flag=1;//æ ‡è®°å¥‡å¼‚ä¸å¦
+	//int flag=1;//±ê¼ÇÆæÒìÓë·ñ
 	var Au=Vec(m);
 	std::vector<sint> p(m), pi(m);
 	for(size_t i=0;i<m;++i)
@@ -379,7 +379,7 @@ var qNullSpace(Var M)
 	size_t m=Size(M);
 	size_t n=Size(At(M,0));
 	var Au=qRowReduce(M);
-	if((m>=n)&&(N::Sgn(Entry(Au,n-1,n-1))))//åˆ—ç‹¬ç«‹é˜µ
+	if((m>=n)&&(N::Sgn(Entry(Au,n-1,n-1))))//ÁĞ¶ÀÁ¢Õó
 		return Vec();
 //	std::cout<<0;
 	std::vector<sint> ind(n+1),dep(n+1);
@@ -437,7 +437,7 @@ var qInverse(Var M)
 var qDet(Var M)
 {
 	size_t n=Size(M);
-	bool sign=true;//è¡Œäº¤æ¢çš„å¥‡å¶æ€§
+	bool sign=true;//ĞĞ½»»»µÄÆæÅ¼ĞÔ
 	var Au=Vec(n);
 	std::vector<sint> p(n);
 	//std::vector<bool> flag(m);

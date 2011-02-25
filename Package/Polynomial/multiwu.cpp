@@ -1,7 +1,7 @@
 /**
 \file
-\brief å¤šå…ƒå¤šé¡¹å¼å´æ–¹æ³•
-\todo æ­£ç¡®æ€§æµ‹è¯•ä»¥åè€ƒè™‘æ•ˆç‡é—®é¢˜
+\brief ¶àÔª¶àÏîÊ½Îâ·½·¨
+\todo ÕıÈ·ĞÔ²âÊÔÒÔºó¿¼ÂÇĞ§ÂÊÎÊÌâ
 */
 #include "common.h"
 
@@ -157,11 +157,11 @@ void BasicSetZ(std::vector<uint> & bs, const std::vector<sparse_z> & polylist)
 }
 
 /**
-\brief å¯¹å‡åˆ—è¿›è¡Œçº¦åŒ–
-\param r çº¦åŒ–ç»“æœ
-\param f æ¬²çº¦åŒ–å¤šé¡¹å¼
-\param polylist å‡åˆ—å¤šé¡¹å¼é›†åˆ
-\param totalvar å˜å…ƒä¸ªæ•°
+\brief ¶ÔÉıÁĞ½øĞĞÔ¼»¯
+\param r Ô¼»¯½á¹û
+\param f ÓûÔ¼»¯¶àÏîÊ½
+\param polylist ÉıÁĞ¶àÏîÊ½¼¯ºÏ
+\param totalvar ±äÔª¸öÊı
 */
 void ReduceByAscendingSet(sparse_z & r,const sparse_z & f,const std::vector<sparse_z> & polylist, uint totalvar)
 {
@@ -176,10 +176,10 @@ void ReduceByAscendingSet(sparse_z & r,const sparse_z & f,const std::vector<spar
 }
 
 /**
-\brief å´ç‰¹å¾åˆ—ç®—æ³•
-\param polylist å¤šé¡¹å¼é›†åˆ
-\param totalvar å˜å…ƒä¸ªæ•°
-\param cs è¿”å›ç‰¹å¾åˆ—é›†åˆ
+\brief ÎâÌØÕ÷ÁĞËã·¨
+\param polylist ¶àÏîÊ½¼¯ºÏ
+\param totalvar ±äÔª¸öÊı
+\param cs ·µ»ØÌØÕ÷ÁĞ¼¯ºÏ
 */
 void CharacterSetZ(std::vector<sparse_z> & cs, const std::vector<sparse_z> & polylist, uint totalvar)
 {

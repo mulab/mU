@@ -1,6 +1,6 @@
 /**
 \file
-\brief Jenkins-Traub算法
+\brief Jenkins-Traub�㷨
 */
 #include "polyfloat.h"
 

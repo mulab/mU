@@ -1,6 +1,6 @@
 /**
 \file
-\brief æœ‰å…³å¤æ•°
+\brief ÓĞ¹Ø¸´Êı
 */
 #include "polyfloat.h"
 

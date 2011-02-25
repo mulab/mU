@@ -1,6 +1,6 @@
 /**
 \file
-\brief æ•´ç³»æ•°ä¸€å…ƒå¤šé¡¹å¼å› å­åˆ†è§£ï¼Œåˆ©ç”¨poly_z
+\brief ÕûÏµÊıÒ»Ôª¶àÏîÊ½Òò×Ó·Ö½â£¬ÀûÓÃpoly_z
 */
 #include "common.h"
 
@@ -278,9 +278,9 @@ bool factor_compare(const poly_z & f,const poly_z & g)
 }
 //
 /**
-\brief æ— å¹³æ–¹åˆ†è§£.
-\param f æ•´ç³»æ•°ä¸€å…ƒå¤šé¡¹å¼.
-\param sqflist æ— å¹³æ–¹å› å­åºåˆ—
+\brief ÎŞÆ½·½·Ö½â.
+\param f ÕûÏµÊıÒ»Ôª¶àÏîÊ½.
+\param sqflist ÎŞÆ½·½Òò×ÓĞòÁĞ
 */
 void UniSqrFreeDecomZ(const poly_z & f,std::vector<poly_z> & sqflist)
 {
@@ -315,9 +315,9 @@ void UniSqrFreeDecomZ(const poly_z & f,std::vector<poly_z> & sqflist)
 }
 
 /**
-\brief æ•´ç³»æ•°å¤šé¡¹å¼å› å­åˆ†è§£.
-\param f æ•´ç³»æ•°ä¸€å…ƒå¤šé¡¹å¼.
-\return fçš„åˆ†è§£ç»“æœ.
+\brief ÕûÏµÊı¶àÏîÊ½Òò×Ó·Ö½â.
+\param f ÕûÏµÊıÒ»Ôª¶àÏîÊ½.
+\return fµÄ·Ö½â½á¹û.
 */
 void UniFacZ(const poly_z & f,mpz_ptr b,std::vector<poly_z> & faclist,std::vector<uint> & exponents)
 {
@@ -361,9 +361,9 @@ void UniFacZ(const poly_z & f,mpz_ptr b,std::vector<poly_z> & faclist,std::vecto
 }
 
 /**
-\brief Henselæå‡å› å­ç»„åˆç®—æ³•.
-\param f å¾…åˆ†è§£æ•´ç³»æ•°æ— å¹³æ–¹å› å­æœ¬åŸnæ¬¡å¤šé¡¹å¼,n>=1,lc(f)>=0.
-\param faclist å„ä¸ç›¸åŒçš„ä¸å¯çº¦å› å­çš„é›†åˆ.
+\brief HenselÌáÉıÒò×Ó×éºÏËã·¨.
+\param f ´ı·Ö½âÕûÏµÊıÎŞÆ½·½Òò×Ó±¾Ô­n´Î¶àÏîÊ½,n>=1,lc(f)>=0.
+\param faclist ¸÷²»ÏàÍ¬µÄ²»¿ÉÔ¼Òò×ÓµÄ¼¯ºÏ.
 */
 void UniFacZ_Hensel_FactorCombination(const poly_z & f,std::vector<poly_z> & faclist)
 {

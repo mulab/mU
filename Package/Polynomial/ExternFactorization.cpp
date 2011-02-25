@@ -1,7 +1,7 @@
 /**
 \file
-\brief 整系数一元多项式因子分解
-\todo 特别地，要加上不可约性的检测，快速分解诸如x^10000-2; x^n-1型多项式的分解
+\brief ��ϵ��һԪ����ʽ���ӷֽ�
+\todo �ر�أ�Ҫ���ϲ���Լ�Եļ�⣬���ٷֽ�����x^10000-2; x^n-1�Ͷ���ʽ�ķֽ�
 */
 #include "common.h"
 
@@ -12,9 +12,9 @@ namespace{
 }
 
 /**
-\brief 整系数多项式因子分解.
-\param f 整系数一元多项式.
-\return f的分解结果.
+\brief ��ϵ������ʽ���ӷֽ�.
+\param f ��ϵ��һԪ����ʽ.
+\return f�ķֽ���.
 */
 var UniFacZ(Var f)
 {

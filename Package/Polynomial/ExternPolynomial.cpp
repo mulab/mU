@@ -282,10 +282,10 @@ Wrap(FactorList)
 		Push(r,f);
 		return r;
 	}
-	//澶氬厓鎯呭舰
+	//多元情形
 	if(Size(v)>1)return 0;
 
-	//闈炴暣绯绘暟鎯呭舰
+	//非整系数情形
 	var fc;
 	fc = Coefficients(Expand(f),At(v,0));
 	for(size_t i = 0; i < Size(fc); ++i)
@@ -337,7 +337,7 @@ Wrap(Factor)
 	return result;
 }
 
-//todo 涓嶅悓鐨勫瓧鍏稿簭
+//todo 不同的字典序
 Wrap(CharacterSet)
 {
 	var v_var;

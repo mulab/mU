@@ -22,7 +22,7 @@ var Drop(Var,size_t,size_t);
 var getMatrixFromVector(Var);
 var getVectorFromMatrix(Var);
 //BLAS.cpp
-bool MatrixQ(Var);//åˆ¤æ–­è¡¨è¾¾å¼æ˜¯å¦ä¸ºçŸ©é˜µï¼ˆåŒ…æ‹¬å„ç§æ•°æ®ç±»å‹çš„çŸ©é˜µï¼‰
+bool MatrixQ(Var);//ÅĞ¶Ï±í´ïÊ½ÊÇ·ñÎª¾ØÕó£¨°üÀ¨¸÷ÖÖÊı¾İÀàĞÍµÄ¾ØÕó£©
 var Transpose(Var);
 var qVAdd(Var,Var);
 var qVSub(Var,Var);
@@ -44,12 +44,12 @@ var Tr(Var);
 var KroneckerProduct(Var,Var);
 //gauss.cpp
 var qLU(Var);
-var LinearSolve(Var,Var);//å³ç«¯çŸ©é˜µï¼Œè‹¥è¾“å…¥ä¸ºå³ç«¯å‘é‡ï¼Œåˆ™åº”è½¬ä¸ºåˆ—çŸ©é˜µ
+var LinearSolve(Var,Var);//ÓÒ¶Ë¾ØÕó£¬ÈôÊäÈëÎªÓÒ¶ËÏòÁ¿£¬ÔòÓ¦×ªÎªÁĞ¾ØÕó
 var qRowReduce(Var);
-var qNullSpace(Var);//è‹¥è¾“å…¥ä¸ºæ•´æ•°çŸ©é˜µï¼Œåˆ™è®¡ç®—å®Œä¹‹ååº”é€šè¿‡é€‚å½“çš„å€ä¹˜å°†å‘é‡è½¬ä¸ºæ•´æ•°å‘é‡ã€‚
+var qNullSpace(Var);//ÈôÊäÈëÎªÕûÊı¾ØÕó£¬Ôò¼ÆËãÍêÖ®ºóÓ¦Í¨¹ıÊÊµ±µÄ±¶³Ë½«ÏòÁ¿×ªÎªÕûÊıÏòÁ¿¡£
 var qDet(Var);
-var qMinors(Var);//æ–¹é˜µ
-var qMinors(Var,size_t);//æ–¹é˜µ
+var qMinors(Var);//·½Õó
+var qMinors(Var,size_t);//·½Õó
 var qMinor(Var,size_t*,size_t*,size_t);
 var qInverse(Var);
 size_t qMatrixRank(Var);

@@ -1,6 +1,6 @@
 /** \file
-\brief å¤šé¡¹å¼æ¨¡å¿«é‡Œç”¨åˆ°çš„ç”Ÿæˆéšæœºæ•°çš„ç±»
-\todo éšæœºç”Ÿæˆå¤šé¡¹å¼ç§»è‡³æ­¤å¤„
+\brief ¶àÏîÊ½Ä£¿ìÀïÓÃµ½µÄÉú³ÉËæ»úÊýµÄÀà
+\todo Ëæ»úÉú³É¶àÏîÊ½ÒÆÖÁ´Ë´¦
 */
 #include "common.h"
 

@@ -156,7 +156,7 @@ struct wpipestream : wiostream
 #else
 namespace mU {
 namespace Stream {
-// TODO: å®ç°ç®¡é“é€šä¿¡ç±»
+// TODO: ÊµÏÖ¹ÜµÀÍ¨ĞÅÀà
 class wpipestream : public std::wiostream
 {
 public:

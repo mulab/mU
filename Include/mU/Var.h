@@ -96,10 +96,10 @@ namespace mU {
 //////////////////////////////////////
 /*!
  * \brief
- * å˜é‡åŸºç±»
+ * ±äÁ¿»ùÀà
  *
  * \remarks
- * é»˜è®¤é‡‡ç”¨å¥æŸ„å‹å¤åˆ¶æ§åˆ¶ï¼Œå¯è¦†ç›–ä¸ºå€¼å‹å¤åˆ¶æ§åˆ¶ã€‚
+ * Ä¬ÈÏ²ÉÓÃ¾ä±úĞÍ¸´ÖÆ¿ØÖÆ£¬¿É¸²¸ÇÎªÖµĞÍ¸´ÖÆ¿ØÖÆ¡£
  */
 #define TYPE(x) type_##x
 enum type_t
@@ -127,10 +127,10 @@ inline size_t Type(Var x)
 
 /*!
  * \brief
- * å¥æŸ„
+ * ¾ä±ú
  *
  * \remarks
- * ä¸ºæŒ‡é’ˆVaræä¾›è‡ªåŠ¨å¤åˆ¶æ§åˆ¶ï¼Œä¾¿äºæ ‡å‡†åº“å®¹å™¨ä½¿ç”¨ã€‚
+ * ÎªÖ¸ÕëVarÌá¹©×Ô¶¯¸´ÖÆ¿ØÖÆ£¬±ãÓÚ±ê×¼¿âÈİÆ÷Ê¹ÓÃ¡£
  */
 class var;
 typedef const var& VAR;
@@ -151,10 +151,10 @@ public:
 //////////////////////////////////////
 /*!
 * \brief
-* å¯¹è±¡
+* ¶ÔÏó
 *
 * \remarks
-* ä¸ºå…¶ä»–å¯¹è±¡æä¾›è‡ªåŠ¨å†…å­˜ç®¡ç†ã€‚
+* ÎªÆäËû¶ÔÏóÌá¹©×Ô¶¯ÄÚ´æ¹ÜÀí¡£
 */
 struct obj_t : var_t
 {
@@ -168,7 +168,7 @@ struct obj_t : var_t
 inline bool ObjQ(Var x) { return Type(x) == TYPE(obj); }
 /*!
 * \brief
-* æ•´æ•°
+* ÕûÊı
 *
 * \remarks
 * mpz_t
@@ -207,7 +207,7 @@ inline int_t::rep_t& CInt(Var x) { return INT_REP(x); }
 
 /*!
 * \brief
-* æœ‰ç†æ•°
+* ÓĞÀíÊı
 *
 * \remarks
 * mpq_t
@@ -264,7 +264,7 @@ inline rat_t::rep_t& CRat(Var x) { return RAT_REP(x); }
 
 /*!
 * \brief
-* æµ®ç‚¹æ•°
+* ¸¡µãÊı
 *
 * \remarks
 * mpf_t
@@ -299,7 +299,7 @@ inline flt_t::rep_t& CFlt(Var x) { return FLT_REP(x); }
 
 /*!
 * \brief
-* å­—ç¬¦ä¸²
+* ×Ö·û´®
 *
 * \remarks
 * wstring
@@ -327,10 +327,10 @@ inline str_t::rep_t& CStr(Var x) { return STR_REP(x); }
 
 /*!
 * \brief
-* ç¬¦å·
+* ·ûºÅ
 *
 * \remarks
-* ä»ç¬¦å·è¡¨ä¸­æ„é€ ã€‚
+* ´Ó·ûºÅ±íÖĞ¹¹Ôì¡£
 */
 struct tab_t : obj_t
 {
@@ -373,10 +373,10 @@ inline sym_t::rep_t& CSym(Var x) { return SYM_REP(x); }
 
 /*!
 * \brief
-* å‘é‡
+* ÏòÁ¿
 *
 * \remarks
-* åŒ…è£…æ ‡å‡†åº“vectorä»¥å½¢æˆå¹¿ä¹‰è¡¨åµŒå¥—ç»“æ„ï¼Œè¡¨è¾¾å¼ä»¥å…¶ä¸ºä¸»ä½“ã€‚
+* °ü×°±ê×¼¿âvectorÒÔĞÎ³É¹ãÒå±íÇ¶Ì×½á¹¹£¬±í´ïÊ½ÒÔÆäÎªÖ÷Ìå¡£
 *
 * \see
 * ex_t
@@ -437,10 +437,10 @@ inline vec_t::rep_t& CVec(Var x) { return VEC_REP(x); }
 
 /*!
 * \brief
-* è¡¨è¾¾å¼
+* ±í´ïÊ½
 *
 * \remarks
-* åŒ…æ‹¬headä¸å‘é‡æ„æˆçš„bodyä¸¤éƒ¨åˆ†ï¼Œæ³¨æ„headä¹Ÿå¯èƒ½ä¸ºè¡¨è¾¾å¼ã€‚
+* °üÀ¨headÓëÏòÁ¿¹¹³ÉµÄbodyÁ½²¿·Ö£¬×¢ÒâheadÒ²¿ÉÄÜÎª±í´ïÊ½¡£
 *
 * \see
 * vec_t
