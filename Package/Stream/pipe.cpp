@@ -2,7 +2,7 @@
 #define BOOST_ALL_DYN_LINK
 #include <boost/array.hpp>
 
-#ifdef _MSC_VER
+#ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <shellapi.h>
@@ -124,7 +124,7 @@ struct wpipestream : wiostream
 		CloseHandle(hOutputReadTmp);
 		CloseHandle(hInputWriteTmp);
 		PROCESS_INFORMATION pi;
-		STARTUPINFO si;
+		STARTUPINFOW si;
 
 		// Set up the start up info struct.
 		ZeroMemory(&si,sizeof(STARTUPINFO));

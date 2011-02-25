@@ -49,12 +49,6 @@ using std::cerr;using std::wcerr;using std::ios;using std::wios;
 #include <hash_set>
 #include <hash_map>
 #pragma comment(lib,"../../Lib/gmp.lib")
-#ifdef MU_EXPORTS
-#define DLL __declspec(dllexport)
-#else
-#define DLL __declspec(dllimport)
-#pragma comment(lib,"mU")
-#endif
 #else
 #include <ext/hash_set>
 #include <ext/hash_map>
@@ -85,6 +79,15 @@ struct hash<std::wstring>
 };
 }
 namespace stdext = __gnu_cxx;
+#endif
+#ifdef _WIN32
+#ifdef MU_EXPORTS	// TODO: change this to mU_EXPORTS and references in VC projects, cmake
+#define DLL __declspec(dllexport)
+#else
+#define DLL __declspec(dllimport)
+#pragma comment(lib,"mU")
+#endif
+#else
 #define DLL
 #endif
 #define API DLL extern

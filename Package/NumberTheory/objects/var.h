@@ -1,6 +1,6 @@
 #pragma once
 
-#ifdef _MSC_VER
+#ifdef _WIN32
 #ifdef VAR_EXPORTS
 #define VAR_API __declspec(dllexport)
 #else

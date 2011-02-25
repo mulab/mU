@@ -1,6 +1,6 @@
 #include <mU/Kernel.h>
 
-#ifdef _MSC_VER
+#ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <ShellAPI.h>
@@ -34,7 +34,7 @@ bool Uninstall(Var x)
 #undef T
 bool Run(const wstring &x)
 {
-	STARTUPINFO si;
+	STARTUPINFOW si;
 	PROCESS_INFORMATION pi;
 
 	ZeroMemory( &si, sizeof(si) );
@@ -42,7 +42,7 @@ bool Run(const wstring &x)
 	ZeroMemory( &pi, sizeof(pi) );
 
 	// Start the child process.
-	if(CreateProcess(NULL,	// No module name (use command line)
+	if(CreateProcessW(NULL,	// No module name (use command line)
 		(wchar*)x.c_str(),	// Command line
 		NULL,           // Process handle not inheritable
 		NULL,           // Thread handle not inheritable
@@ -72,7 +72,10 @@ struct cthread_t : obj_t
 	HANDLE rep;
 };
 namespace {
-	DWORD WINAPI ThreadProc(__in  LPVOID lpParameter)
+	// FIXME: is this __in parameter decorator really necessary?
+	//        it's causing compilation errors in mingw, commenting
+	//        it out for now
+	DWORD WINAPI ThreadProc(/*__in*/  LPVOID lpParameter)
 	{
 		Eval(*(var*)lpParameter);
 		return 0;

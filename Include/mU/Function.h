@@ -2,8 +2,8 @@
 #include "Number.h"
 #include "Kernel.h"
 
-#ifdef _MSC_VER
-#ifdef FUNCTION_EXPORTS
+#ifdef _WIN32
+#ifdef FUNCTION_EXPORTS	// TODO: change this to Function_EXPORTS and references
 #define FUNCTION_API __declspec(dllexport) extern
 #else
 #define FUNCTION_API __declspec(dllimport) extern
