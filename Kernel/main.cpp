@@ -2,7 +2,7 @@
 #include <mU/Parser.h>
 using namespace mU;
 
-inline void prompt() { wcout<<(wchar)956<<L"> "; }
+inline void prompt() { wcout<<L"mU> "; }
 inline void newline() { wcout<<L"  > "; }
 int main(int argc,char *argv[])
 {
