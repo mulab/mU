@@ -15,6 +15,21 @@ namespace mU
 
 	};
 
+	class ParserException : public Exception
+	{
+
+	};
+
+	class UnexpectedTokenException : public ParserException
+	{
+
+	};
+
+	class MoreInputNeededException : public ParserException
+	{
+
+	};
+
 	class RuntimeException : public Exception
 	{
 

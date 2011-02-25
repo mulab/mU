@@ -1,3 +1,5 @@
+#include <typeinfo>
+#include <mU/Exceptions.h>
 #include <mU/Kernel.h>
 #include <mU/Parser.h>
 using namespace mU;
@@ -48,28 +50,29 @@ int main(int argc,char *argv[])
 			p.parse();
 			r = Eval(Optimi(p.result()));
 		}
+		catch (std::bad_cast &)
+		{
+			wcout << L"wrong type of object encountered\n" << std::flush;
+		}
+		catch (UnexpectedTokenException &)
+		{
+			wcout << std::setw(p.column + 4) << L"^\n" << std::flush;
+		}
+		catch (MoreInputNeededException &)
+		{
+			newline();
+			buf += L'\n';
+			continue;
+		}
 		catch(std::exception &e)
 		{
 			stringstream w(e.what());
 			string t;
 			std::getline(w,t,':');
-			if(t == "parser")
-			{
-				std::getline(w,t,':');
-				if(t == "more")
-				{
-					newline();
-					buf += L'\n';
-					continue;
-				}
-				else if(t == "error")
-					wcout<<std::setw(p.column + 4)<<L"^\n";
-			}
-			else
-				wcerr
-					<< L"main:"
-					<< e.what()	<< L'='
-					<< buf << std::endl;
+			wcerr
+				<< L"main:"
+				<< e.what()	<< L'='
+				<< buf << std::endl;
 			buf.clear();
 			prompt();
 			continue;

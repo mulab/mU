@@ -1,3 +1,4 @@
+#include <mU/Exceptions.h>
 #include <mU/Parser.h>
 
 namespace mU {
@@ -186,11 +187,11 @@ void parser::note(size_t i, const wstring &s)
 }
 void parser::error()
 {
-	throw std::logic_error("parser:error:unexpected token");
+	throw mU::UnexpectedTokenException();
 }
 void parser::more()
 {
-	throw std::logic_error("parser:more:need more input");
+	throw mU::MoreInputNeededException();
 }
 void parser::accept()
 {
