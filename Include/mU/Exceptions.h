@@ -29,6 +29,11 @@ namespace mU
 	{
 
 	};
+
+	class UnsupportedCharacterException : public RuntimeException
+	{
+
+	};
 }
 
 #endif /* EXCEPTIONS_H_ */

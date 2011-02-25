@@ -112,6 +112,9 @@ public:
 			}
 			else if ((c[0] & LEN_4_MASK) == LEN_4_CHECK)
 			{
+#ifdef _WIN32
+				throw UnsupportedCharacterException();
+#else
 				if (!iostream->read(c+1, 3))
 				{
 					if (iostream->eof())
@@ -129,6 +132,7 @@ public:
 						| (static_cast<wchar_t>(c[1] & 0x3f) << 12)
 						| (static_cast<wchar_t>(c[2] & 0x3f) << 6)
 						| static_cast<wchar_t>(c[3] & 0x3f);
+#endif
 			}
 			else
 			{
@@ -145,25 +149,31 @@ public:
 			char c[4];
 			std::streamsize len;
 			wchar_t o = s[i];
-			if (o < 0x80)
+			if ((o & 0x7f) == o)
 			{
 				c[0] = static_cast<char>(o);
 				len = 1;
 			}
-			else if (o < 0x800)
+			else if ((o & 0x7ff) == o)
 			{
 				c[0] = static_cast<char>(((o & 0x7c0) >> 6) | 0xc0);
 				c[1] = static_cast<char>((o & 0x3f) | 0x80);
 				len = 2;
 			}
-			else if (o < 0x10000)
+#ifdef _WIN32
+			else
+#else
+			else if ((o & 0xffff) == o)
+#endif
 			{
 				c[0] = static_cast<char>(((o & 0xf000) >> 12) | 0xe0);
 				c[1] = static_cast<char>(((o & 0xfc0) >> 6) | 0x80);
 				c[2] = static_cast<char>((o & 0x3f) | 0x80);
 				len = 3;
 			}
-			else if (o < 0x110000)
+#ifndef _WIN32
+			else if ((o & 0xfffff) == o
+						|| (o & 0xffff0000) == 0x100000)
 			{
 				c[0] = static_cast<char>(((o & 0x1c0000) >> 18) | 0xf0);
 				c[1] = static_cast<char>(((o & 0x3f000) >> 12) | 0x80);
@@ -175,6 +185,7 @@ public:
 			{
 				throw InvalidUtf8StreamException();
 			}
+#endif
 			if (!iostream->write(c, len))
 			{
 				throw IOException();
