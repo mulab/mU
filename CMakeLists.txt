@@ -2,10 +2,12 @@ cmake_minimum_required(VERSION 2.6)
 
 project(mU CXX)
 
+# TODO: also check for the availability of gmp and mpfr libraries
+
 set(Boost_USE_STATIC_LIBS       OFF)
 set(Boost_USE_MULTITHREADED      ON)
 set(Boost_USE_STATIC_RUNTIME    OFF)
-find_package( Boost 1.44.0 COMPONENTS system iostreams )
+find_package( Boost 1.42.0 COMPONENTS system iostreams )
 
 if(NOT Boost_FOUND)
     message(SEND_ERROR "boost library not found")
