@@ -182,7 +182,7 @@ void Grammar::print(Kernel& k, wostream& o, const Tuple& x, uint y) const {
                         }
                     } else if (h == $.Times) {
                         for (uint i = 2; i < x.size; ++i) {
-                            // Orderless,å› æ­¤ä¸ç”¨è€ƒè™‘Symbolç´§è·ŸIntegerçš„æƒ…å†µ
+                            // Orderless,Òò´Ë²»ÓÃ¿¼ÂÇSymbol½ô¸úIntegerµÄÇé¿ö
                             // if (!(x[i - 1].isObject() && x[i].isSymbol()))
                                 o << L' ';
                             print(k, o, x[i], op.prec);

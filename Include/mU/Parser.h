@@ -1,7 +1,7 @@
 #pragma once
 #include "Grammar.h"
 
-// TODO: èŠ‚ç‚¹å®šä¹‰æ”¹ä¸º
+// TODO: ½Úµã¶¨Òå¸ÄÎª
 /*
 struct node {
 	node* child;
@@ -9,7 +9,7 @@ struct node {
 	// node* childs[];
 };
 */
-// å¯é€šè¿‡è¯­è¨€åŠ¨æ€ä¿®æ”¹è¯­æ³•å®šä¹‰,ç±»ä¼¼äºLisp,Maxima,LaTeX(\catcode)
+// ¿ÉÍ¨¹ıÓïÑÔ¶¯Ì¬ĞŞ¸ÄÓï·¨¶¨Òå,ÀàËÆÓÚLisp,Maxima,LaTeX(\catcode)
 
 namespace mU {
 class Parser {
@@ -55,7 +55,7 @@ public:
 	API void more();
 	
 	enum Instr {
-		//å­—èŠ‚ç /Stack/FullForm/MX
+		//×Ö½ÚÂë/Stack/FullForm/MX
 		instr_null, 
 		instr_symbol, 
 		instr_key, 

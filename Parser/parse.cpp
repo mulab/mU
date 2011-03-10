@@ -319,7 +319,7 @@ uint Parser::primary() {
 		return dollar();
     }
     //SPACE -> null
-    //瑙ｉ噴瑕佷笌null鎵撳嵃鍚屾
+    //解释要与null打印同步
     if (mLookback == COMMA || mLookback == SEMICOLON) {
         r = node(tag_primary, instr_null);
         return r;

@@ -1,3 +1,24 @@
-#Mon May 03 12:32:16 CST 2010
+#Thu Mar 10 21:30:47 CST 2011
 eclipse.preferences.version=1
-encoding/<project>=UTF-8
+encoding//Combinatorics/Combinatorics.vcxproj=UTF-8
+encoding//Combinatorics/Combinatorics.vcxproj.filters=UTF-8
+encoding//Kernel/Kernel.vcxproj=UTF-8
+encoding//Kernel/Kernel.vcxproj.filters=UTF-8
+encoding//Link/Java/Java/mU=UTF-8
+encoding//Number/Number.vcxproj=UTF-8
+encoding//Number/Number.vcxproj.filters=UTF-8
+encoding//Numeric/Numeric.vcxproj=UTF-8
+encoding//Numeric/Numeric.vcxproj.filters=UTF-8
+encoding//Parser/Parser.vcxproj=UTF-8
+encoding//Parser/Parser.vcxproj.filters=UTF-8
+encoding//Polynomial/Polynomial.vcxproj=UTF-8
+encoding//Polynomial/Polynomial.vcxproj.filters=UTF-8
+encoding//String/String.vcxproj=UTF-8
+encoding//String/String.vcxproj.filters=UTF-8
+encoding//System/System.vcxproj=UTF-8
+encoding//System/System.vcxproj.filters=UTF-8
+encoding//mU/mU.reg=UTF-16LE
+encoding//mU/mU.vcxproj=UTF-8
+encoding//mU/mU.vcxproj.filters=UTF-8
+encoding/<project>=GBK
+encoding/mU.sln=UTF-8

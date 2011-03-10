@@ -109,7 +109,7 @@ struct Grammar {
 		wcs name;
 		wcs show;
 		uint prec;
-		//默认为infix
+		//Ĭ��Ϊinfix
 		bool postfix;
 		bool prefix;
 		bool left;

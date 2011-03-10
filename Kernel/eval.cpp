@@ -23,8 +23,8 @@ void Kernel::abort() {
     throw std::logic_error("abort");
 }
 void Kernel::debug() {
-    // TODO: 澶勭悊trace,debug,exception,semaphore,kill,yield,resume
-    // 浣滀负鍑芥暟瀵硅薄,鍏佽澶栭儴鎻掑叆(Hook)澶勭悊鍑芥暟?
+    // TODO: 处理trace,debug,exception,semaphore,kill,yield,resume
+    // 作为函数对象,允许外部插入(Hook)处理函数?
 	if (depth >= recursion) {
 		logging(__FUNCTIONW__) << _W("Recursion depth of ") << recursion << _W(" exceeded!") << endl;
 		abort();
