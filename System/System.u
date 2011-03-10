@@ -37,14 +37,14 @@ Attributes[Unset] = {HoldFirst}
 Attributes[While] = {HoldAll}
 Attributes[With] = {HoldAll}
 
-<< Path["../String/String.u"]
+<< Path["/String/String.u"]
 
-<< Path["../Number/Number.u"]
-<< Path["../Polynomial/Polynomial.u"]
-<< Path["../Numeric/Numeric.u"]
-<< Path["../Combinatorics/Combinatorics.u"]
+<< Path["/Number/Number.u"]
+<< Path["/Polynomial/Polynomial.u"]
+<< Path["/Numeric/Numeric.u"]
+<< Path["/Combinatorics/Combinatorics.u"]
 
-<< Path["../Calculus/D.u"]
-<< Path["../Calculus/Integrate.u"]
+<< Path["/Calculus/D.u"]
+<< Path["/Calculus/Integrate.u"]
 
 (*End[]*)
