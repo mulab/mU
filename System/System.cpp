@@ -13,7 +13,7 @@ CAPI void Install(Kernel& k) {
     cvalue(k, cnoload("system"), SYS(CInterface));
     var r;
     k.beginContext(sys);
-    Input(k, r, path() + _W("/System/System.u"));
+    Input(k, r, path() + _W("../System/System.u"));
     k.endContext();
 }
 CAPI void Uninstall(Kernel& k) {
