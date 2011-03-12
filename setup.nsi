@@ -71,17 +71,17 @@ ShowUninstDetails show
 
 # Installer sections
 Section -Main SEC0000
-    SetOutPath $INSTDIR
+    SetOutPath "$INSTDIR\bin"
     SetOverwrite on
-    File libcombinatorics.dll
-    File libkernel.dll
-    File libnumber.dll
-    File libnumeric.dll
-    File libparser.dll
-    File libpolynomial.dll
-    File libstring.dll
-    File libsystem.dll
-    File mu.exe
+    File bin\libcombinatorics.dll
+    File bin\libkernel.dll
+    File bin\libnumber.dll
+    File bin\libnumeric.dll
+    File bin\libparser.dll
+    File bin\libpolynomial.dll
+    File bin\libstring.dll
+    File bin\libsystem.dll
+    File bin\mu.exe
     File C:\MinGW\bin\libstdc++-6.dll
     File C:\MinGW\bin\libgcc_s_dw2-1.dll
     File C:\MinGW\bin\libgmp-10.dll
@@ -105,17 +105,17 @@ Section -Main SEC0000
 SectionEnd
 
 Section -post SEC0001
-    WriteRegStr HKLM "${REGKEY}" Path $INSTDIR
+    WriteRegStr HKLM "${REGKEY}" Path "$INSTDIR\bin"
     SetOutPath $INSTDIR
     WriteUninstaller $INSTDIR\uninstall.exe
     !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
     SetOutPath $SMPROGRAMS\$StartMenuGroup
-    CreateShortcut "$SMPROGRAMS\$StartMenuGroup\mU kernel.lnk" $INSTDIR\mu.exe
+    CreateShortcut "$SMPROGRAMS\$StartMenuGroup\mU kernel.lnk" "$INSTDIR\bin\mu.exe"
     CreateShortcut "$SMPROGRAMS\$StartMenuGroup\Uninstall $(^Name).lnk" $INSTDIR\uninstall.exe
     !insertmacro MUI_STARTMENU_WRITE_END
     # FIXME: we should append to per-user %PATH% if we are only installing for the
     #        current user
-    ${EnvVarUpdate} $0 "PATH" "A" "HKLM" $INSTDIR
+    ${EnvVarUpdate} $0 "PATH" "A" "HKLM" $INSTDIR\bin
     WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" DisplayName "$(^Name)"
     WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" DisplayVersion "${VERSION}"
     WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" Publisher "${COMPANY}"
@@ -139,9 +139,9 @@ done${UNSECTION_ID}:
     Pop $R0
 !macroend
 
+# FIXME: 单用户安装，卸载之后开始菜单链接不能正常删除
 # Uninstaller sections
 Section /o -un.Main UNSEC0000
-    ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" $INSTDIR
     Delete /REBOOTOK $INSTDIR\System\System.u
     Delete /REBOOTOK $INSTDIR\String\String.u
     Delete /REBOOTOK $INSTDIR\Polynomial\Polynomial.u
@@ -150,25 +150,27 @@ Section /o -un.Main UNSEC0000
     Delete /REBOOTOK $INSTDIR\Combinatorics\Combinatorics.u
     Delete /REBOOTOK $INSTDIR\Calculus\D.u
     Delete /REBOOTOK $INSTDIR\Calculus\Integrate.u
-    Delete /REBOOTOK $INSTDIR\libmpfr-1.dll
-    Delete /REBOOTOK $INSTDIR\libgmp-10.dll
-    Delete /REBOOTOK $INSTDIR\libgcc_s_dw2-1.dll
-    Delete /REBOOTOK $INSTDIR\libstdc++-6.dll
-    Delete /REBOOTOK $INSTDIR\mu.exe
-    Delete /REBOOTOK $INSTDIR\libsystem.dll
-    Delete /REBOOTOK $INSTDIR\libstring.dll
-    Delete /REBOOTOK $INSTDIR\libpolynomial.dll
-    Delete /REBOOTOK $INSTDIR\libparser.dll
-    Delete /REBOOTOK $INSTDIR\libnumeric.dll
-    Delete /REBOOTOK $INSTDIR\libnumber.dll
-    Delete /REBOOTOK $INSTDIR\libkernel.dll
-    Delete /REBOOTOK $INSTDIR\libcombinatorics.dll
+    Delete /REBOOTOK $INSTDIR\bin\libmpfr-1.dll
+    Delete /REBOOTOK $INSTDIR\bin\libgmp-10.dll
+    Delete /REBOOTOK $INSTDIR\bin\libgcc_s_dw2-1.dll
+    Delete /REBOOTOK $INSTDIR\bin\libstdc++-6.dll
+    Delete /REBOOTOK $INSTDIR\bin\mu.exe
+    Delete /REBOOTOK $INSTDIR\bin\libsystem.dll
+    Delete /REBOOTOK $INSTDIR\bin\libstring.dll
+    Delete /REBOOTOK $INSTDIR\bin\libpolynomial.dll
+    Delete /REBOOTOK $INSTDIR\bin\libparser.dll
+    Delete /REBOOTOK $INSTDIR\bin\libnumeric.dll
+    Delete /REBOOTOK $INSTDIR\bin\libnumber.dll
+    Delete /REBOOTOK $INSTDIR\bin\libkernel.dll
+    Delete /REBOOTOK $INSTDIR\bin\libcombinatorics.dll
     DeleteRegValue HKLM "${REGKEY}\Components" Main
 SectionEnd
 
 Section -un.post UNSEC0001
     DeleteRegKey HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)"
+    ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\bin"
     Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\Uninstall $(^Name).lnk"
+    Delete /REBOOTOK "$SMPROGRAMS\$StartMenuGroup\mU kernel.lnk"
     Delete /REBOOTOK $INSTDIR\uninstall.exe
     DeleteRegValue HKLM "${REGKEY}" StartMenuGroup
     DeleteRegValue HKLM "${REGKEY}" Path

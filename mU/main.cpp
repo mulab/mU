@@ -39,8 +39,6 @@ inline void open(Parser& p, wifstream& f, const char* s) {
 	f.close();
 }
 int main(int argc, char *argv[]) {
-	// FIXME: .u脚本中文路径名处理有问题
-#ifdef _MSC_VER
 	try {
 		setlocale(LC_ALL, "");
 		wcin.imbue(std::locale(""));
@@ -48,7 +46,7 @@ int main(int argc, char *argv[]) {
 	} catch (std::exception& e) {
 		wcerr << _W("Error occurred while set locale, ") << e.what() << _W("...") << endl;
 	}
-#endif
+
 	// wcerr.rdbuf(0);
 
 	Kernel k;
