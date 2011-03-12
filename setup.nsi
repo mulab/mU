@@ -34,6 +34,7 @@ Name maTHmU
 !include MultiUser.nsh
 !include Sections.nsh
 !include MUI2.nsh
+!include EnvVarUpdate.nsh
 
 # Variables
 Var StartMenuGroup
@@ -112,6 +113,9 @@ Section -post SEC0001
     CreateShortcut "$SMPROGRAMS\$StartMenuGroup\mU kernel.lnk" $INSTDIR\mu.exe
     CreateShortcut "$SMPROGRAMS\$StartMenuGroup\Uninstall $(^Name).lnk" $INSTDIR\uninstall.exe
     !insertmacro MUI_STARTMENU_WRITE_END
+    # FIXME: we should append to per-user %PATH% if we are only installing for the
+    #        current user
+    ${EnvVarUpdate} $0 "PATH" "A" "HKLM" $INSTDIR
     WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" DisplayName "$(^Name)"
     WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" DisplayVersion "${VERSION}"
     WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" Publisher "${COMPANY}"
@@ -137,6 +141,7 @@ done${UNSECTION_ID}:
 
 # Uninstaller sections
 Section /o -un.Main UNSEC0000
+    ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" $INSTDIR
     Delete /REBOOTOK $INSTDIR\System\System.u
     Delete /REBOOTOK $INSTDIR\String\String.u
     Delete /REBOOTOK $INSTDIR\Polynomial\Polynomial.u

@@ -39,6 +39,7 @@ inline void open(Parser& p, wifstream& f, const char* s) {
 	f.close();
 }
 int main(int argc, char *argv[]) {
+	// FIXME: .u脚本中文路径名处理有问题
 #ifdef _MSC_VER
 	try {
 		setlocale(LC_ALL, "");
