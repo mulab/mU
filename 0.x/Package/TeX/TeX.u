@@ -1,0 +1,25 @@
+BeginPackage["TeX`"]
+Begin["`Private`"]
+Trs = Get[StringJoin[$Package,"TeX/TeX.tr"]];
+Do[Tr[i[[1]]] := i[[2]],{i,Trs}];
+Tr[x_] := Module[{m = 90,n = StringLength[x],k,r},
+If[n > m,
+k = IntegerPart[n / m];
+r = "";
+Do[r = StringJoin[r,StringTake[x,{m * i - m + 1,m * i}],"\\\\\n"],{i,k}];
+StringJoin[r,StringTake[x,{m * k,n}]],
+x]];
+Boxes = {RowBox,SuperscriptBox,SubscriptBox,FractionBox,SubsuperscriptBox,UnderoverscriptBox,SqrtBox,RadicalBox};
+A[x_] := Full[x] /; FreeQ[Boxes,Head[x]];
+A[x_String] := Tr[x];
+A[RowBox[x_List]] := Apply[StringJoin,Map[A,x]];
+A[SuperscriptBox[x_,y_]] := StringJoin["{",A[x],"}^{",A[y],"}"];
+A[SubscriptBox[x_,y_]] := StringJoin["{",A[x],"}_{",A[y],"}"];
+A[FractionBox[{x_,y_}]] := StringJoin["\\frac{",A[x],"}{",A[y],"}"];
+A[SubsuperscriptBox[x_,y_,z_]] := StringJoin[A[x],"_{",A[y],"}^{",A[z],"}"];
+A[UnderoverscriptBox[x_,y_,z_]] := StringJoin[A[x],"\\limits_{",A[y],"}^{",A[z],"}"];
+A[SqrtBox[x_]] := StringJoin["\\sqrt{",A[x],"}"];
+A[RadicalBox[x_,e_]] := StringJoin["\\sqrt[",A[e],"]{",A[x],"}"];
+End[]
+TeX[x_] := `Private`A[ToExpression[Box['x]]];
+EndPackage[]
