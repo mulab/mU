@@ -8,12 +8,7 @@ else()
     set(SOCK_LIB "")
 endif()
 
-# FIXME: use Boost_LIBRARIES instead boost_system-mgw45-mt-1_45
-if(WIN32)
-    target_link_libraries(Stream mU gmp ${SOCK_LIB} boost_system-mgw45-mt-1_45) 
-elseif(UNIX)
-    target_link_libraries(Stream mU gmp ${SOCK_LIB} boost_system)
-else()
-    message(FATAL_ERROR "building on an unsupported operating system")
+target_link_libraries(Stream mU gmp ${SOCK_LIB} ${Boost_LIBRARIES})
+
 endif()
 

@@ -7,7 +7,7 @@ project(mU CXX)
 set(Boost_USE_STATIC_LIBS       OFF)
 set(Boost_USE_MULTITHREADED      ON)
 set(Boost_USE_STATIC_RUNTIME    OFF)
-find_package( Boost 1.42.0 COMPONENTS system iostreams )
+find_package( Boost 1.42.0 COMPONENTS system )
 
 if(NOT Boost_FOUND)
     message(SEND_ERROR "boost library not found")
