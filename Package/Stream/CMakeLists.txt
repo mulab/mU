@@ -10,5 +10,3 @@ endif()
 
 target_link_libraries(Stream mU gmp ${SOCK_LIB} ${Boost_LIBRARIES})
 
-endif()
-
