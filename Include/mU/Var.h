@@ -81,7 +81,7 @@ struct hash<std::wstring>
 namespace stdext = __gnu_cxx;
 #endif
 #ifdef _WIN32
-#ifdef mU_EXPORTS
+#ifdef MU_EXPORTS
 #define DLL __declspec(dllexport)
 #else
 #define DLL __declspec(dllimport)

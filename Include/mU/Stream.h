@@ -2,7 +2,7 @@
 #include "Kernel.h"
 
 #ifdef _WIN32
-#ifdef Stream_EXPORTS
+#ifdef STREAM_EXPORTS
 #define STREAM_API __declspec(dllexport) extern
 #else
 #define STREAM_API __declspec(dllimport) extern

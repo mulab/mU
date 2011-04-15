@@ -3,7 +3,7 @@
 #include "Kernel.h"
 
 #ifdef _WIN32
-#ifdef Function_EXPORTS
+#ifdef FUNCTION_EXPORTS
 #define FUNCTION_API __declspec(dllexport) extern
 #else
 #define FUNCTION_API __declspec(dllimport) extern
