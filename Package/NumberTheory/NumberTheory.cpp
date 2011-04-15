@@ -164,14 +164,14 @@ void Initialize()
 	Rational::Init();
 	List::Init();
 	Old::Randomize();
-#define T(x) var TAG(x) = Sym(L###x,System);Externals[TAG(x)] = WRAP(x);
+#define T(x) var TAG(x) = Sym(L###x,System);CProcs[TAG(x)] = WRAP(x);
 	T(FactorInteger)T(SeedRandom)T(RandomInteger)T(RandomPrime)T(NextPrime)
 	T(IntegerLength)T(GCD)T(LCM)T(ExtendedGCD)T(ChineseRemainder)T(PrimeQ)
 #undef T
 #define T(x,y) Attributes[TAG(x)].insert(y);
 
 #undef T
-#define T(x) Externals[TAG(x)] = WRAP(x);
+#define T(x) CProcs[TAG(x)] = WRAP(x);
 	T(Radical)
 #undef T
 	Initialized = true;

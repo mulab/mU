@@ -1,0 +1,6 @@
+(* Begin["System`"] *)
+(* CInstall["kernel"] *)
+
+CProc["kernel",Box,CInstall,CUninstall]
+
+(* End[] *)

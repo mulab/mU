@@ -62,11 +62,11 @@ void Initialize()
 {
 	static bool Initialized = false;
 	if(Initialized) return;
-#define T(x) var TAG(x) = Sym(L###x,System);Externals[TAG(x)] = WRAP(x);
+#define T(x) var TAG(x) = Sym(L###x,System);CProcs[TAG(x)] = WRAP(x);
 	T(Pipe)T(Buffer)T(File)T(Link)T(Read)T(Write)
 	T(Server)T(Request)T(Parse)
 #undef T
-#define T(x) var TAG(x) = Sym(L###x,System);Functionals[TAG(x)] = WRAP(x);
+#define T(x) var TAG(x) = Sym(L###x,System);COpers[TAG(x)] = WRAP(x);
 
 #undef T
 #define T(x,y) Attributes[TAG(x)].insert(y);

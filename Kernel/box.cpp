@@ -445,3 +445,11 @@ else if(h == tag_##x)\
 }
 //////////////////////////////////////
 }
+
+using namespace mU;
+
+CAPI var System_Box(Var x) {
+	wostringstream t;
+	BoxPrint(Pretty(At(x,0)),t);
+	return Str(t.str());
+}

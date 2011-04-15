@@ -189,19 +189,19 @@ void Initialize()
 {
 	static bool Initialized = false;
 	if(Initialized) return;
-#define T(x) var TAG(x) = Sym(L###x,System);Externals[TAG(x)] = WRAP(x);
+#define T(x) var TAG(x) = Sym(L###x,System);CProcs[TAG(x)] = WRAP(x);
 	T(Factorial)T(Binomial)T(Fibonacci)T(Lucas)T(EulerGamma)T(Catalan)T(Log)T(Log2)
 	T(Log10)T(Exp)T(Cos)T(Sin)T(Tan)T(Sec)T(Csc)T(Cot)T(ArcCos)T(ArcSin)T(ArcTan)
 	T(Cosh)T(Sinh)T(Tanh)T(Sech)T(Csch)T(Coth)T(ArcCosh)T(ArcSinh)T(ArcTanh)T(Gamma)
 	T(LogGamma)T(Zeta)T(Erf)T(Erfc)
 #undef T
-#define T(x) var TAG(x) = Sym(L###x,System);Functionals[TAG(x)] = WRAP(x);
+#define T(x) var TAG(x) = Sym(L###x,System);COpers[TAG(x)] = WRAP(x);
 
 #undef T
 #define T(x,y) Attributes[TAG(x)].insert(y);
 	
 #undef T
-#define T(x) Externals[TAG(x)] = WRAP(x);
+#define T(x) CProcs[TAG(x)] = WRAP(x);
 	T(Sqrt)T(Pow)T(Pi)T(E)
 #undef T
 	Initialized = true;

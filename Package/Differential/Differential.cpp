@@ -121,10 +121,10 @@ void Initialize()
 #define T(x) TAG(x) = Sym(L###x,System);
 	T($D)T($Derivative)T($MultiD)
 #undef T
-#define T(x) Externals[TAG(x)] = WRAP(x);
+#define T(x) CProcs[TAG(x)] = WRAP(x);
 	T(D)T($MultiD)
 #undef T
-#define T(x) Functionals[TAG(x)] = WRAP(x);
+#define T(x) COpers[TAG(x)] = WRAP(x);
 	//\todo ɾ
 	T(Derivative)T($Derivative)
 #undef T

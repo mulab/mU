@@ -33,6 +33,8 @@ typedef var_t* Var;
 typedef unsigned long uint;
 typedef signed long sint;
 typedef wchar_t wchar;
+#define __W(x) L ## x
+#define _W(x) __W(x)
 using std::string;using std::wstring;using std::istream;using std::wistream;
 using std::ostream;using std::wostream;using std::iostream;using std::wiostream;
 using std::istringstream;using std::wistringstream;
@@ -81,16 +83,17 @@ struct hash<std::wstring>
 namespace stdext = __gnu_cxx;
 #endif
 #ifdef _WIN32
-#ifdef MU_EXPORTS
+#ifdef KERNEL_EXPORTS
 #define DLL __declspec(dllexport)
 #else
 #define DLL __declspec(dllimport)
-#pragma comment(lib,"mU")
+#pragma comment(lib,"Kernel")
 #endif
 #else
 #define DLL
 #endif
 #define API DLL extern
+#define CAPI extern "C" DLL
 
 namespace mU {
 //////////////////////////////////////

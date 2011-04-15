@@ -88,7 +88,7 @@ Wrap(LeastSquares)
 void Initialize()
 {
 	static bool Initialized = false;
-#define T(x) Var TAG(x) = Sym(L###x,System);Externals[TAG(x)] = WRAP(x);
+#define T(x) Var TAG(x) = Sym(L###x,System);CProcs[TAG(x)] = WRAP(x);
 	T(mLinearSolve)T(LinearSolve)T(StrassenMM)T(MDot)T(MInverse)T(MDet)T(NullSpace)T(Rank)T(LeastSquares)
 #undef T
 #define T(x,y) Attributes[TAG(x)].insert(y);

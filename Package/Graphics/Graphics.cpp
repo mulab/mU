@@ -98,7 +98,7 @@ Wrap(ContourPlot) {
 void Initialize() {
     static bool Initialized = false;
     if (Initialized) return;
-#define T(x) var TAG(x) = Sym(L###x,System);Externals[TAG(x)] = WRAP(x);
+#define T(x) var TAG(x) = Sym(L###x,System);CProcs[TAG(x)] = WRAP(x);
     T(Plot)
     T(Plot3D)
     T(ListPlot)
@@ -110,7 +110,7 @@ void Initialize() {
     T(ContourPlot3D)
     T(ContourPlot)
 #undef T
-#define T(x) var TAG(x) = Sym(L###x,System);Functionals[TAG(x)] = WRAP(x);
+#define T(x) var TAG(x) = Sym(L###x,System);COpers[TAG(x)] = WRAP(x);
 #undef T
 #define T(x,y) Attributes[TAG(x)].insert(y);
     T(Plot, HoldAll)

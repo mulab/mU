@@ -35,7 +35,7 @@ var Evalf(Var x)
 				iter = Attributes.find(x);
 			if(iter != Attributes.end() &&
 				iter->second.count(Constant))
-				return Externals[x](0);
+				return CProcs[x](0);
 		}
 		break;
 	case TYPE(vec):

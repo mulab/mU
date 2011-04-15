@@ -2,15 +2,19 @@
 #include <mU/Exceptions.h>
 #include <mU/Kernel.h>
 #include <mU/Parser.h>
+#include <mU/Interface.h>
 using namespace mU;
 
 inline void prompt() { wcout<<L"mU> "; }
 inline void newline() { wcout<<L"  > "; }
-int main(int argc,char *argv[])
-{
+int main(int argc,char *argv[]) {
 	setlocale(LC_ALL,"");
 	//wcerr.rdbuf(0);
 	Initialize();
+	if (!cinstall("kernel")) {
+		wcerr << _W("Kernel library not found, quit...") << std::endl;
+		return -1;
+	}
 	ParseFile(Path() + L"mU.ini");
 	if(argc > 1)
 	{

@@ -61,12 +61,12 @@ public:
 	DLL static stdext::hash_map<wstring,size_t> s_postfix_symbol, s_prefix_symbol, s_infix_symbol;
 	DLL static std::set<token_t> s_end;
 	DLL static void init();
-	parser();
-	parser(wistream&);
-	void start(wistream&);
-	void parse();
-	var result();
-	void clear();
+	DLL parser();
+	DLL parser(wistream&);
+	DLL void start(wistream&);
+	DLL void parse();
+	DLL var result();
+	DLL void clear();
 	
 	size_t lineno;
 	size_t column;

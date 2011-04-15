@@ -126,8 +126,8 @@ var Eval(Var x)
 		}
 		{
 			stdext::hash_map<Var,CProc>::const_iterator
-				iter = Externals.find(h);
-			if(iter != Externals.end())
+				iter = CProcs.find(h);
+			if(iter != CProcs.end())
 			{
 				var t = iter->second(r);
 				if(t) return t;
@@ -158,8 +158,8 @@ var Eval(Var x)
 			}
 			{
 				stdext::hash_map<Var,COper>::const_iterator
-					iter = Functionals.find(Head(h));
-				if(iter != Functionals.end())
+					iter = COpers.find(Head(h));
+				if(iter != COpers.end())
 				{
 					var t = iter->second(Body(h),r);
 					if(t) return t;

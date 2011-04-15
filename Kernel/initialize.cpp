@@ -2,6 +2,7 @@
 #include <mU/String.h>
 #include <mU/Pattern.h>
 #include <mU/Kernel.h>
+#include <mU/Interface.h>
 
 namespace mU {
 namespace {
@@ -614,12 +615,6 @@ Wrap(Full)
 	FullPrint(At(x,0),t);
 	return Str(t.str());
 }
-Wrap(Box)
-{
-	wostringstream t;
-	BoxPrint(Pretty(At(x,0)),t);
-	return Str(t.str());
-}
 Wrap(ToString)
 {
 	wostringstream t;
@@ -866,8 +861,8 @@ std::map<Var,def_t> DownValues;
 std::map<Var,def_t> SubValues;
 std::map<Var,map_t> Properties;
 std::map<Var,attr_t> Attributes;
-stdext::hash_map<Var,CProc> Externals;
-stdext::hash_map<Var,COper> Functionals;
+stdext::hash_map<Var,CProc> CProcs;
+stdext::hash_map<Var,COper> COpers;
 var
 Global, System, Null, True, False, Nil,
 Constant, Flat, HoldAll, HoldAllComplete, HoldFirst,
@@ -932,10 +927,10 @@ void Initialize()
 	T(Exponent)T(Deg)T(CoefficientList)T(FromCoefficientList)T(Graphics2D)T(Graphics3D)
 	T(Options)T(StringLength)T(StringInsert)T(StringTake)T(StringDrop)
 #undef T
-#define T(x) Externals[TAG(x)] = x;
+#define T(x) CProcs[TAG(x)] = x;
 	T(Plus)T(Times)T(Dot)
 #undef T
-#define T(x) Externals[TAG(x)] = WRAP(x);
+#define T(x) CProcs[TAG(x)] = WRAP(x);
 	T(Timing)T(And)T(Or)T(Not)T(If)T(For)T(While)T(Flatten)T(FlattenAll)
 	T(SameQ)T(Less)T(Equal)T(Greater)T(UnsameQ)T(GreaterEqual)T(Unequal)T(LessEqual)
 	T(FreeQ)T(MatchQ)T(MemberQ)T(With)T(Block)T(Module)T(ReplaceRepeated)
@@ -946,7 +941,7 @@ void Initialize()
 	T(Contexts)T(ContextPath)T(Apply)T(Map)T(Unset)T(Full)T(ToString)T(ToExpression)
 	T(Exit)T(Quit)T(Set)T(SetDelayed)T(Hold)T(Run)T(Task)T(Kill)T(Array)T(Table)T(Do)
 	T(N)T(IntegerPart)T(Floor)T(Ceiling)T(Round)T(Expand)T(Variables)T(Coefficient)
-	T(Exponent)T(Deg)T(CoefficientList)T(FromCoefficientList)T(Box)T(StringLength)
+	T(Exponent)T(Deg)T(CoefficientList)T(FromCoefficientList)T(StringLength)
 	T(Set)T(Part)T(Property)T(SetDelayed)T(CompoundExpression)T(Power)T(Mod)
 	T(StringInsert)T(StringTake)T(StringDrop)
 #undef T
@@ -964,7 +959,7 @@ void Initialize()
 	T(Unevaluated,HoldAll)T(Function,HoldAll)T(Context,HoldFirst)T(Property,HoldAll)
 	T(RuleDelayed,HoldRest)T(Unset,HoldFirst)T(Task,HoldAll)T(Table,HoldAll)T(Do,HoldAll)
 #undef T
-#define T(x) Functionals[TAG(x)] = WRAP(x);
+#define T(x) COpers[TAG(x)] = WRAP(x);
 	T(Function)
 #undef T
 	ContextPath.push(std::list<Var>());
@@ -975,3 +970,15 @@ void Initialize()
 }
 }
 DLLMAIN(mU::Initialize)
+
+using namespace mU;
+#define SYS(x) Sym(_W(#x),System)
+CAPI void Install() {
+	CProcs[SYS(CProc)] = (CProc)cfunc(cnoload("kernel"), SYS(CProc));
+	Begin(System);
+	ParseFile(Path() + _W("Kernel/Kernel.u"));
+	End();
+}
+CAPI void Uninstall() {
+	wcout << "#Kernel# Uninstall Successfully!" << std::endl;
+}
