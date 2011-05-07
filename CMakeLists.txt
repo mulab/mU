@@ -2,7 +2,9 @@ cmake_minimum_required(VERSION 2.6)
 
 project(mU CXX)
 
-# TODO: also check for the availability of gmp and mpfr libraries
+find_library(GMP gmp)
+find_library(MPFR mpfr)
+# TODO: prompt while gmp or mpfr is not found, reference to "developer getting started" page
 
 set(Boost_USE_STATIC_LIBS       OFF)
 set(Boost_USE_MULTITHREADED      ON)
@@ -11,6 +13,7 @@ find_package( Boost 1.42.0 COMPONENTS system )
 
 if(NOT Boost_FOUND)
     message(SEND_ERROR "boost library not found")
+    # TODO: reference to "developer getting started" page
 endif()
    
 set(mU_HEADER_DIR ${mU_SOURCE_DIR}/Include ${Boost_INCLUDE_DIRS})
@@ -19,10 +22,10 @@ set(CMAKE_CXX_FLAGS "-Wno-deprecated")
 set(EXECUTABLE_OUTPUT_PATH ..)
 set(LIBRARY_OUTPUT_PATH ..)
 
-# set(CMAKE_SHARED_LIBRARY_PREFIX "")
-# set(CMAKE_SHARED_LIBRARY_SUFFIX ".dll")
-# set(CMAKE_SHARED_MODULE_PREFIX "")
-# set(CMAKE_SHARED_MODULE_SUFFIX ".dll")
+set(CMAKE_SHARED_LIBRARY_PREFIX "")
+set(CMAKE_SHARED_LIBRARY_SUFFIX ".dll")
+set(CMAKE_SHARED_MODULE_PREFIX "")
+set(CMAKE_SHARED_MODULE_SUFFIX ".dll")
     
 # FIXME: can we simply set the library type to SHARED?
 # issue 1: what's the difference between SHARED and MODULE on UNIX gcc

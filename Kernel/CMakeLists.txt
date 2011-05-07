@@ -28,7 +28,10 @@ set(KERNEL_SRCS
 add_library(Kernel ${PACKAGE_LIB_TYPE} ${KERNEL_SRCS})
 
 set_target_properties(Kernel PROPERTIES
-                            COMPILE_DEFINITIONS "KERNEL_EXPORTS")
+                            COMPILE_DEFINITIONS "KERNEL_EXPORTS"
+                            LIBRARY_OUTPUT_NAME "kernel"
+                            PREFIX "lib"
+                            SUFFIX ".so")
 
 if(WIN32)
     target_link_libraries(Kernel gmp)
