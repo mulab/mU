@@ -62,6 +62,11 @@ bool cinstall(const char* x) {
     void* m = cload(x);
     if (!m)
         return false;
+#ifndef _WIN32
+	void *dllmain = csym(m, "DllMain");
+	if (dllmain)
+		reinterpret_cast<Ptr>(dllmain)();
+#endif
     void* ptr = csym(m, "Install");
     if (ptr)
         reinterpret_cast<Ptr>(ptr)();
