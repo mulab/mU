@@ -3,5 +3,5 @@ AUX_SOURCE_DIRECTORY(. MATRIX_SRCS)
 
 add_library(Matrix ${PACKAGE_LIB_TYPE} ${MATRIX_SRCS})
 
-target_link_libraries(Matrix mU Function gmp)
+target_link_libraries(Matrix Kernel Function gmp)
 

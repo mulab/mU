@@ -3,5 +3,5 @@ AUX_SOURCE_DIRECTORY(. NUMBERTHEORY_SRCS)
 
 add_library(NumberTheory ${PACKAGE_LIB_TYPE} ${NUMBERTHEORY_SRCS})
 
-target_link_libraries(NumberTheory mU gmp)
+target_link_libraries(NumberTheory Kernel gmp)
 

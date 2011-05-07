@@ -6,5 +6,5 @@ add_library(Function SHARED ${FUNCTION_SRCS})
 set_target_properties(Function PROPERTIES 
                         COMPILE_DEFINITIONS "FUNCTION_EXPORTS")
 
-target_link_libraries(Function mU gmp mpfr)
+target_link_libraries(Function Kernel gmp mpfr)
 

@@ -10,5 +10,5 @@ else()
     set(SOCK_LIB "")
 endif()
 
-target_link_libraries(Stream mU gmp ${SOCK_LIB} ${Boost_LIBRARIES})
+target_link_libraries(Stream Kernel gmp ${SOCK_LIB} ${Boost_LIBRARIES})
 

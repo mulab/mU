@@ -3,4 +3,4 @@ AUX_SOURCE_DIRECTORY(. GRAPHICS_SRCS)
 
 add_library(Graphics ${PACKAGE_LIB_TYPE} ${GRAPHICS_SRCS})
 
-target_link_libraries(Graphics mU gmp)
+target_link_libraries(Graphics Kernel gmp)
