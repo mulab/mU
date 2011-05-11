@@ -145,6 +145,8 @@ inline var ParseString(const wstring &x)
 inline var ParseFile(const wstring &x)
 {
 	// TODO: 考察在各个平台下这样读入文件时系统是否都会正确的做字符编码转换
+	//       在GNU/Linux下，使用locale::global应用默认区域设置之后就OK
+	//       Windows平台待测试
     wifstream i(to_string(x.c_str(), x.length()).c_str());
     return Parse(i);
 }

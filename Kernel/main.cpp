@@ -10,6 +10,7 @@ inline void prompt() { wcout<<L"mU> "; }
 inline void newline() { wcout<<L"  > "; }
 int main(int argc,char *argv[]) {
 	setlocale(LC_ALL,"");
+	std::locale::global(std::locale(""));
 	//wcerr.rdbuf(0);
 	Initialize();
 	if (!cinstall("kernel")) {
