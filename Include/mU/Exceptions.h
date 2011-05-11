@@ -40,7 +40,12 @@ namespace mU
 
 	};
 
-	class InvalidUtf8StreamException : public RuntimeException
+	class InvalidCodePointException : public RuntimeException
+	{
+
+	};
+
+	class InvalidUtf8StreamException : public InvalidCodePointException
 	{
 
 	};

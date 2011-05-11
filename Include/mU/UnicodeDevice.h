@@ -9,8 +9,13 @@
 #define UNICODEDEVICE_H_
 
 #include <iosfwd>
+#include <locale>
+#include <boost/scoped_array.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/iostreams/categories.hpp>
+#ifdef _WIN32
+#include <windows.h>
+#endif
 #include "Exceptions.h"
 namespace io = boost::iostreams;
 
@@ -195,6 +200,122 @@ public:
 	}
 };
 
+}
+
+// FIXME: 这两个函数应该在.cpp文件里的
+namespace mU
+{
+inline wstring to_wstring(const char *src, size_t len)
+{
+	using namespace std;
+	using namespace boost;
+	scoped_array<wchar_t> buffer(new wchar_t[len]);
+	int count;
+#ifdef _WIN32
+	count = MultiByteToWideChar(CP_ACP,
+			MB_PRECOMPOSED | MB_USEGLYPHCHARS | MB_ERR_INVALID_CHARS,
+			src, len, buffer.get(), len);
+
+	if (!count)
+	{
+		switch (GetLastError())
+		{
+		case ERROR_NO_UNICODE_TRANSLATION:
+			throw InvalidCodePointException();
+		default:
+			throw RuntimeException();	// FIXME: 确切的错误类型
+		}
+	}
+#else
+	locale def("");
+	typedef codecvt<wchar_t, char, mbstate_t> codecvt_t;
+	const codecvt_t &cvt = use_facet<codecvt_t>(def);
+	mbstate_t state;
+	mbsinit(&state);
+	const char *in_next = src;
+	wchar_t *out_next = buffer.get();
+
+	codecvt_base::result r = cvt.in(state,
+									src, src+len, in_next,
+									buffer.get(), buffer.get()+len,
+									out_next);
+
+	switch (r)
+	{
+	case codecvt_base::ok:
+		break;
+	case codecvt_base::noconv:
+		throw InvalidCodePointException();
+	default:
+		throw RuntimeException();	// FIXME: 确切的错误类型
+	}
+	count = out_next - buffer.get();
+#endif
+	return wstring(buffer.get(), count);
+}
+
+inline string to_string(const mU::wchar *src, size_t len)
+{
+	using namespace std;
+	using namespace boost;
+	scoped_array<char> buffer(new char[len*8]);
+	int count;
+#ifdef _WIN32
+	const char def_char = '?';
+	BOOL used_def_char = false;
+	count = WideCharToMultiByte(CP_ACP,
+#ifdef __MINGW32__
+			// FIXME: 应该是WC_ERR_INVALID_CHARS | WC_NO_BEST_FIT_CHARS
+			//        但mingw不支持
+			0,
+#else
+			WC_ERR_INVALID_CHARS | WC_NO_BEST_FIT_CHARS
+#endif
+			src, len, buffer.get(), len*8,
+			&def_char, &used_def_char);
+
+	if (used_def_char)
+	{
+		throw InvalidCodePointException();
+	}
+
+	if (!count)
+	{
+		switch (GetLastError())
+		{
+		case ERROR_NO_UNICODE_TRANSLATION:
+			throw InvalidCodePointException();
+		default:
+			throw RuntimeException();	// FIXME: ??е????????
+		}
+	}
+#else
+	locale def("");
+	typedef codecvt<wchar_t, char, mbstate_t> codecvt_t;
+	const codecvt_t &cvt = use_facet<codecvt_t>(def);
+	mbstate_t state;
+	mbsinit(&state);
+	const wchar_t *in_next = src;
+	char *out_next = buffer.get();
+
+	codecvt_base::result r = cvt.out(state,
+			src, src+len, in_next,
+			buffer.get(), buffer.get()+len*8,
+			out_next);
+
+	switch (r)
+	{
+	case codecvt_base::ok:
+		break;
+	case codecvt_base::noconv:
+		throw InvalidCodePointException();
+	default:
+		throw RuntimeException();	// FIXME: ??е????????
+	}
+	count = out_next - buffer.get();
+#endif
+	return string(buffer.get(), count);
+}
 }
 
 #endif /* UNICODEDEVICE_H_ */

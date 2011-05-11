@@ -1,5 +1,6 @@
 #pragma once
 #include "Var.h"
+#include "UnicodeDevice.h"
 
 #ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN
@@ -143,7 +144,8 @@ inline var ParseString(const wstring &x)
 }
 inline var ParseFile(const wstring &x)
 {
-    wifstream i(string(x.begin(),x.end()).c_str());
+	// TODO: 考察在各个平台下这样读入文件时系统是否都会正确的做字符编码转换
+    wifstream i(to_string(x.c_str(), x.length()).c_str());
     return Parse(i);
 }
 API var Pretty(Var);
