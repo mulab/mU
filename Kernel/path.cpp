@@ -1,38 +1,44 @@
 #include <mU/Kernel.h>
+#include <boost/scoped_ptr.hpp>
+using namespace std;
 
 #ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <ShellAPI.h>
+
 namespace mU {
-//////////////////////////////////////
-#define T(x) (((cmodule_t*)(Var)(x))->rep)
+
 struct cmodule_t : obj_t
 {
 	void print(wostream &f) { f << L"CModule[" << rep << L']'; }
 	HMODULE rep;
 };
+
 wstring Path()
 {
-	static wchar buf[0x100];
-	GetModuleFileNameW(NULL,buf,0x100);
+	static wchar buf[MAX_PATH];
+	API_CALL(GetModuleFileNameW,NULL,buf,MAX_PATH);
 	wcsrchr(buf,L'\\')[1] = 0;
-	return buf;
+	return buf;	// TODO: cache this result
 }
-var Install(const wstring &x)
+
+var Install(const wstring &x)	// FIXME: behavior change, now may throw, check callers
 {
-	cmodule_t *r = new cmodule_t;
-	r->rep = LoadLibraryW(x.c_str());
-	if(r->rep) return r;
-	delete r;
+	scoped_ptr<cmodule_t> r = new cmodule_t;
+	API_CALL_R(r->rep, LoadLibraryW, x.c_str());
+	if(r->rep) return r.get();
 	return 0;
 }
-bool Uninstall(Var x)
+
+bool Uninstall(Var x)			// FIXME: behavior change, now may throw, check callers
 {
-	return FreeLibrary(T(x)) == TRUE;
+	BOOL r;
+	API_CALL(r,FreeLibrary,dynamic_cast<cmodule_t*>(x)->rep);
+	return r == TRUE;
 }
-#undef T
-bool Run(const wstring &x)
+
+bool Run(const wstring &x)		// FIXME: behavior change, now may throw, check callers
 {
 	STARTUPINFOW si;
 	PROCESS_INFORMATION pi;
@@ -42,8 +48,10 @@ bool Run(const wstring &x)
 	ZeroMemory( &pi, sizeof(pi) );
 
 	// Start the child process.
-	if(CreateProcessW(NULL,	// No module name (use command line)
-		(wchar*)x.c_str(),	// Command line
+	API_CALL(CreateProcessW,
+		NULL,	// No module name (use command line)
+		// FIXME: 应该创建一个长为32768的buffer来转储，而不是使用const_cast
+		const_cast<wchar*>(x.c_str()),	// Command line
 		NULL,           // Process handle not inheritable
 		NULL,           // Thread handle not inheritable
 		FALSE,          // Set handle inheritance to FALSE
@@ -52,17 +60,15 @@ bool Run(const wstring &x)
 		NULL,           // Use parent's starting directory
 		&si,            // Pointer to STARTUPINFO structure
 		&pi )           // Pointer to PROCESS_INFORMATION structure
-		)
-	{
-		// Wait until child process exits.
-		WaitForSingleObject( pi.hProcess, INFINITE );
+	);
 
-		// Close process and thread handles.
-		CloseHandle( pi.hProcess );
-		CloseHandle( pi.hThread );
-		return true;
-	}
-	return false;
+	// Wait until child process exits.
+	WaitForSingleObject( pi.hProcess, INFINITE );
+
+	// Close process and thread handles.
+	CloseHandle( pi.hProcess );
+	CloseHandle( pi.hThread );
+	return true;
 }
 #define T(x) (((cthread_t*)(Var)(x))->rep)
 struct cthread_t : obj_t
@@ -77,7 +83,7 @@ namespace {
 	//        it out for now
 	DWORD WINAPI ThreadProc(/*__in*/  LPVOID lpParameter)
 	{
-		Eval(*(var*)lpParameter);
+		Eval(*static_cast<var*>lpParameter);
 		return 0;
 	}
 }
@@ -103,6 +109,7 @@ bool Kill(Var x)
 #undef T
 #else
 #include <dlfcn.h>
+#include <unistd.h>
 namespace mU {
 //////////////////////////////////////
 #define T(x) (((cmodule_t*)(Var)(x))->rep)
@@ -115,7 +122,7 @@ wstring Path()
 {
     static char buf[0x100];
     memset(buf,0,0x100);
-    readlink("/proc/self/exe",buf,0x100);
+    readlink("/proc/self/exe",buf,0x100);	// FIXME: should be wrapped with API_CALL
 	strrchr(buf,L'/')[1] = 0;
 	return wstring(buf,buf + strlen(buf));
 }
