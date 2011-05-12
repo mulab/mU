@@ -21,11 +21,6 @@ set(CMAKE_CXX_FLAGS "-Wno-deprecated")
 
 set(EXECUTABLE_OUTPUT_PATH ..)
 set(LIBRARY_OUTPUT_PATH ..)
-
-set(CMAKE_SHARED_LIBRARY_PREFIX "")
-set(CMAKE_SHARED_LIBRARY_SUFFIX ".dll")
-set(CMAKE_SHARED_MODULE_PREFIX "")
-set(CMAKE_SHARED_MODULE_SUFFIX ".dll")
     
 # FIXME: can we simply set the library type to SHARED?
 # issue 1: what's the difference between SHARED and MODULE on UNIX gcc

@@ -29,9 +29,7 @@ add_library(Kernel ${PACKAGE_LIB_TYPE} ${KERNEL_SRCS})
 
 set_target_properties(Kernel PROPERTIES
                             COMPILE_DEFINITIONS "KERNEL_EXPORTS"
-                            LIBRARY_OUTPUT_NAME "kernel"
-                            PREFIX "lib"
-                            SUFFIX ".so")
+                            OUTPUT_NAME "kernel")
 
 if(WIN32)
     target_link_libraries(Kernel gmp)
@@ -43,4 +41,10 @@ endif()
 
 set(MU_SRCS main.cpp)
 add_executable(mU ${MU_SRCS})
-target_link_libraries(mU Kernel gmp dl)
+if(WIN32)
+    target_link_libraries(mU Kernel gmp)
+elseif(UNIX)
+    target_link_libraries(mU Kernel gmp dl)
+else()
+    message(FATAL_ERROR "building on an unsupported operating system")
+endif()
