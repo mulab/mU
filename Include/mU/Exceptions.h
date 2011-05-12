@@ -8,6 +8,13 @@
 #ifndef EXCEPTIONS_H_
 #define EXCEPTIONS_H_
 
+#include <boost/system/error_code.hpp>
+#ifdef _WIN32
+#include <Windows.h>
+#else
+#include <errno.h>
+#endif
+
 namespace mU
 {
 	class Exception
@@ -54,6 +61,36 @@ namespace mU
 	{
 
 	};
+
+	class SystemError : public RuntimeException
+	{
+	public:
+		SystemError()
+#ifdef _WIN32
+			: error(GetLastError(), boost::system::system_category())
+#else
+			: error(errno, boost::system::system_category())
+#endif
+		{}
+	private:
+		boost::system::error_condition error;
+	};
+
+#ifdef _WIN32
+#define API_CALL(api_func, ...)			\
+	if (!api_func(__VA_ARGS__))			\
+		throw SystemError();
+#define API_CALL_R(r, api_func, ...)	\
+	if (!(r = api_func(__VA_ARGS__)))	\
+		throw SystemError();
+#else
+#define API_CALL(api_func, ...) 		\
+	if (api_func(__VA_ARGS__) == -1)	\
+		throw SystemError();
+#define API_CALL_R(r, api_func, ...)		\
+	if ((r = api_func(__VA_ARGS__)) == -1)	\
+		throw SystemError();
+#endif
 }
 
 #endif /* EXCEPTIONS_H_ */
