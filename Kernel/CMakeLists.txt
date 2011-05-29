@@ -32,9 +32,9 @@ set_target_properties(Kernel PROPERTIES
                             OUTPUT_NAME "kernel")
 
 if(WIN32)
-    target_link_libraries(Kernel gmp)
+    target_link_libraries(Kernel gmp ${Boost_LIBRARIES})
 elseif(UNIX)
-    target_link_libraries(Kernel pthread gmp dl)
+    target_link_libraries(Kernel pthread gmp dl ${Boost_LIBRARIES})
 else()
     message(FATAL_ERROR "building on an unsupported operating system")
 endif()
