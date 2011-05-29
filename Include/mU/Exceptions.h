@@ -9,6 +9,7 @@
 #define EXCEPTIONS_H_
 
 #include <boost/system/error_code.hpp>
+#include <boost/version.hpp>
 #ifdef _WIN32
 #include <Windows.h>
 #else
@@ -66,10 +67,18 @@ namespace mU
 	{
 	public:
 		SystemError()
+#if (BOOST_VERSION >= 104400)
 #ifdef _WIN32
 			: error(GetLastError(), boost::system::system_category())
 #else
 			: error(errno, boost::system::system_category())
+#endif
+#else
+#ifdef _WIN32
+			: error(GetLastError(), boost::system::system_category)
+#else
+			: error(errno, boost::system::system_category)
+#endif
 #endif
 		{}
 	private:
