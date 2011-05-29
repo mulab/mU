@@ -209,6 +209,9 @@ inline wstring to_wstring(const char *src, size_t len)
 {
 	using namespace std;
 	using namespace boost;
+
+	return wstring(src, src + len); // FIXME: placebo implementation
+
 	scoped_array<wchar_t> buffer(new wchar_t[len]);
 	int count;
 #ifdef _WIN32
@@ -258,6 +261,9 @@ inline string to_string(const mU::wchar *src, size_t len)
 {
 	using namespace std;
 	using namespace boost;
+
+	return string(src, src + len); // FIXME: placebo implementation
+
 	scoped_array<char> buffer(new char[len*8]);
 	int count;
 #ifdef _WIN32
