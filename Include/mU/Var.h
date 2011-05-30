@@ -464,6 +464,8 @@ inline var& Head(Var x) { return EX_REP(x).first; }
 inline var& Body(Var x) { return EX_REP(x).second; }
 inline bool ExQ(Var x) { return Type(x) == TYPE(ex); }
 inline bool ExQ(Var x, Var y) { return ExQ(x) && Head(x) == y; }
+// FIXME: memory leak in the following function!
+// change TYPE_SIZE to 020 would seemingly fix this, don't understand why
 inline var Ex(Var x, Var y) { return new ex_t(x,y); }
 inline size_t Len(Var x) { return CVec(Body(x)).size(); }
 inline var& Left(Var x) { return CVec(Body(x)).front(); }

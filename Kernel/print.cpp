@@ -1,3 +1,4 @@
+#include <boost/scoped_array.hpp>
 #include <mU/Number.h>
 #include <mU/Kernel.h>
 #include <mU/Parser.h>
@@ -15,8 +16,12 @@ inline void Print(wchar x, wostream &f)
 		<< ((x >> 4) & 0xF)
 		<< (x & 0xF);
 }
+
 void Print(Var x, wostream &f, size_t y)
 {
+	static size_t bufsize = 1024;
+	static boost::scoped_array<char> buffer(new char[bufsize]);
+
 	switch(Type(x))
 	{
 	case TYPE(obj):
@@ -25,21 +30,45 @@ void Print(Var x, wostream &f, size_t y)
 	case TYPE(int):
 		{
 			int_t::rep_t &rep = CInt(x);
-			f << mpz_get_str(0,10,rep);
+			const size_t req_size = mpz_sizeinbase(rep, 10) + 2;
+			if (bufsize < req_size)
+			{
+				bufsize = req_size;
+				buffer.reset(new char[bufsize]);
+			}
+			f << mpz_get_str(buffer.get(), 10, rep);
 		}
 		break;
 	case TYPE(rat):
 		{
 			rat_t::rep_t &rep = CRat(x);
-			f << mpq_get_str(0,10,rep);
+			const size_t req_size = mpz_sizeinbase(mpq_numref(rep), 10)
+										+ mpz_sizeinbase(mpq_denref(rep), 10)
+										+ 3;
+			if (bufsize < req_size)
+			{
+				bufsize = req_size;
+				buffer.reset(new char[bufsize]);
+			}
+			f << mpq_get_str(buffer.get(),10,rep);
 		}
 		break;
 	case TYPE(flt):
 		{
 			flt_t::rep_t &rep = CFlt(x);
 			long exp;
-			char *s = mpf_get_str(0,&exp,10,(uint)(LOG_10_2 * mpf_get_prec(rep)),rep);
-			wstring t(s,s + strlen(s));
+			const size_t n_digits = static_cast<size_t>(LOG_10_2
+													* mpf_get_prec(rep));
+			const size_t req_size = n_digits + 2;
+			if (bufsize < req_size)
+			{
+				bufsize = req_size;
+				buffer.reset(new char[bufsize]);
+			}
+			const char *const s = mpf_get_str(buffer.get(), &exp, 10,
+												n_digits, rep);
+			// TODO: maybe we don't need character encoding conversion here.
+			wstring t(to_wstring(s, strlen(s)));
 			const wchar *buf = t.c_str();
 			if(exp == 0)
 				f << L"0." << buf;
