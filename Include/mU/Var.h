@@ -19,6 +19,7 @@
 #include <stack>
 #include <set>
 #include <map>
+#include <memory>
 #include <deque>
 #include <queue>
 #include <list>
@@ -423,33 +424,33 @@ inline var Vec() { return new vec_t; }
 inline var Vec(size_t n) { return new vec_t(n); }
 inline var Vec(Var a)
 {
-	vec_t *r = new vec_t(1);
+	std::auto_ptr<vec_t> r(new vec_t(1));
 	r->rep[0] = a;
-	return r;
+	return r.release();
 }
 inline var Vec(Var a, Var b)
 {
-	vec_t *r = new vec_t(2);
+	std::auto_ptr<vec_t> r(new vec_t(2));
 	r->rep[0] = a;
 	r->rep[1] = b;
-	return r;
+	return r.release();
 }
 inline var Vec(Var a, Var b, Var c)
 {
-	vec_t *r = new vec_t(3);
+	std::auto_ptr<vec_t> r(new vec_t(3));
 	r->rep[0] = a;
 	r->rep[1] = b;
 	r->rep[2] = c;
-	return r;
+	return r.release();
 }
 inline var Vec(Var a, Var b, Var c, Var d)
 {
-	vec_t *r = new vec_t(4);
+	std::auto_ptr<vec_t> r(new vec_t(4));
 	r->rep[0] = a;
 	r->rep[1] = b;
 	r->rep[2] = c;
 	r->rep[3] = d;
-	return r;
+	return r.release();
 }
 inline var& At(Var x, size_t y) { return VEC_REP(x)[y]; }
 inline size_t Size(Var x) { return VEC_REP(x).size(); }

@@ -1,3 +1,4 @@
+#include <memory>
 #include <mU/Kernel.h>
 #include <boost/scoped_ptr.hpp>
 using namespace std;
@@ -128,19 +129,19 @@ wstring Path()
 }
 var Install(const wstring &x)
 {
-	cmodule_t *r = new cmodule_t;
-    	r->rep = dlopen(string(x.begin(),x.end()).c_str(),RTLD_LAZY);
+	auto_ptr<cmodule_t> r(new cmodule_t);
+    r->rep = dlopen(string(x.begin(),x.end()).c_str(),RTLD_LAZY);
 	if(r->rep)
 	{
 		typedef void(*DllMain)();
 		DllMain f = (DllMain)dlsym(r->rep,"DllMain");
 		if(f) f();
-		return r;
+		return r.release();
 	}
 	wcerr
         << L"Install:"
 		<< dlerror() << std::endl;
-	delete r;
+
 	return 0;
 }
 bool Uninstall(Var x)
