@@ -6,6 +6,7 @@
 #include <cstring>
 #include <cstdlib>
 #include <cstdarg>
+#include <climits>
 #include <cmath>
 #include <ctime>
 #include <locale>
@@ -26,6 +27,7 @@
 #include <iterator>
 #include <stdexcept>
 #include <gmp.h>
+#include <boost/intrusive_ptr.hpp>
 
 namespace mU {
 struct var_t;
@@ -110,22 +112,42 @@ enum type_t
 	type_obj,type_int,type_rat,type_flt,
 	type_str,type_sym,type_vec,type_ex
 };
-const size_t TYPE_SIZE = 010;
+
+const size_t TYPE_BITS = 3;
+const size_t TYPE_SIZE = 1 << TYPE_BITS;
 const size_t TYPE_MASK = TYPE_SIZE - 1;
 
 struct var_t
 {
-	size_t id;
-	var_t() : id(0) {}
-	var_t(type_t t) : id(t) {}
-	Var clone() { id += TYPE_SIZE; return this; }
-	Var copy(Var x) { id += TYPE_SIZE; if(x) x->destroy(); return this; }
-	void destroy() { id -= TYPE_SIZE; if(id < TYPE_SIZE) delete this; }
+private:
+	type_t type : TYPE_BITS;
+	size_t refcount : sizeof(size_t) * CHAR_BIT - TYPE_BITS;
+
+public:
+	var_t(type_t t) : type(t), refcount(0) {}
 	virtual ~var_t() {}
+
+	friend size_t mU::Type(Var x);
+	friend void mU::intrusive_ptr_add_ref(var_t *);
+	friend void mU::intrusive_ptr_release(var_t *);
 };
 inline size_t Type(Var x)
 {
-	return static_cast<type_t>((x->id) & TYPE_MASK);
+	return x->type;
+}
+
+inline void intrusive_ptr_add_ref(var_t *pv)
+{
+	++(pv->refcount);
+}
+
+inline void intrusive_ptr_release(var_t *pv)
+{
+	--(pv->refcount);
+	if (pv->refcount == 0)
+	{
+		delete pv;
+	}
 }
 
 /*!
@@ -135,22 +157,22 @@ inline size_t Type(Var x)
  * \remarks
  * 为指针Var提供自动复制控制，便于标准库容器使用。
  */
-class var;
-typedef const var& VAR;
+
 class var
 {
-	Var ptr;
+	boost::intrusive_ptr<var_t> ptr;
 public:
 	var() : ptr(0) {}
-	var(Var x) : ptr(x ? x->clone() : 0) {}
-	var(VAR x) : ptr(x.ptr ? x.ptr->clone() : 0) {}
-	Var operator =(Var x) { return ptr = x ? x->copy(ptr) : 0; }
-	Var operator =(VAR x) { return ptr = x.ptr ? x.ptr->copy(ptr) : 0; }
-	~var() { if(ptr) ptr->destroy(); }
-	operator Var() const { return ptr; }
-	Var get() const { return ptr; }
-	Var operator ->() const { return ptr; }
+	var(var_t *x) : ptr(x) {}
+	var(const var &x) : ptr(x.ptr) {}
+	Var operator =(var_t *x) { ptr = x; return ptr.get(); }
+	Var operator =(const var &x) { ptr = x.ptr; return ptr.get(); }
+	~var() {}
+	operator Var() const { return ptr.get(); }
+	Var get() const { return ptr.get(); }
+	Var operator ->() const { return ptr.operator->(); }
 };
+
 //////////////////////////////////////
 /*!
 * \brief
