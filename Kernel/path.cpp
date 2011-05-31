@@ -1,6 +1,5 @@
 #include <memory>
 #include <mU/Kernel.h>
-#include <boost/scoped_ptr.hpp>
 using namespace std;
 
 #ifdef _WIN32
@@ -16,7 +15,7 @@ struct cmodule_t : obj_t
 	HMODULE rep;
 };
 
-wstring Path()
+wstring Path()					// FIXME: behavior change, now may throw, check callers
 {
 	static wchar buf[MAX_PATH];
 	API_CALL(GetModuleFileNameW,NULL,buf,MAX_PATH);
@@ -26,16 +25,16 @@ wstring Path()
 
 var Install(const wstring &x)	// FIXME: behavior change, now may throw, check callers
 {
-	scoped_ptr<cmodule_t> r = new cmodule_t;
+	auto_ptr<cmodule_t> r (new cmodule_t);
 	API_CALL_R(r->rep, LoadLibraryW, x.c_str());
-	if(r->rep) return r.get();
+	if(r->rep) return r.release();
 	return 0;
 }
 
 bool Uninstall(Var x)			// FIXME: behavior change, now may throw, check callers
 {
 	BOOL r;
-	API_CALL(r,FreeLibrary,dynamic_cast<cmodule_t*>(x)->rep);
+	API_CALL_R(r,FreeLibrary,dynamic_cast<cmodule_t*>(x)->rep);
 	return r == TRUE;
 }
 
@@ -60,18 +59,18 @@ bool Run(const wstring &x)		// FIXME: behavior change, now may throw, check call
 		NULL,           // Use parent's environment block
 		NULL,           // Use parent's starting directory
 		&si,            // Pointer to STARTUPINFO structure
-		&pi )           // Pointer to PROCESS_INFORMATION structure
+		&pi             // Pointer to PROCESS_INFORMATION structure
 	);
 
 	// Wait until child process exits.
-	WaitForSingleObject( pi.hProcess, INFINITE );
+	API_CALL(WaitForSingleObject, pi.hProcess, INFINITE );
 
 	// Close process and thread handles.
-	CloseHandle( pi.hProcess );
-	CloseHandle( pi.hThread );
+	API_CALL(CloseHandle, pi.hProcess );
+	API_CALL(CloseHandle, pi.hThread );
 	return true;
 }
-#define T(x) (((cthread_t*)(Var)(x))->rep)
+
 struct cthread_t : obj_t
 {
 	void print(wostream &f) { f << L"CThread[" << rep << L']'; }
@@ -84,7 +83,7 @@ namespace {
 	//        it out for now
 	DWORD WINAPI ThreadProc(/*__in*/  LPVOID lpParameter)
 	{
-		Eval(*static_cast<var*>lpParameter);
+		Eval(*static_cast<var*>(lpParameter));
 		return 0;
 	}
 }
@@ -105,9 +104,9 @@ var Task(Var x)
 }
 bool Kill(Var x)
 {
-	return TerminateThread(T(x),-1) == TRUE;
+	return TerminateThread(dynamic_cast<cthread_t *>(x)->rep,-1) == TRUE;
 }
-#undef T
+
 #else
 #include <dlfcn.h>
 #include <unistd.h>
