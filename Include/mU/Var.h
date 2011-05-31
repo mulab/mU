@@ -353,10 +353,10 @@ inline str_t::rep_t& CStr(Var x) { return STR_REP(x); }
 
 /*!
 * \brief
-* 符号
+* 符号表“上下文（context）”
 *
-* \remarks
-* 从符号表中构造。
+* \remark
+* 存储从符号名称到符号sym_t变量的映射关系
 */
 struct tab_t : obj_t
 {
@@ -370,6 +370,13 @@ inline tab_t::rep_t &TAB_REP(Var x)
 inline var Tab() { return new tab_t; }
 inline tab_t::rep_t& CTab(Var x) { return TAB_REP(x); }
 
+/*!
+ * \brief
+ * 符号
+ *
+ * \remarks
+ * 仅存储符号名称及符号所属的“上下文（context）”
+ */
 struct sym_t : var_t
 {
 //	static void ruin(Var x) { delete (sym_t*)x; }
@@ -487,8 +494,6 @@ inline var& Head(Var x) { return EX_REP(x).first; }
 inline var& Body(Var x) { return EX_REP(x).second; }
 inline bool ExQ(Var x) { return Type(x) == TYPE(ex); }
 inline bool ExQ(Var x, Var y) { return ExQ(x) && Head(x) == y; }
-// FIXME: memory leak in the following function!
-// change TYPE_SIZE to 020 would seemingly fix this, don't understand why
 inline var Ex(Var x, Var y) { return new ex_t(x,y); }
 inline size_t Len(Var x) { return CVec(Body(x)).size(); }
 inline var& Left(Var x) { return CVec(Body(x)).front(); }
