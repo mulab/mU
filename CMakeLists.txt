@@ -6,7 +6,13 @@ find_library(GMP gmp)
 find_library(MPFR mpfr)
 # TODO: prompt while gmp or mpfr is not found, reference to "developer getting started" page
 
-set(Boost_USE_STATIC_LIBS       OFF)
+if(WIN32)
+    set(Boost_USE_STATIC_LIBS    ON)
+elseif(UNIX)
+    set(Boost_USE_STATIC_LIBS   OFF)
+else
+    message(FATAL_ERROR "building on an unsupported operating system")
+endif()
 set(Boost_USE_MULTITHREADED      ON)
 set(Boost_USE_STATIC_RUNTIME    OFF)
 find_package( Boost 1.42.0 COMPONENTS system )
