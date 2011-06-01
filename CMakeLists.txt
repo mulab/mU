@@ -2,15 +2,29 @@ cmake_minimum_required(VERSION 2.6)
 
 project(mU CXX)
 
-find_library(GMP gmp)
-find_library(MPFR mpfr)
-# TODO: prompt while gmp or mpfr is not found, reference to "developer getting started" page
+if ("${CMAKE_GENERATOR}" MATCHES "MinGW")
+    set(MinGW TRUE)
+else()
+    set(MinGW FALSE)
+endif()
+
+if (MinGW)
+    set(POSSIBLE_LIBRARY_PATH 
+        "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\MinGW;InstallLocation]/lib" 
+        "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\{AC2C1BDB-1E91-4F94-B99C-E716FE2E9C75}_is1;InstallLocation]/lib" 
+        c:/MinGW/lib /MinGW/lib)
+else()
+    set(POSSIBLE_LIBRARY_PATH "")
+endif()
+
+find_library(GMP gmp PATHS ${POSSIBLE_LIBRARY_PATH})
+find_library(MPFR mpfr PATHS ${POSSIBLE_LIBRARY_PATH})
 
 if(WIN32)
     set(Boost_USE_STATIC_LIBS    ON)
 elseif(UNIX)
     set(Boost_USE_STATIC_LIBS   OFF)
-else
+else()
     message(FATAL_ERROR "building on an unsupported operating system")
 endif()
 set(Boost_USE_MULTITHREADED      ON)
