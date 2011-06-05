@@ -421,14 +421,14 @@ Wrap(Run)
 {
 	return Run(CStr(At(x,0))) ? True : False;
 }
-Wrap(Task)
-{
-	return Task(At(x,0));
-}
-Wrap(Kill)
-{
-	return Kill(At(x,0)) ? True : False;
-}
+//Wrap(Task)
+//{
+//	return Task(At(x,0));
+//}
+//Wrap(Kill)
+//{
+//	return Kill(At(x,0)) ? True : False;
+//}
 Wrap(NumberQ)
 {
 	return NumQ(At(x,0)) ? True : False;
@@ -850,7 +850,7 @@ Wrap2(Function)
 	return Eval(Subs(m,At(x,1)));
 }
 }
-void(*Types[TYPE_SIZE])(Var);
+//void(*Types[TYPE_SIZE])(Var);
 var Contexts;
 stdext::hash_map<Var,const wchar*> ContextName;
 std::stack<Var> ContextStack;
@@ -870,25 +870,38 @@ HoldRest, Listable, Locked, NHoldAll, NHoldFirst,
 NHoldRest, NumericFunction, OneIdentity, Orderless, Protected,
 ReadProtected, SequenceHold, Stub, Temporary,
 TAG(Symbol), TAG(List), TAG(String), TAG(Integer), TAG(Rational), TAG(Real),
-TAG(Postfix), TAG(Prefix), TAG(Differential), TAG(Minus), TAG(Divide), TAG(Plus),
-TAG(Times), TAG(Power), TAG(Return), TAG(Continue), TAG(Break), TAG(Set), TAG(Rule),
-TAG(Pattern), TAG(Blank), TAG(Optional), TAG(Condition), TAG(PatternTest),
-TAG(Unevaluated), TAG(Derivative), TAG(Function), TAG(Slot), TAG(BlankSequence),
-TAG(SlotSequence), TAG(Part), TAG(Property), TAG(Sequence), TAG(Sqrt), TAG(Radical),
-TAG(RuleDelayed), TAG(SetDelayed), TAG(CompoundExpression), TAG(Integrate), TAG(D), TAG(Sum), TAG(Limit),
+TAG(Postfix), TAG(Prefix), TAG(Differential),
+TAG(Minus), TAG(Divide), TAG(Plus), TAG(Times), TAG(Power),
+TAG(Return), TAG(Continue), TAG(Break),
+TAG(Set), TAG(Rule), TAG(Pattern), TAG(Blank), TAG(Optional), TAG(Condition),
+TAG(PatternTest), TAG(Unevaluated), TAG(Derivative), TAG(Function), TAG(Slot),
+TAG(BlankSequence), TAG(SlotSequence), TAG(Part), TAG(Property), TAG(Sequence),
+TAG(Sqrt), TAG(Radical), TAG(RuleDelayed), TAG(SetDelayed),
+TAG(CompoundExpression), TAG(Integrate), TAG(D), TAG(Sum), TAG(Limit),
 TAG(Infinity), TAG(Pi), TAG(E), TAG(I), TAG(Mod), TAG(Dot), TAG(Pow),
-TAG(Timing), TAG(And), TAG(Or), TAG(Not), TAG(If), TAG(For), TAG(While), TAG(Flatten), TAG(FlattenAll), 
-TAG(SameQ), TAG(Less), TAG(Equal), TAG(Greater), TAG(UnsameQ), TAG(GreaterEqual), TAG(Unequal), TAG(LessEqual), 
-TAG(FreeQ), TAG(MatchQ), TAG(MemberQ), TAG(With), TAG(Block), TAG(Module), TAG(ReplaceRepeated), 
-TAG(Replace), TAG(ReplaceAll), TAG(OddQ), TAG(EvenQ), TAG(SetAttributes), TAG(StringJoin), TAG(Join), TAG(Attributes), 
-TAG(Get), TAG(Put), TAG(PutAppend), TAG(Install), TAG(Uninstall), TAG(NumberQ), TAG(AtomQ), TAG(IntegerQ), 
-TAG(SymbolQ), TAG(StringQ), TAG(Pretty), TAG(Input), TAG(Print), TAG(Clear), TAG(BeginPackage), TAG(EndPackage), 
-TAG(Begin), TAG(End), TAG(Evaluate), TAG(Dispatch), TAG(Length), TAG(Path), TAG(Head), TAG(Context), 
-TAG(Contexts), TAG(ContextPath), TAG(Apply), TAG(Map), TAG(Unset), TAG(Full), TAG(ToString), TAG(ToExpression), 
-TAG(Exit), TAG(Quit), TAG(Hold), TAG(Run), TAG(Task), TAG(Kill), TAG(Array), TAG(Table), TAG(Do), TAG(Box),
-TAG(N), TAG(IntegerPart), TAG(Floor), TAG(Ceiling), TAG(Round), TAG(Expand), TAG(Variables), TAG(Coefficient), 
-TAG(Exponent), TAG(Deg), TAG(CoefficientList), TAG(FromCoefficientList), TAG(Graphics2D), TAG(Graphics3D),
-TAG(Options), TAG(StringLength), TAG(StringInsert), TAG(StringTake), TAG(StringDrop);
+TAG(Timing),
+TAG(And), TAG(Or), TAG(Not), TAG(If), TAG(For), TAG(While),
+TAG(Flatten), TAG(FlattenAll), TAG(SameQ), TAG(Less), TAG(Equal), TAG(Greater),
+TAG(UnsameQ), TAG(GreaterEqual), TAG(Unequal), TAG(LessEqual), TAG(FreeQ),
+TAG(MatchQ), TAG(MemberQ), TAG(With), TAG(Block), TAG(Module),
+TAG(ReplaceRepeated), TAG(Replace), TAG(ReplaceAll), TAG(OddQ), TAG(EvenQ),
+TAG(SetAttributes), TAG(StringJoin), TAG(Join), TAG(Attributes),
+TAG(Get), TAG(Put), TAG(PutAppend),
+TAG(Install), TAG(Uninstall),
+TAG(NumberQ), TAG(AtomQ), TAG(IntegerQ), TAG(SymbolQ), TAG(StringQ),
+TAG(Pretty), TAG(Input), TAG(Print), TAG(Clear),
+TAG(BeginPackage), TAG(EndPackage), TAG(Begin), TAG(End),
+TAG(Evaluate), TAG(Dispatch), TAG(Length), TAG(Path), TAG(Head), TAG(Context),
+TAG(Contexts), TAG(ContextPath), TAG(Apply), TAG(Map), TAG(Unset), TAG(Full),
+TAG(ToString), TAG(ToExpression),
+TAG(Exit), TAG(Quit), TAG(Hold), TAG(Run), /*TAG(Task), TAG(Kill),*/ TAG(Array),
+TAG(Table), TAG(Do), TAG(Box), TAG(N), TAG(IntegerPart),
+TAG(Floor), TAG(Ceiling), TAG(Round),
+TAG(Expand), TAG(Variables), TAG(Coefficient),
+TAG(Exponent), TAG(Deg), TAG(CoefficientList), TAG(FromCoefficientList),
+TAG(Graphics2D), TAG(Graphics3D),
+TAG(Options), TAG(StringLength), TAG(StringInsert), TAG(StringTake),
+TAG(StringDrop);
 void Initialize()
 {
 	static bool Initialized = false;
@@ -897,14 +910,14 @@ void Initialize()
 	Contexts = Tab();
 	Global = Ctx(L"Global`");
 	System = Ctx(L"System`");
-#define T(x) x = Sym(L###x,System);
+#define T(x) x = Sym(_W(#x),System);
 	T(Null)T(True)T(False)T(Nil)
 	T(Constant)T(Flat)T(HoldAll)T(HoldAllComplete)T(HoldFirst)
 	T(HoldRest)T(Listable)T(Locked)T(NHoldAll)T(NHoldFirst)
 	T(NHoldRest)T(NumericFunction)T(OneIdentity)T(Orderless)T(Protected)
 	T(ReadProtected)T(SequenceHold)T(Stub)T(Temporary)
 #undef T
-#define T(x) TAG(x) = Sym(L###x,System);
+#define T(x) TAG(x) = Sym(_W(#x),System);
 	T(Symbol)T(List)T(String)T(Integer)T(Rational)
 	T(Real)T(Return)T(Continue)T(Break)T(Set)T(Rule)
 	T(Minus)T(Divide)T(Plus)T(Times)T(Power)T(Integrate)T(D)
@@ -922,7 +935,7 @@ void Initialize()
 	T(SymbolQ)T(StringQ)T(Pretty)T(Input)T(Print)T(Clear)T(BeginPackage)T(EndPackage)
 	T(Begin)T(End)T(Evaluate)T(Dispatch)T(Length)T(Path)T(Head)T(Context)
 	T(Contexts)T(ContextPath)T(Apply)T(Map)T(Unset)T(Full)T(ToString)T(ToExpression)
-	T(Exit)T(Quit)T(Hold)T(Run)T(Task)T(Kill)T(Array)T(Table)T(Do)T(Box)
+	T(Exit)T(Quit)T(Hold)T(Run)/*T(Task)T(Kill)*/T(Array)T(Table)T(Do)T(Box)
 	T(N)T(IntegerPart)T(Floor)T(Ceiling)T(Round)T(Expand)T(Variables)T(Coefficient)
 	T(Exponent)T(Deg)T(CoefficientList)T(FromCoefficientList)T(Graphics2D)T(Graphics3D)
 	T(Options)T(StringLength)T(StringInsert)T(StringTake)T(StringDrop)
@@ -939,7 +952,7 @@ void Initialize()
 	T(SymbolQ)T(StringQ)T(Pretty)T(Input)T(Print)T(Clear)T(BeginPackage)T(EndPackage)
 	T(Begin)T(End)T(Evaluate)T(Unevaluated)T(Dispatch)T(Length)T(Path)T(Head)T(Context)
 	T(Contexts)T(ContextPath)T(Apply)T(Map)T(Unset)T(Full)T(ToString)T(ToExpression)
-	T(Exit)T(Quit)T(Set)T(SetDelayed)T(Hold)T(Run)T(Task)T(Kill)T(Array)T(Table)T(Do)
+	T(Exit)T(Quit)T(Set)T(SetDelayed)T(Hold)T(Run)/*T(Task)T(Kill)*/T(Array)T(Table)T(Do)
 	T(N)T(IntegerPart)T(Floor)T(Ceiling)T(Round)T(Expand)T(Variables)T(Coefficient)
 	T(Exponent)T(Deg)T(CoefficientList)T(FromCoefficientList)T(StringLength)
 	T(Set)T(Part)T(Property)T(SetDelayed)T(CompoundExpression)T(Power)T(Mod)
@@ -957,7 +970,7 @@ void Initialize()
 	T(SetAttributes,HoldFirst)T(StringJoin,Flat)T(StringJoin,OneIdentity)
 	T(Join,Flat)T(Join,OneIdentity)T(Attributes,HoldAll)T(Clear,HoldAll)
 	T(Unevaluated,HoldAll)T(Function,HoldAll)T(Context,HoldFirst)T(Property,HoldAll)
-	T(RuleDelayed,HoldRest)T(Unset,HoldFirst)T(Task,HoldAll)T(Table,HoldAll)T(Do,HoldAll)
+	T(RuleDelayed,HoldRest)T(Unset,HoldFirst)/*T(Task,HoldAll)*/T(Table,HoldAll)T(Do,HoldAll)
 #undef T
 #define T(x) COpers[TAG(x)] = WRAP(x);
 	T(Function)

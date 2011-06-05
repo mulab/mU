@@ -71,48 +71,47 @@ bool Run(const wstring &x)		// FIXME: behavior change, now may throw, check call
 	return true;
 }
 
-struct cthread_t : obj_t
-{
-	void print(wostream &f) { f << L"CThread[" << rep << L']'; }
-	var args;
-	HANDLE rep;
-};
-namespace {
-	// FIXME: is this __in parameter decorator really necessary?
-	//        it's causing compilation errors in mingw, commenting
-	//        it out for now
-	DWORD WINAPI ThreadProc(/*__in*/  LPVOID lpParameter)
-	{
-		Eval(*static_cast<var*>(lpParameter));
-		return 0;
-	}
-}
-var Task(Var x)
-{
-	DWORD dwThreadId;
-	cthread_t *r = new cthread_t;
-	r->args = x;
-	r->rep =
-		CreateThread(
-		NULL,		// default security attributes
-		0,			// use default stack size
-		ThreadProc,	// thread function name
-		&r->args,	// argument to thread function
-		0,			// use default creation flags
-		&dwThreadId);
-	return r;
-}
-bool Kill(Var x)
-{
-	return TerminateThread(dynamic_cast<cthread_t *>(x)->rep,-1) == TRUE;
-}
+//struct cthread_t : obj_t
+//{
+//	void print(wostream &f) { f << L"CThread[" << rep << L']'; }
+//	var args;
+//	HANDLE rep;
+//};
+//namespace {
+//	// FIXME: is this __in parameter decorator really necessary?
+//	//        it's causing compilation errors in mingw, commenting
+//	//        it out for now
+//	DWORD WINAPI ThreadProc(/*__in*/  LPVOID lpParameter)
+//	{
+//		Eval(*static_cast<var*>(lpParameter));
+//		return 0;
+//	}
+//}
+//var Task(Var x)
+//{
+//	DWORD dwThreadId;
+//	cthread_t *r = new cthread_t;
+//	r->args = x;
+//	r->rep =
+//		CreateThread(
+//		NULL,		// default security attributes
+//		0,			// use default stack size
+//		ThreadProc,	// thread function name
+//		&r->args,	// argument to thread function
+//		0,			// use default creation flags
+//		&dwThreadId);
+//	return r;
+//}
+//bool Kill(Var x)
+//{
+//	return TerminateThread(dynamic_cast<cthread_t *>(x)->rep,-1) == TRUE;
+//}
 
 #else
 #include <dlfcn.h>
 #include <unistd.h>
 namespace mU {
 //////////////////////////////////////
-#define T(x) (((cmodule_t*)(Var)(x))->rep)
 struct cmodule_t : obj_t
 {
 	void print(wostream &f) { f << L"CModule[" << rep << L']'; }
@@ -145,45 +144,44 @@ var Install(const wstring &x)
 }
 bool Uninstall(Var x)
 {
-    return dlclose(T(x)) == 0;
+    return dlclose((dynamic_cast<cmodule_t*>(x))->rep) == 0;
 }
-#undef T
+
 bool Run(const wstring &x)
 {
 	return system(string(x.begin(),x.end()).c_str()) == 0;
 }
-#define T(x) (((cthread_t*)(Var)(x))->rep)
-struct cthread_t : obj_t
-{
-	void print(wostream &f) { f << L"CThread[" << rep << L']'; }
-	var args;
-	pthread_t rep;
-};
-namespace {
-	void* ThreadProc(void* lpParameter)
-	{
-		pthread_setcancelstate(PTHREAD_CANCEL_ENABLE,NULL);
-		pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS,NULL);
-		Eval(*(var*)lpParameter);
-		return 0;
-	}
-}
-var Task(Var x)
-{
-	cthread_t *r = new cthread_t;
-	r->args = x;
-	pthread_create(
-		&r->rep,
-		NULL,		// default security attributes
-		ThreadProc,	// thread function name
-		&r->args);	// argument to thread function
-	return r;
-}
-bool Kill(Var x)
-{
-	return pthread_cancel(T(x)) == 0;
-}
-#undef T
+
+//struct cthread_t : obj_t
+//{
+//	void print(wostream &f) { f << L"CThread[" << rep << L']'; }
+//	var args;
+//	pthread_t rep;
+//};
+//namespace {
+//	void* ThreadProc(void* lpParameter)
+//	{
+//		pthread_setcancelstate(PTHREAD_CANCEL_ENABLE,NULL);
+//		pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS,NULL);
+//		Eval(*(var*)lpParameter);
+//		return 0;
+//	}
+//}
+//var Task(Var x)
+//{
+//	cthread_t *r = new cthread_t;
+//	r->args = x;
+//	pthread_create(
+//		&r->rep,
+//		NULL,		// default security attributes
+//		ThreadProc,	// thread function name
+//		&r->args);	// argument to thread function
+//	return r;
+//}
+//bool Kill(Var x)
+//{
+//	return pthread_cancel((dynamic_cast<cthread_t*>(x))->rep) == 0;
+//}
 #endif
 //////////////////////////////////////
 }

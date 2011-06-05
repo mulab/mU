@@ -298,8 +298,8 @@ API wstring Path();
 API var Install(const wstring&);
 API bool Uninstall(Var);
 API bool Run(const wstring&);
-API var Task(Var);
-API bool Kill(Var);
+//API var Task(Var);
+//API bool Kill(Var);
 
 // 多项式基本操作
 API void  Expand(Var,Var,Var);
