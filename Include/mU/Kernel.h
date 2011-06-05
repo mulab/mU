@@ -27,8 +27,14 @@ case DLL_PROCESS_DETACH:\
 }\
 return TRUE;\
 }
+#else
+#define DLLMAIN(x) extern "C" void DllMain(){x();}
+#include <sys/time.h>
+#endif
+
 namespace mU {
 //////////////////////////////////////
+#ifdef _WIN32
 struct timer
 {
 	timer() { QueryPerformanceFrequency(&Frequency); }
@@ -43,10 +49,6 @@ struct timer
 	double value;
 };
 #else
-#define DLLMAIN(x) extern "C" void DllMain(){x();}
-#include <sys/time.h>
-namespace mU {
-//////////////////////////////////////
 struct timer
 {
 	timer() {}
@@ -61,14 +63,18 @@ struct timer
     double value;
 };
 #endif
+
+// 内核初始化函数
 API void Initialize();
+
+// 表达式排序相关函数
 API int Compare(Var,Var);
 inline bool Before(Var x, Var y) { return Compare(x,y) < 0; }
 inline bool Same(Var x, Var y) { return Compare(x,y) == 0; }
 inline bool After(Var x, Var y) { return Compare(x,y) > 0; }
 struct Before2 { inline bool operator()(Var x, Var y) const { return Before(x,y); } };
 struct After2 { inline bool operator()(Var x, Var y) const { return After(x,y); } };
-API bool FreeQ(Var,Var);
+
 API int Order(Var,Var);
 inline bool Less(Var x, Var y) { return Order(x,y) < 0; }
 inline bool Equal(Var x, Var y) { return Order(x,y) == 0; }
@@ -76,6 +82,10 @@ inline bool Greater(Var x, Var y) { return Order(x,y) > 0; }
 struct Less2 { inline bool operator()(Var x, Var y) const { return Less(x,y); } };
 struct Greater2 { inline bool operator()(Var x, Var y) const { return Greater(x,y); } };
 inline void Sort(Var x) { std::sort(CVec(x).begin(),CVec(x).end(),Less); }
+
+API bool FreeQ(Var,Var);
+
+// 符号定义相关
 typedef std::map<Var,var> map_t;
 typedef std::map<var,var,Before2> dict_t;
 typedef std::map<var,std::pair<var,var>,Before2> def_t;
@@ -90,18 +100,23 @@ API std::map<Var,map_t> Properties;
 API std::map<Var,attr_t> Attributes;
 API stdext::hash_map<Var,CProc> CProcs;
 API stdext::hash_map<Var,COper> COpers;
+
 API var Eval(Var);
 API void Set(Var,Var);
 API void Unset(Var);
 API void Clear(Var);
+
 API var Thread(Var,Var);
 API void Flatten(Var,Var);
 API void Flatten(Var,Var,Var);
 API void FlattenAll(Var,Var);
 API void FlattenAll(Var,Var,Var);
+
+// 测试某个表达式中是否不含有模式??
 API bool FixQ(Var);
-API wstring Unique();
+
 API var Supply(Var,Var,Var);
+
 template <typename T>
 var Subs(const T& m, Var x)
 {
@@ -121,6 +136,8 @@ var Subs(const T& m, Var x)
 		return Ex(Subs(m,Head(x)),Subs(m,Body(x)));
 	return x;
 }
+
+// 符号表相关
 API var Contexts;
 API stdext::hash_map<Var,const wchar*> ContextName;
 API std::stack<Var> ContextStack;
@@ -134,7 +151,10 @@ API var Ctx(const wstring&);
 API var Sym(const wstring&);
 API var Ctx2(const wchar*);
 API var Sym2(const wchar*);
+API wstring Unique();
+
 API var Optimi(Var);
+
 API var Read(wistream&,Var = 0);
 API var Parse(wistream& = wcin);
 inline var ParseString(const wstring &x)
@@ -160,6 +180,7 @@ inline void Println(Var x, wostream &f = wcout)
 }
 API void FullPrint(Var,wostream& = wcout);
 API void BoxPrint(Var,wostream& = wcout,size_t = 0);
+
 #define TAG(x) tag_##x
 #define WRAP(x) wrap_##x
 #define Wrap(f) var WRAP(f)(Var x)
@@ -190,6 +211,7 @@ TAG(Exit), TAG(Quit), TAG(Hold), TAG(Run), TAG(Task), TAG(Kill), TAG(Array), TAG
 TAG(N), TAG(IntegerPart), TAG(Floor), TAG(Ceiling), TAG(Round), TAG(Expand), TAG(Variables), TAG(Coefficient), 
 TAG(Exponent), TAG(Deg), TAG(CoefficientList), TAG(FromCoefficientList), TAG(Graphics2D), TAG(Graphics3D),
 TAG(Options), TAG(StringLength), TAG(StringInsert), TAG(StringTake), TAG(StringDrop);
+
 inline var Tag(Var x)
 {
 	switch(Type(x))
@@ -205,6 +227,7 @@ inline var Tag(Var x)
 		return Head(x);
 	}
 }
+
 inline bool ZeroQ(Var x)
 {
 	return (IntQ(x) && mpz_cmp_ui(CInt(x),0L) == 0)
@@ -212,6 +235,7 @@ inline bool ZeroQ(Var x)
 		|| (FltQ(x) && mpf_cmp_ui(CFlt(x),0L) == 0)
 		;
 }
+
 inline bool OneQ(Var x)
 {
 	return (IntQ(x) && mpz_cmp_ui(CInt(x),1L) == 0)
@@ -219,6 +243,7 @@ inline bool OneQ(Var x)
 		|| (FltQ(x) && mpf_cmp_ui(CFlt(x),1L) == 0)
 		;
 }
+
 inline bool NOneQ(Var x)
 {
 	return (IntQ(x) && mpz_cmp_si(CInt(x),-1L) == 0)
@@ -226,8 +251,18 @@ inline bool NOneQ(Var x)
 		|| (FltQ(x) && mpf_cmp_si(CFlt(x),-1L) == 0)
 		;
 }
-inline bool OddQ(Var x) { return IntQ(x) && mpz_odd_p(CInt(x)); }
-inline bool EvenQ(Var x) { return IntQ(x) && mpz_even_p(CInt(x)); }
+
+inline bool OddQ(Var x)
+{
+	return IntQ(x) && mpz_odd_p(CInt(x));
+}
+
+inline bool EvenQ(Var x)
+{
+	return IntQ(x) && mpz_even_p(CInt(x));
+}
+
+// 四则运算
 API var Plus(Var);
 API var Plus(Var,Var);
 API var Times(Var);
@@ -236,16 +271,20 @@ API var Power(Var,Var);
 API var Mod(Var,Var);
 API var Dot(Var);
 API var Dot(Var,Var);
+
 API void Do(Var,size_t,const var*);
 API var Table(Var,size_t,const var*);
 API var Array(Var,Var,size_t,const var*);
 API var Array(Var,Var,size_t,const var*,const var*);
+
+// 基本数值计算
 API var Evalf(Var);
 API var Evalf(Var,size_t);
 API var IntegerPart(Var);
 API var Floor(Var);
 API var Ceiling(Var);
 API var Round(Var);
+
 inline var Timing(Var x)
 {
 	timer t;
@@ -254,12 +293,15 @@ inline var Timing(Var x)
 	t.end();
 	return Vec(Int(t.value),r);
 }
+
 API wstring Path();
 API var Install(const wstring&);
 API bool Uninstall(Var);
 API bool Run(const wstring&);
 API var Task(Var);
 API bool Kill(Var);
+
+// 多项式基本操作
 API void  Expand(Var,Var,Var);
 API var  Expand(Var,Var);
 API var Expand(Var);

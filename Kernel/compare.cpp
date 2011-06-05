@@ -35,21 +35,7 @@ int Compare(Var x, Var y)
 	}
 	return 0;
 }
-bool FreeQ(Var x, Var y)
-{
-	if(Same(x,y)) return false;
-	if(VecQ(x))
-	{
-		size_t n = Size(x);
-		for(size_t i = 0; i < n; ++i)
-			if(!FreeQ(At(x,i),y))
-				return false;
-		return true;
-	}
-	if(ExQ(x))
-		return FreeQ(Head(x),y) && FreeQ(Body(x),y);
-	return true;
-}
+
 int Order(Var x, Var y)
 {
 	if(Type(x) < Type(y))
@@ -82,6 +68,22 @@ int Order(Var x, Var y)
 		}
 	}
 	return 0;
+}
+
+bool FreeQ(Var x, Var y)
+{
+	if(Same(x,y)) return false;
+	if(VecQ(x))
+	{
+		size_t n = Size(x);
+		for(size_t i = 0; i < n; ++i)
+			if(!FreeQ(At(x,i),y))
+				return false;
+		return true;
+	}
+	if(ExQ(x))
+		return FreeQ(Head(x),y) && FreeQ(Body(x),y);
+	return true;
 }
 //////////////////////////////////////
 }
