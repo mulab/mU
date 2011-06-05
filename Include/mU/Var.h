@@ -85,6 +85,7 @@ struct hash<std::wstring>
 }
 namespace stdext = __gnu_cxx;
 #endif
+
 #ifdef _WIN32
 #ifdef KERNEL_EXPORTS
 #define DLL __declspec(dllexport)
@@ -95,6 +96,7 @@ namespace stdext = __gnu_cxx;
 #else
 #define DLL
 #endif
+
 #define API DLL extern
 #define CAPI extern "C" DLL
 
@@ -161,6 +163,7 @@ inline void intrusive_ptr_release(var_t *pv)
 
 class var
 {
+private:
 	boost::intrusive_ptr<var_t> ptr;
 public:
 	var() : ptr(0) {}
@@ -192,6 +195,7 @@ struct obj_t : var_t
 	virtual void print(wostream &f) { f << this; }
 };
 inline bool ObjQ(Var x) { return Type(x) == TYPE(obj); }
+
 /*!
 * \brief
 * ÕûÊý
@@ -513,6 +517,7 @@ inline bool NumQ(Var x)
         return false;
 	}
 }
+
 inline bool AtomQ(Var x)
 {
 	switch(Type(x))
