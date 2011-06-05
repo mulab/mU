@@ -18,7 +18,7 @@ struct cmodule_t : obj_t
 wstring Path()					// FIXME: behavior change, now may throw, check callers
 {
 	static wchar buf[MAX_PATH];
-	API_CALL(GetModuleFileNameW,NULL,buf,MAX_PATH);
+	OS_API_CALL(GetModuleFileNameW,NULL,buf,MAX_PATH);
 	wcsrchr(buf,L'\\')[1] = 0;
 	return buf;	// TODO: cache this result
 }
@@ -26,7 +26,7 @@ wstring Path()					// FIXME: behavior change, now may throw, check callers
 var Install(const wstring &x)	// FIXME: behavior change, now may throw, check callers
 {
 	auto_ptr<cmodule_t> r (new cmodule_t);
-	API_CALL_R(r->rep, LoadLibraryW, x.c_str());
+	OS_API_CALL_R(r->rep, LoadLibraryW, x.c_str());
 	if(r->rep) return r.release();
 	return 0;
 }
@@ -34,7 +34,7 @@ var Install(const wstring &x)	// FIXME: behavior change, now may throw, check ca
 bool Uninstall(Var x)			// FIXME: behavior change, now may throw, check callers
 {
 	BOOL r;
-	API_CALL_R(r,FreeLibrary,dynamic_cast<cmodule_t*>(x)->rep);
+	OS_API_CALL_R(r,FreeLibrary,dynamic_cast<cmodule_t*>(x)->rep);
 	return r == TRUE;
 }
 
@@ -48,7 +48,7 @@ bool Run(const wstring &x)		// FIXME: behavior change, now may throw, check call
 	ZeroMemory( &pi, sizeof(pi) );
 
 	// Start the child process.
-	API_CALL(CreateProcessW,
+	OS_API_CALL(CreateProcessW,
 		NULL,	// No module name (use command line)
 		// FIXME: 应该创建一个长为32768的buffer来转储，而不是使用const_cast
 		const_cast<wchar*>(x.c_str()),	// Command line
@@ -63,11 +63,11 @@ bool Run(const wstring &x)		// FIXME: behavior change, now may throw, check call
 	);
 
 	// Wait until child process exits.
-	API_CALL(WaitForSingleObject, pi.hProcess, INFINITE );
+	OS_API_CALL(WaitForSingleObject, pi.hProcess, INFINITE );
 
 	// Close process and thread handles.
-	API_CALL(CloseHandle, pi.hProcess );
-	API_CALL(CloseHandle, pi.hThread );
+	OS_API_CALL(CloseHandle, pi.hProcess );
+	OS_API_CALL(CloseHandle, pi.hThread );
 	return true;
 }
 

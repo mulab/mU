@@ -86,17 +86,17 @@ namespace mU
 	};
 
 #ifdef _WIN32
-#define API_CALL(api_func, ...)			\
+#define OS_API_CALL(api_func, ...)			\
 	if (!api_func(__VA_ARGS__))			\
 		throw SystemError();
-#define API_CALL_R(r, api_func, ...)	\
+#define OS_API_CALL_R(r, api_func, ...)	\
 	if (!(r = api_func(__VA_ARGS__)))	\
 		throw SystemError();
 #else
-#define API_CALL(api_func, ...) 		\
+#define OS_API_CALL(api_func, ...) 		\
 	if (api_func(__VA_ARGS__) == -1)	\
 		throw SystemError();
-#define API_CALL_R(r, api_func, ...)		\
+#define OS_API_CALL_R(r, api_func, ...)		\
 	if ((r = api_func(__VA_ARGS__)) == -1)	\
 		throw SystemError();
 #endif
