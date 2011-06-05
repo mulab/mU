@@ -3,15 +3,15 @@
 #include "common.h"
 #include "F2P.h"
 
-#define RES 30 /* # converge iterations */
+#define RES_CURVE 30 /* # converge iterations */
 #define _L 0 /* left direction: -x, -i */
 #define _R 1 /* right direction: +x, +i */
 #define _B 2 /* bottom direction: -y, -j */
 #define _T 3 /* top direction: +y, +j */
 #define LB 0 /* left bottom corner */
 #define LT 1 /* left top corner */
-#define RB 2 /* right bottom corner */
-#define RT 3 /* right top corner */
+#define RB_CURVE 2 /* right bottom corner */
+#define RT_CURVE 3 /* right top corner */
 
 #define RAND() ((rand()&32767)/32767.) /* random number between 0 and 1 */
 #define HASHBIT (5)
@@ -26,7 +26,7 @@
 #define BE 2 /* bottom edge */
 #define TE 3 /* top edge */
 
-#define CUBE_NUM 29
+#define CUBE_NUM_CURVE 29
 
 
 

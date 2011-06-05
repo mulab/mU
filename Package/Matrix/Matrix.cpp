@@ -90,15 +90,15 @@ void Initialize()
 	static bool Initialized = false;
 	if (Initialized) return;
 
-	DEF_TAG_SYM_WRAPPED_CPROC(mLinearSolve)
-    DEF_TAG_SYM_WRAPPED_CPROC(LinearSolve)
-    DEF_TAG_SYM_WRAPPED_CPROC(StrassenMM)
-    DEF_TAG_SYM_WRAPPED_CPROC(MDot)
-    DEF_TAG_SYM_WRAPPED_CPROC(MInverse)
-    DEF_TAG_SYM_WRAPPED_CPROC(MDet)
-    DEF_TAG_SYM_WRAPPED_CPROC(NullSpace)
-    DEF_TAG_SYM_WRAPPED_CPROC(Rank)
-    DEF_TAG_SYM_WRAPPED_CPROC(LeastSquares)
+	DECL_TAG_SYM_WRAPPED_CPROC(mLinearSolve)
+    DECL_TAG_SYM_WRAPPED_CPROC(LinearSolve)
+    DECL_TAG_SYM_WRAPPED_CPROC(StrassenMM)
+    DECL_TAG_SYM_WRAPPED_CPROC(MDot)
+    DECL_TAG_SYM_WRAPPED_CPROC(MInverse)
+    DECL_TAG_SYM_WRAPPED_CPROC(MDet)
+    DECL_TAG_SYM_WRAPPED_CPROC(NullSpace)
+    DECL_TAG_SYM_WRAPPED_CPROC(Rank)
+    DECL_TAG_SYM_WRAPPED_CPROC(LeastSquares)
 
 	Initialized = true;
 }

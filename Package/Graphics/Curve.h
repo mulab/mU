@@ -2,7 +2,7 @@
 
 #include "common.h"
 
-#define ADD_POINT_ANGLE 0.05
+#define ADD_POINT_ANGLE_CURVE 0.05
 #define MIN_DELTA_DIS 0.001
 
 class Curve {

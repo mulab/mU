@@ -4,7 +4,7 @@
 #include "GraphicsMaker.h"
 
 //#define ADD_POINT_ANGLE 0.3
-#define ADD_POINT_ANGLE 0.1
+#define ADD_POINT_ANGLE_SURFACE 0.1
 #define MAX_SPLIT_DEPTH 0
 #define LARGE 1000000
 

@@ -99,16 +99,16 @@ void Initialize() {
     static bool Initialized = false;
     if (Initialized) return;
 
-    DEF_TAG_SYM_WRAPPED_CPROC(Plot)
-    DEF_TAG_SYM_WRAPPED_CPROC(Plot3D)
-    DEF_TAG_SYM_WRAPPED_CPROC(ListPlot)
-    DEF_TAG_SYM_WRAPPED_CPROC(ParametricCurvePlot)
-    DEF_TAG_SYM_WRAPPED_CPROC(ParametricRegionPlot)
-    DEF_TAG_SYM_WRAPPED_CPROC(PolarPlot)
-    DEF_TAG_SYM_WRAPPED_CPROC(ParametricCurvePlot3D)
-    DEF_TAG_SYM_WRAPPED_CPROC(ParametricSurfacePlot3D)
-    DEF_TAG_SYM_WRAPPED_CPROC(ContourPlot3D)
-    DEF_TAG_SYM_WRAPPED_CPROC(ContourPlot)
+    DECL_TAG_SYM_WRAPPED_CPROC(Plot)
+    DECL_TAG_SYM_WRAPPED_CPROC(Plot3D)
+    DECL_TAG_SYM_WRAPPED_CPROC(ListPlot)
+    DECL_TAG_SYM_WRAPPED_CPROC(ParametricCurvePlot)
+    DECL_TAG_SYM_WRAPPED_CPROC(ParametricRegionPlot)
+    DECL_TAG_SYM_WRAPPED_CPROC(PolarPlot)
+    DECL_TAG_SYM_WRAPPED_CPROC(ParametricCurvePlot3D)
+    DECL_TAG_SYM_WRAPPED_CPROC(ParametricSurfacePlot3D)
+    DECL_TAG_SYM_WRAPPED_CPROC(ContourPlot3D)
+    DECL_TAG_SYM_WRAPPED_CPROC(ContourPlot)
 
     SET_ATTR(Plot, HoldAll)
     SET_ATTR(Plot3D, HoldAll)

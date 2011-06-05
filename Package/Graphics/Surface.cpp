@@ -118,7 +118,7 @@ void Surface::trySplitPolygonX(unsigned int id, int depth) {
     double netk1 = f->getDerivativeX(p1->x, p1->y, dx) / graphScalex;
     double netk2 = f->getDerivativeX(p2->x, p2->y, -dx) / graphScalex;
     double dangle = acos((1 + netk1 * netk2) / sqrt(1 + netk1 * netk1) / sqrt(1 + netk2 * netk2));
-    if (dangle > ADD_POINT_ANGLE) {	//need to add data
+    if (dangle > ADD_POINT_ANGLE_SURFACE) {	//need to add data
         double x = (p1->x + p2->x) / 2;
         double y = vert[sur[id]->p11]->y;
         double z = f->getSingleData(x, y);
@@ -176,7 +176,7 @@ void Surface::trySplitPolygonY(unsigned int id, int depth) {
     double netk1 = f->getDerivativeY(p1->x, p1->y, dy) / graphScaley;
     double netk2 = f->getDerivativeY(p2->x, p2->y, -dy) / graphScaley;
     double dangle = acos((1 + netk1 * netk2) / sqrt(1 + netk1 * netk1) / sqrt(1 + netk2 * netk2));
-    if (dangle > ADD_POINT_ANGLE) {	//need to add data
+    if (dangle > ADD_POINT_ANGLE_SURFACE) {	//need to add data
         double x = p1->x;
         double y = (p1->y + p2->y) / 2;
         double z = f->getSingleData(x, y);

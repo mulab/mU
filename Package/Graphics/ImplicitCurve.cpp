@@ -8,9 +8,9 @@ ImplicitCurve::ImplicitCurve(F2P* f2p, double xmin, double xmax, double ymin, do
     spy = ymax - ymin;
     m_start.x = (xmax + xmin) / 2;
     m_start.y = (ymax + ymin) / 2;
-    sizex = spx / CUBE_NUM;
-    sizey = spy / CUBE_NUM;
-    m_bounds = (CUBE_NUM - 1) / 2;
+    sizex = spx / CUBE_NUM_CURVE;
+    sizey = spy / CUBE_NUM_CURVE;
+    m_bounds = (CUBE_NUM_CURVE - 1) / 2;
     /* allocate hash tables and build cube polygon table: */
     m_centers = new CENTERLIST*[HASHSIZE*2];
     for (int i = 0; i < HASHSIZE*2; i++) {
@@ -44,9 +44,9 @@ ImplicitCurve::ImplicitCurve(F2P* f2p, double xmin, double xmax, double ymin, do
         /* test six face directions, maybe add to stack: */
         //
         testface(c.i - 1, c.j, &c, _L, LB, LT);
-        testface(c.i + 1, c.j, &c, _R, RB, RT);
-        testface(c.i, c.j - 1, &c, _B, LB, RB);
-        testface(c.i, c.j + 1, &c, _T, LT, RT);
+        testface(c.i + 1, c.j, &c, _R, RB_CURVE, RT_CURVE);
+        testface(c.i, c.j - 1, &c, _B, LB, RB_CURVE);
+        testface(c.i, c.j + 1, &c, _T, LT, RT_CURVE);
     }
 }
 
@@ -296,7 +296,7 @@ void ImplicitCurve::converge (Point2d *p1, Point2d *p2, double v, Point2d *p) {
     while (1) {
         p->x = 0.5 * (pos.x + neg.x);
         p->y = 0.5 * (pos.y + neg.y);
-        if (i++ == RES) return;
+        if (i++ == RES_CURVE) return;
         if ((f->getSingleData(p->x, p->y)) > 0.0) {
             pos.x = p->x;
             pos.y = p->y;

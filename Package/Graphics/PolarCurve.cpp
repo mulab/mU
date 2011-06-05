@@ -78,7 +78,7 @@ void PolarCurve::addVerts(LineStrip* lineStrip) {
         double netk1 = kcaled[i];
         double netk2 = getK(arrayT[i+1], -dt) / graphScale;
         double dangle = acos((1 + netk1 * netk2) / sqrt(1 + netk1 * netk1) / sqrt(1 + netk2 * netk2));
-        if (dangle > ADD_POINT_ANGLE) {
+        if (dangle > ADD_POINT_ANGLE_CURVE) {
             double t = (arrayT[i] + arrayT[i+1]) / 2;
             double x = f->getSingleData(t) * cos(t);
             double y = f->getSingleData(t) * sin(t);

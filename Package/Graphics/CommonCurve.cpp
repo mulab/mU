@@ -73,7 +73,7 @@ void CommonCurve::addVerts(LineStrip* lineStrip) {
         double netk1 = kcaled[i];
         double netk2 = f->getDerivative(lineStrip->vert[i+1]->x, -dx) / graphScale; //always divided by graph scale
         double dangle = acos((1 + netk1 * netk2) / sqrt(1 + netk1 * netk1) / sqrt(1 + netk2 * netk2));
-        if (dangle > ADD_POINT_ANGLE) {	//need to add points
+        if (dangle > ADD_POINT_ANGLE_CURVE) {	//need to add points
             double x = (lineStrip->vert[i]->x + lineStrip->vert[i+1]->x) / 2;
             double y = f->getSingleData(x);
             lineStrip->vert.add(i + 1, new Point2d(x, y));
