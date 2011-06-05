@@ -212,11 +212,20 @@ TAG(N), TAG(IntegerPart), TAG(Floor), TAG(Ceiling), TAG(Round), TAG(Expand), TAG
 TAG(Exponent), TAG(Deg), TAG(CoefficientList), TAG(FromCoefficientList), TAG(Graphics2D), TAG(Graphics3D),
 TAG(Options), TAG(StringLength), TAG(StringInsert), TAG(StringTake), TAG(StringDrop);
 
+#define DEF_SYSTEM_SYM(x) x = Sym(_W(#x),System);
+#define DEF_SYSTEM_TAG_SYM(x) TAG(x) = Sym(_W(#x),System);
+#define DEF_CPROC(x) CProcs[TAG(x)] = x;
+#define DEF_WRAPPED_CPROC(x) CProcs[TAG(x)] = WRAP(x);
+#define DEF_TAG_SYM_WRAPPED_CPROC(x) var DEF_SYSTEM_TAG_SYM(x)DEF_WRAPPED_CPROC(x)
+#define DEF_WRAPPED_COPER(x) COpers[TAG(x)] = WRAP(x);
+#define DEF_TAG_SYM_WRAPPED_COPER(x) var DEF_SYSTEM_TAG_SYM(x)DEF_WRAPPED_COPER(x)
+#define SET_ATTR(x,y) Attributes[TAG(x)].insert(y);
+
 inline var Tag(Var x)
 {
 	switch(Type(x))
 	{
-	case TYPE(obj): return ((obj_t*)x)->tag();
+	case TYPE(obj): return (dynamic_cast<obj_t*>(x))->tag();
 	case TYPE(int): return TAG(Integer);
 	case TYPE(rat): return TAG(Rational);
 	case TYPE(flt): return TAG(Real);

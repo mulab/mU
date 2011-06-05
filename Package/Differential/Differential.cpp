@@ -118,19 +118,18 @@ void Initialize()
 	static bool Initialized = false;
 	if(Initialized) return;
 	ParseFile(Path() + L"Package/Differential/D.u");
-#define T(x) TAG(x) = Sym(L###x,System);
-	T($D)T($Derivative)T($MultiD)
-#undef T
-#define T(x) CProcs[TAG(x)] = WRAP(x);
-	T(D)T($MultiD)
-#undef T
-#define T(x) COpers[TAG(x)] = WRAP(x);
-	//\todo ɾ
-	T(Derivative)T($Derivative)
-#undef T
-#define T(x,y) Attributes[TAG(x)].insert(y);
 
-#undef T
+	DEF_SYSTEM_TAG_SYM($D)
+	DEF_SYSTEM_TAG_SYM($Derivative)
+	DEF_SYSTEM_TAG_SYM($MultiD)
+
+	DEF_WRAPPED_CPROC(D)
+	DEF_WRAPPED_CPROC($MultiD)
+
+	//\todo ɾ
+	DEF_WRAPPED_COPER(Derivative)
+	DEF_WRAPPED_COPER($Derivative)
+
 	Initialized = true;
 }
 }

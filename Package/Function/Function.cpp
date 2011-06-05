@@ -189,21 +189,46 @@ void Initialize()
 {
 	static bool Initialized = false;
 	if(Initialized) return;
-#define T(x) var TAG(x) = Sym(L###x,System);CProcs[TAG(x)] = WRAP(x);
-	T(Factorial)T(Binomial)T(Fibonacci)T(Lucas)T(EulerGamma)T(Catalan)T(Log)T(Log2)
-	T(Log10)T(Exp)T(Cos)T(Sin)T(Tan)T(Sec)T(Csc)T(Cot)T(ArcCos)T(ArcSin)T(ArcTan)
-	T(Cosh)T(Sinh)T(Tanh)T(Sech)T(Csch)T(Coth)T(ArcCosh)T(ArcSinh)T(ArcTanh)T(Gamma)
-	T(LogGamma)T(Zeta)T(Erf)T(Erfc)
-#undef T
-#define T(x) var TAG(x) = Sym(L###x,System);COpers[TAG(x)] = WRAP(x);
 
-#undef T
-#define T(x,y) Attributes[TAG(x)].insert(y);
-	
-#undef T
-#define T(x) CProcs[TAG(x)] = WRAP(x);
-	T(Sqrt)T(Pow)T(Pi)T(E)
-#undef T
+	DEF_TAG_SYM_WRAPPED_CPROC(Factorial)
+	DEF_TAG_SYM_WRAPPED_CPROC(Binomial)
+	DEF_TAG_SYM_WRAPPED_CPROC(Fibonacci)
+	DEF_TAG_SYM_WRAPPED_CPROC(Lucas)
+	DEF_TAG_SYM_WRAPPED_CPROC(EulerGamma)
+	DEF_TAG_SYM_WRAPPED_CPROC(Catalan)
+	DEF_TAG_SYM_WRAPPED_CPROC(Log)
+	DEF_TAG_SYM_WRAPPED_CPROC(Log2)
+	DEF_TAG_SYM_WRAPPED_CPROC(Log10)
+	DEF_TAG_SYM_WRAPPED_CPROC(Exp)
+	DEF_TAG_SYM_WRAPPED_CPROC(Cos)
+	DEF_TAG_SYM_WRAPPED_CPROC(Sin)
+	DEF_TAG_SYM_WRAPPED_CPROC(Tan)
+	DEF_TAG_SYM_WRAPPED_CPROC(Sec)
+	DEF_TAG_SYM_WRAPPED_CPROC(Csc)
+	DEF_TAG_SYM_WRAPPED_CPROC(Cot)
+	DEF_TAG_SYM_WRAPPED_CPROC(ArcCos)
+	DEF_TAG_SYM_WRAPPED_CPROC(ArcSin)
+	DEF_TAG_SYM_WRAPPED_CPROC(ArcTan)
+	DEF_TAG_SYM_WRAPPED_CPROC(Cosh)
+	DEF_TAG_SYM_WRAPPED_CPROC(Sinh)
+	DEF_TAG_SYM_WRAPPED_CPROC(Tanh)
+	DEF_TAG_SYM_WRAPPED_CPROC(Sech)
+	DEF_TAG_SYM_WRAPPED_CPROC(Csch)
+	DEF_TAG_SYM_WRAPPED_CPROC(Coth)
+	DEF_TAG_SYM_WRAPPED_CPROC(ArcCosh)
+	DEF_TAG_SYM_WRAPPED_CPROC(ArcSinh)
+	DEF_TAG_SYM_WRAPPED_CPROC(ArcTanh)
+	DEF_TAG_SYM_WRAPPED_CPROC(Gamma)
+	DEF_TAG_SYM_WRAPPED_CPROC(LogGamma)
+	DEF_TAG_SYM_WRAPPED_CPROC(Zeta)
+	DEF_TAG_SYM_WRAPPED_CPROC(Erf)
+	DEF_TAG_SYM_WRAPPED_CPROC(Erfc)
+
+	DEF_WRAPPED_CPROC(Sqrt)
+	DEF_WRAPPED_CPROC(Pow)
+	DEF_WRAPPED_CPROC(Pi)
+	DEF_WRAPPED_CPROC(E)
+
 	Initialized = true;
 }
 }

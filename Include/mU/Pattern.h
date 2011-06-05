@@ -20,16 +20,18 @@ struct pos_t
 	pos_t& operator ++() { ++index; return *this; }
 	pos_t& operator --() { --index; return *this; }
 };
-#define T(x) (((pat_t*)(Var)(x)))
+
 struct pat_t : obj_t
 {
 	var m_next;
 	virtual bool match(map_t&,pos_t&) = 0;
 	bool next(map_t &m, pos_t &x)
 	{
-		return T(m_next) ? T(m_next)->match(m,x) : !x;
+		return m_next.get() ?
+					dynamic_cast<pat_t*>(m_next.get())->match(m,x) : !x;
 	}
 };
+inline pat_t *PAT(Var x) { return dynamic_cast<pat_t*>(x); }
 API var Pat(pos_t&);
 API var Pat(Var,pos_t&);
 inline var Pat(Var x) { pos_t p((var&)x); return Pat(p); }
@@ -37,7 +39,7 @@ inline var Pat(Var x, Var y) { pos_t p(y); return Pat(x,p); }
 inline bool MatchQ(map_t &m, Var x, Var y)
 {
 	pos_t p((var&)y);
-	return T(x)->match(m,p);
+	return PAT(x)->match(m,p);
 }
 API bool MemberQ(Var,Var);
 API var Dispatch(Var);
@@ -45,10 +47,12 @@ API var Replace(Var,Var,Var);
 API var Replace(Var,Var);
 API var ReplaceAll(Var,Var,Var);
 API var ReplaceAll(Var,Var);
+
 namespace Pattern {
-inline bool Match(map_t &m, Var x, pos_t &y) { return T(x)->match(m,y); }
-inline var& Next(Var x) { return T(x)->m_next; }
-#undef T
+
+inline bool Match(map_t &m, Var x, pos_t &y) { return PAT(x)->match(m,y); }
+inline var& Next(Var x) { return PAT(x)->m_next; }
+
 class fix : public pat_t
 {
 	var m_value;

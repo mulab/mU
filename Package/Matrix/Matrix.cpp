@@ -88,13 +88,19 @@ Wrap(LeastSquares)
 void Initialize()
 {
 	static bool Initialized = false;
-#define T(x) Var TAG(x) = Sym(L###x,System);CProcs[TAG(x)] = WRAP(x);
-	T(mLinearSolve)T(LinearSolve)T(StrassenMM)T(MDot)T(MInverse)T(MDet)T(NullSpace)T(Rank)T(LeastSquares)
-#undef T
-#define T(x,y) Attributes[TAG(x)].insert(y);
+	if (Initialized) return;
 
-#undef T
-		Initialized = true;
+	DEF_TAG_SYM_WRAPPED_CPROC(mLinearSolve)
+    DEF_TAG_SYM_WRAPPED_CPROC(LinearSolve)
+    DEF_TAG_SYM_WRAPPED_CPROC(StrassenMM)
+    DEF_TAG_SYM_WRAPPED_CPROC(MDot)
+    DEF_TAG_SYM_WRAPPED_CPROC(MInverse)
+    DEF_TAG_SYM_WRAPPED_CPROC(MDet)
+    DEF_TAG_SYM_WRAPPED_CPROC(NullSpace)
+    DEF_TAG_SYM_WRAPPED_CPROC(Rank)
+    DEF_TAG_SYM_WRAPPED_CPROC(LeastSquares)
+
+	Initialized = true;
 }
 }
 }

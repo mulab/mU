@@ -38,16 +38,34 @@ typedef signed long sint;
 typedef wchar_t wchar;
 #define __W(x) L ## x
 #define _W(x) __W(x)
-using std::string;using std::wstring;using std::istream;using std::wistream;
-using std::ostream;using std::wostream;using std::iostream;using std::wiostream;
-using std::istringstream;using std::wistringstream;
-using std::ostringstream;using std::wostringstream;
-using std::stringstream;using std::wstringstream;
-using std::ifstream;using std::wifstream;
-using std::ofstream;using std::wofstream;
-using std::fstream;using std::wfstream;
-using std::cin;using std::wcin;using std::cout;using std::wcout;
-using std::cerr;using std::wcerr;using std::ios;using std::wios;
+using std::string;
+using std::wstring;
+using std::istream;
+using std::wistream;
+using std::ostream;
+using std::wostream;
+using std::iostream;
+using std::wiostream;
+using std::istringstream;
+using std::wistringstream;
+using std::ostringstream;
+using std::wostringstream;
+using std::stringstream;
+using std::wstringstream;
+using std::ifstream;
+using std::wifstream;
+using std::ofstream;
+using std::wofstream;
+using std::fstream;
+using std::wfstream;
+using std::cin;
+using std::wcin;
+using std::cout;
+using std::wcout;
+using std::cerr;
+using std::wcerr;
+using std::ios;
+using std::wios;
 }
 
 #ifdef _MSC_VER

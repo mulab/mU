@@ -62,17 +62,18 @@ void Initialize()
 {
 	static bool Initialized = false;
 	if(Initialized) return;
-#define T(x) var TAG(x) = Sym(L###x,System);CProcs[TAG(x)] = WRAP(x);
-	T(Pipe)T(Buffer)T(File)T(Link)T(Read)T(Write)
-	T(Server)T(Request)T(Parse)
-#undef T
-#define T(x) var TAG(x) = Sym(L###x,System);COpers[TAG(x)] = WRAP(x);
 
-#undef T
-#define T(x,y) Attributes[TAG(x)].insert(y);
-	
-#undef T
-		Initialized = true;
+	DEF_TAG_SYM_WRAPPED_CPROC(Pipe)
+	DEF_TAG_SYM_WRAPPED_CPROC(Buffer)
+	DEF_TAG_SYM_WRAPPED_CPROC(File)
+	DEF_TAG_SYM_WRAPPED_CPROC(Link)
+	DEF_TAG_SYM_WRAPPED_CPROC(Read)
+	DEF_TAG_SYM_WRAPPED_CPROC(Write)
+	DEF_TAG_SYM_WRAPPED_CPROC(Server)
+	DEF_TAG_SYM_WRAPPED_CPROC(Request)
+	DEF_TAG_SYM_WRAPPED_CPROC(Parse)
+
+	Initialized = true;
 }
 }
 }

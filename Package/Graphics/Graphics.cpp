@@ -98,32 +98,29 @@ Wrap(ContourPlot) {
 void Initialize() {
     static bool Initialized = false;
     if (Initialized) return;
-#define T(x) var TAG(x) = Sym(L###x,System);CProcs[TAG(x)] = WRAP(x);
-    T(Plot)
-    T(Plot3D)
-    T(ListPlot)
-    T(ParametricCurvePlot)
-    T(ParametricRegionPlot)
-    T(PolarPlot)
-    T(ParametricCurvePlot3D)
-    T(ParametricSurfacePlot3D)
-    T(ContourPlot3D)
-    T(ContourPlot)
-#undef T
-#define T(x) var TAG(x) = Sym(L###x,System);COpers[TAG(x)] = WRAP(x);
-#undef T
-#define T(x,y) Attributes[TAG(x)].insert(y);
-    T(Plot, HoldAll)
-    T(Plot3D, HoldAll)
-    T(ListPlot, HoldAll)
-    T(ParametricCurvePlot, HoldAll)
-    T(ParametricRegionPlot, HoldAll)
-    T(PolarPlot, HoldAll)
-    T(ParametricCurvePlot3D, HoldAll)
-    T(ParametricSurfacePlot3D, HoldAll)
-    T(ContourPlot3D, HoldAll)
-    T(ContourPlot, HoldAll)
-#undef T
+
+    DEF_TAG_SYM_WRAPPED_CPROC(Plot)
+    DEF_TAG_SYM_WRAPPED_CPROC(Plot3D)
+    DEF_TAG_SYM_WRAPPED_CPROC(ListPlot)
+    DEF_TAG_SYM_WRAPPED_CPROC(ParametricCurvePlot)
+    DEF_TAG_SYM_WRAPPED_CPROC(ParametricRegionPlot)
+    DEF_TAG_SYM_WRAPPED_CPROC(PolarPlot)
+    DEF_TAG_SYM_WRAPPED_CPROC(ParametricCurvePlot3D)
+    DEF_TAG_SYM_WRAPPED_CPROC(ParametricSurfacePlot3D)
+    DEF_TAG_SYM_WRAPPED_CPROC(ContourPlot3D)
+    DEF_TAG_SYM_WRAPPED_CPROC(ContourPlot)
+
+    SET_ATTR(Plot, HoldAll)
+    SET_ATTR(Plot3D, HoldAll)
+    SET_ATTR(ListPlot, HoldAll)
+    SET_ATTR(ParametricCurvePlot, HoldAll)
+    SET_ATTR(ParametricRegionPlot, HoldAll)
+    SET_ATTR(PolarPlot, HoldAll)
+    SET_ATTR(ParametricCurvePlot3D, HoldAll)
+    SET_ATTR(ParametricSurfacePlot3D, HoldAll)
+    SET_ATTR(ContourPlot3D, HoldAll)
+    SET_ATTR(ContourPlot, HoldAll)
+
     Initialized = true;
 }
 }

@@ -4,40 +4,38 @@ namespace mU {
 //////////////////////////////////////
 namespace S
 {
-#define T(x) (((str_t*)(x))->rep)
 void Set(Var x, const wchar *y)
 {
-	T(x).assign(y);
+	STR_REP(x).assign(y);
 }
 void Add(Var x, Var y, Var z)
 {
-		T(x) = T(y) + T(z);
+	STR_REP(x) = STR_REP(y) + STR_REP(z);
 }
 void AddTo(Var x, Var y)
 {
-	T(x) += T(y);
+	STR_REP(x) += STR_REP(y);
 }
 int Cmp(Var x, Var y)
 {
-	return T(x).compare(T(y));
+	return STR_REP(x).compare(STR_REP(y));
 }
 uint Length(Var x)
 {
-	return T(x).length();
+	return STR_REP(x).length();
 }
 void Insert(Var x, Var y, uint n)
 {
-	T(x).insert(n,T(y));
+	STR_REP(x).insert(n,STR_REP(y));
 }
 var Substr(Var x, uint y, uint n)
 {
-	return Str(T(x).substr(y,n));
+	return Str(STR_REP(x).substr(y,n));
 }
 void Erase(Var x, uint y, uint n)
 {
-	T(x).erase(y,n);
+	STR_REP(x).erase(y,n);
 }
-#undef T
 }
 //////////////////////////////////////
 }

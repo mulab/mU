@@ -164,16 +164,21 @@ void Initialize()
 	Rational::Init();
 	List::Init();
 	Old::Randomize();
-#define T(x) var TAG(x) = Sym(L###x,System);CProcs[TAG(x)] = WRAP(x);
-	T(FactorInteger)T(SeedRandom)T(RandomInteger)T(RandomPrime)T(NextPrime)
-	T(IntegerLength)T(GCD)T(LCM)T(ExtendedGCD)T(ChineseRemainder)T(PrimeQ)
-#undef T
-#define T(x,y) Attributes[TAG(x)].insert(y);
 
-#undef T
-#define T(x) CProcs[TAG(x)] = WRAP(x);
-	T(Radical)
-#undef T
+	DEF_TAG_SYM_WRAPPED_CPROC(FactorInteger)
+	DEF_TAG_SYM_WRAPPED_CPROC(SeedRandom)
+	DEF_TAG_SYM_WRAPPED_CPROC(RandomInteger)
+	DEF_TAG_SYM_WRAPPED_CPROC(RandomPrime)
+	DEF_TAG_SYM_WRAPPED_CPROC(NextPrime)
+	DEF_TAG_SYM_WRAPPED_CPROC(IntegerLength)
+	DEF_TAG_SYM_WRAPPED_CPROC(GCD)
+	DEF_TAG_SYM_WRAPPED_CPROC(LCM)
+	DEF_TAG_SYM_WRAPPED_CPROC(ExtendedGCD)
+	DEF_TAG_SYM_WRAPPED_CPROC(ChineseRemainder)
+	DEF_TAG_SYM_WRAPPED_CPROC(PrimeQ)
+
+	DEF_WRAPPED_CPROC(Radical)
+
 	Initialized = true;
 }
 }
