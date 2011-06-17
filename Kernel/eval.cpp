@@ -1,3 +1,5 @@
+#include <cassert>
+#include <locale>
 #include <mU/Number.h>
 #include <mU/String.h>
 #include <mU/Pattern.h>
@@ -5,6 +7,240 @@
 
 namespace mU {
 //////////////////////////////////////
+namespace {
+
+var EvalSym(Var symbol)
+{
+	map_t::const_iterator iter = OwnValues.find(symbol);
+	if (iter != OwnValues.end() && iter->second != symbol)
+		return Eval(iter->second);
+	else
+		return symbol;
+}
+
+var FlattenSequence(Var vector, bool evaluate)
+{
+	size_t n = Size(vector);
+	var r = Vec();
+	Reserve(r,n);
+	for(size_t i = 0; i < n; ++i)
+	{
+		var c = evaluate ? Eval(At(vector, i)) : At(vector, i);
+		if(ExQ(c,TAG(Sequence)))
+			CVec(r).insert(
+			CVec(r).end(),
+			CVec(Body(c)).begin(),
+			CVec(Body(c)).end());
+		else
+			Push(r,c);
+	}
+	return r;
+}
+
+var EvalVec(Var vector)
+{
+	return FlattenSequence(vector, true);
+}
+
+bool SearchFactValues(var &result, var head, var body)
+{
+	std::map<Var,dict_t>::const_iterator
+		iter = FactValues.find(head);
+	if(iter != FactValues.end())
+	{
+		dict_t::const_iterator
+			iter2 = iter->second.find(body);
+		if(iter2 != iter->second.end())
+		{
+			result = Eval(iter2->second);
+			return true;
+		}
+	}
+	return false;
+}
+
+bool SearchDownValues(var &result, var head, var body)
+{
+	std::map<Var,def_t>::const_iterator
+		iter = DownValues.find(head);
+	if(iter != DownValues.end())
+	{
+		const def_t &definitions = iter->second;
+		def_t::const_iterator
+			iter2 = definitions.begin();
+		map_t m;
+		while(iter2 != definitions.end())
+		{
+			if(MatchQ(m,iter2->second.first,body))
+			{
+				result = Eval(Subs(m,iter2->second.second));
+				return true;
+			}
+			++iter2;
+		}
+	}
+	return false;
+}
+
+bool SearchCProcs(var &result, var head, var body)
+{
+	stdext::hash_map<Var,CProc>::const_iterator
+		iter = CProcs.find(head);
+	if(iter != CProcs.end())
+	{
+		result = iter->second(body);
+		if (result)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+bool SearchSubValues(var &result, var head, var body)
+{
+	std::map<Var,def_t>::const_iterator
+		iter = SubValues.find(Head(head));
+	if(iter != SubValues.end())
+	{
+		def_t::const_iterator
+			iter2 = iter->second.begin();
+		var t = Vec(Body(head),body);
+		map_t m;
+		while(iter2 != iter->second.end())
+		{
+			if(MatchQ(m,iter2->second.first,t))
+			{
+				result = Eval(Subs(m,iter2->second.second));
+				return true;
+			}
+			++iter2;
+		}
+	}
+	return false;
+}
+
+bool SearchCOpers(var &result, var head, var body)
+{
+	stdext::hash_map<Var,COper>::const_iterator
+		iter = COpers.find(Head(head));
+	if(iter != COpers.end())
+	{
+		result = iter->second(Body(head),body);
+		if (result)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+bool HandleAttributes(var &result, Var expression, const attr_t &attributes,
+						var head, var &body)
+{
+	if(attributes.count(SequenceHold))
+	{
+		body = Body(expression);
+	}
+	else
+	{
+		body = FlattenSequence(Body(expression), false);
+	}
+	size_t n = Size(body);
+	if(n == 1 && attributes.count(OneIdentity))
+	{
+		result = Eval(At(body,0));
+		return true;
+	}
+	if(!attributes.count(HoldAll))
+	{
+		if(n > 0 && !attributes.count(HoldFirst))
+			At(body,0) = Eval(At(body,0));
+		if(n > 1 && !attributes.count(HoldRest))
+			for(size_t i = 1; i < n; ++i)
+				At(body,i) = Eval(At(body,i));
+	}
+	if(attributes.count(Listable))
+	{
+		var t = Thread(head,body);
+		if(t)
+		{
+			result = Eval(t);
+			return true;
+		}
+	}
+	if(attributes.count(Flat))
+	{
+		var t = body;
+		body = Vec();
+		Reserve(body,n);
+		Flatten(body,head,t);
+	}
+	if(attributes.count(Orderless))
+		Sort(body);
+
+	return false;
+}
+
+var EvalEx(Var expression)
+{
+	var head = Eval(Head(expression));
+	var body;
+	var result;
+	bool found;
+	if(SymQ(head))
+	{
+		std::map<Var,attr_t>::const_iterator
+			iter = Attributes.find(head);
+		if(iter != Attributes.end())
+		{
+			if (HandleAttributes(result, expression, iter->second, head, body))
+			{
+				return result;
+			}
+		}
+		else
+		{
+			body = Eval(Body(expression));
+		}
+
+		if (SearchFactValues(result, head, body))
+		{
+			return result;
+		}
+
+		if (SearchDownValues(result, head, body))
+		{
+			return result;
+		}
+
+		if (SearchCProcs(result, head, body))
+		{
+			return result;
+		}
+	}
+	else
+	{
+		body = Eval(Body(expression));
+
+		if(ExQ(head) && SymQ(Head(head)))
+		{
+			if (SearchSubValues(result, head, body))
+			{
+				return result;
+			}
+
+			if (SearchCOpers(result, head, body))
+			{
+				return result;
+			}
+		}
+	}
+	return Ex(head,body);
+}
+
+}
+
 var Eval(Var x)
 {
 	switch(Type(x))
@@ -16,275 +252,174 @@ var Eval(Var x)
 	case TYPE(str):
 		return x;
 	case TYPE(sym):
-		{
-			map_t::const_iterator
-				iter = OwnValues.find(x);
-			if(iter != OwnValues.end() && iter->second != x)
-				return Eval(iter->second);
-		}
-		return x;
+		return EvalSym(x);
 	case TYPE(vec):
-		{
-			size_t n = Size(x);
-			var r = Vec();
-			Reserve(r,n);
-			for(size_t i = 0; i < n; ++i)
-			{
-				var c = Eval(At(x,i));
-				if(ExQ(c,TAG(Sequence)))
-					CVec(r).insert(
-					CVec(r).end(),
-					CVec(Body(c)).begin(),
-					CVec(Body(c)).end());
-				else
-					Push(r,c);
-			}
-			return r;
-		}
+		return EvalVec(x);
+	case TYPE(ex):
+		return EvalEx(x);
+	default:
+		assert(false);		// TODO: ±¨¸æ´íÎó
+		return Null;
 	}
-	var h = Eval(Head(x));
-	var r;
-	if(SymQ(h))
+}
+
+namespace {
+// TODO: each return statement here should be replaced by a throw statement.
+void SetPart(var x_indices, var y)
+{
+	if(SymQ(At(x_indices,0)))
 	{
-		std::map<Var,attr_t>::const_iterator
-			iter = Attributes.find(h);
-		if(iter != Attributes.end())
+		const var x = At(x_indices,0);
+		map_t::const_iterator iter = OwnValues.find(x);
+		if(iter != OwnValues.end())
 		{
-			if(iter->second.count(SequenceHold))
-				r = Body(x);
-			else
+			var c = iter->second;
+			size_t n = Size(x_indices);
+			for(size_t i = 1; i < n - 1; ++i)
 			{
-				size_t n = Size(Body(x));
-				r = Vec();
-				Reserve(r,n);
-				for(size_t i = 0; i < n; ++i)
+				int j = Z::SI(Eval(At(x_indices,i)));
+				if(j == 0) return;
+				if(ExQ(c)) c = Body(c);
+				if(VecQ(c))
 				{
-					var c = At(Body(x),i);
-					if(ExQ(c,TAG(Sequence)))
-						CVec(r).insert(
-						CVec(r).end(),
-						CVec(Body(c)).begin(),
-						CVec(Body(c)).end());
-					else
-						Push(r,c);
+					j < 0 ? j += Size(c) : --j;
+					if(j < 0 || j >= Size(c))
+						return;
+					c = At(c,j);
 				}
 			}
-			size_t n = Size(r);
-			if(n == 1 && iter->second.count(OneIdentity))
-				return Eval(At(r,0));
-			if(!iter->second.count(HoldAll))
+			int j = Z::SI(Eval(At(x_indices,n - 1)));
+			if(j == 0) return;
+			if(ExQ(c)) c = Body(c);
+			if(VecQ(c))
 			{
-				if(n > 0 && !iter->second.count(HoldFirst))
-					At(r,0) = Eval(At(r,0));
-				if(n > 1 && !iter->second.count(HoldRest))
-					for(size_t i = 1; i < n; ++i)
-						At(r,i) = Eval(At(r,i));
+				j < 0 ? j += Size(c) : --j;
+				if(j < 0 || j >= Size(c))
+					return;
+				At(c,j) = y;
 			}
-			if(iter->second.count(Listable))
-			{
-				var t = Thread(h,r);
-				if(t) return Eval(t);
-			}
-			if(iter->second.count(Flat))
-			{
-				var t = r;
-				r = Vec();
-				Reserve(r,n);
-				Flatten(r,h,t);
-			}
-			if(iter->second.count(Orderless))
-				Sort(r);
 		}
 		else
-			r = Eval(Body(x));
 		{
-			std::map<Var,dict_t>::const_iterator
-				iter = FactValues.find(h);
-			if(iter != FactValues.end())
-			{
-				dict_t::const_iterator
-					iter2 = iter->second.find(r);
-				if(iter2 != iter->second.end())
-					return Eval(iter2->second);
-			}
-		}
-		{
-			std::map<Var,def_t>::const_iterator
-				iter = DownValues.find(h);
-			if(iter != DownValues.end())
-			{
-				def_t::const_iterator
-					iter2 = iter->second.begin();
-				map_t m;
-				while(iter2 != iter->second.end())
-				{
-					if(MatchQ(m,iter2->second.first,r))
-						return Eval(Subs(m,iter2->second.second));
-					++iter2;
-				}
-			}
-		}
-		{
-			stdext::hash_map<Var,CProc>::const_iterator
-				iter = CProcs.find(h);
-			if(iter != CProcs.end())
-			{
-				var t = iter->second(r);
-				if(t) return t;
-			}
+			// TODO: more specific exception class here
+			throw Exception("Part assignment failed!");
 		}
 	}
 	else
 	{
-		r = Eval(Body(x));
-		if(ExQ(h) && SymQ(Head(h)))
-		{
-			{
-				std::map<Var,def_t>::const_iterator
-					iter = SubValues.find(Head(h));
-				if(iter != SubValues.end())
-				{
-					def_t::const_iterator
-						iter2 = iter->second.begin();
-					var t = Vec(Body(h),r);
-					map_t m;
-					while(iter2 != iter->second.end())
-					{
-						if(MatchQ(m,iter2->second.first,t))
-							return Eval(Subs(m,iter2->second.second));
-						++iter2;
-					}
-				}
-			}
-			{
-				stdext::hash_map<Var,COper>::const_iterator
-					iter = COpers.find(Head(h));
-				if(iter != COpers.end())
-				{
-					var t = iter->second(Body(h),r);
-					if(t) return t;
-				}
-			}
-		}
+		// TODO: we need more specific exception class here.
+		throw Exception("first argument to Part should be a symbol!");
 	}
-	return Ex(h,r);
 }
+
+void SetDownValue(var head, var body, var y)
+{
+	if(ExQ(y,TAG(Condition)))
+	{
+		DownValues[head][Ex(TAG(Condition),Vec(body,Right(y)))] =
+				std::make_pair(
+						new Pattern::condition(
+								new Pattern::chain(
+										new Pattern::push(),
+										Pat(head,body),
+										new Pattern::pop()),
+										Right(y)),
+										Left(y));
+	}
+	else
+	{
+		DownValues[head][body] =
+				std::make_pair(
+						new Pattern::chain(
+								new Pattern::push(),
+								Pat(head,body),
+								new Pattern::pop()),
+								y);
+	}
+}
+
+void SetSubValue(var head, var body, var y)
+{
+	var b = Eval(body);
+	var t = Vec(Body(head),b);
+	if(ExQ(y,TAG(Condition)))
+	{
+		SubValues[Head(head)][Ex(TAG(Condition),Vec(t,Right(y)))] =
+				std::make_pair(
+						new Pattern::condition(
+								Pat(t),
+								Right(y)),
+								Left(y));
+	}
+	else
+	{
+		SubValues[Head(head)][t] =
+				std::make_pair(
+						Pat(t),
+						y);
+	}
+}
+
+}
+
 void Set(Var x, Var y)
 {
 	if(SymQ(x))
 	{
 		OwnValues[x] = y;
-		return;
 	}
-	if(VecQ(x))
+	else if(VecQ(x))
 	{
 		size_t n = Size(x);
 		for(size_t i = 0; i < n; ++i)
 			Set(At(x,i),At(y,i));
-		return;
 	}
-	if(ExQ(x))
+	else if(ExQ(x))
 	{
-		var h = Eval(Head(x));
-		if(SymQ(h))
+		var head = Eval(Head(x));
+		if(SymQ(head))
 		{
-			var b = Body(x);
-			if(h == TAG(Part))
+			var body = Body(x);
+			if(head == TAG(Part))
 			{
-				if(SymQ(At(b,0)))
-				{
-					map_t::const_iterator
-						iter = OwnValues.find(At(b,0));
-					if(iter != OwnValues.end())
-					{
-						var c = iter->second;
-						size_t n = Size(b);
-						for(size_t i = 1; i < n - 1; ++i)
-						{
-							int j = Z::SI(Eval(At(b,i)));
-							if(j == 0) return;
-							if(ExQ(c)) c = Body(c);
-							if(VecQ(c))
-							{
-								j < 0 ? j += Size(c) : --j;
-								if(j < 0 || j >= Size(c))
-									return;
-								c = At(c,j);
-							}
-						}
-						int j = Z::SI(Eval(At(b,n - 1)));
-						if(j == 0) return;
-						if(ExQ(c)) c = Body(c);
-						if(VecQ(c))
-						{
-							j < 0 ? j += Size(c) : --j;
-							if(j < 0 || j >= Size(c))
-								return;
-							At(c,j) = y;
-						}
-						return;
-					}
-				}
+				SetPart(body, y);
 			}
-			else if(h == TAG(Property))
+			else if(head == TAG(Property))
 			{
-				if(SymQ(At(b,0)) && SymQ(At(b,1)))
-					Properties[At(b,0)][At(b,1)] = y;
-				return;
+				if(SymQ(At(body,0)) && SymQ(At(body,1)))
+					Properties[At(body,0)][At(body,1)] = y;
 			}
-			b = Eval(b);
-			if(FixQ(b))
-				FactValues[h][b] = y;
 			else
 			{
-				if(ExQ(y,TAG(Condition)))
+				body = Eval(body);
+				if(FixQ(body))
 				{
-					DownValues[h][Ex(TAG(Condition),Vec(b,Right(y)))] =
-						std::make_pair(
-						new Pattern::condition(
-						new Pattern::chain(
-						new Pattern::push(),
-						Pat(h,b),
-						new Pattern::pop()),Right(y)),
-						Left(y));
+					FactValues[head][body] = y;
 				}
 				else
 				{
-					DownValues[h][b] =
-						std::make_pair(
-						new Pattern::chain(
-						new Pattern::push(),
-						Pat(h,b),
-						new Pattern::pop()),
-						y);
+					SetDownValue(head, body, y);
 				}
 			}
-			return;
 		}
-		else if(ExQ(h) && SymQ(Head(h)))
+		else if(ExQ(head) && SymQ(Head(head)))
 		{
-			var b = Eval(Body(x));
-			var t = Vec(Body(h),b);
-			if(ExQ(y,TAG(Condition)))
-			{
-				SubValues[Head(h)][Ex(TAG(Condition),Vec(t,Right(y)))] =
-					std::make_pair(
-					new Pattern::condition(
-					Pat(t),
-					Right(y)),
-					Left(y));
-			}
-			else
-			{
-				SubValues[Head(h)][t] =
-					std::make_pair(
-					Pat(t),
-					y);
-			}
-			return;
+			var body = Body(x);
+			SetSubValue(head, body, y);
+		}
+		else
+		{
+			// TODO: more specific exception class
+			throw Exception("no assignment performed!");
 		}
 	}
+	else
+	{
+		// TODO: more specific exception class
+		throw Exception("no assignment performed!");
+	}
 }
+
 void Unset(Var x)
 {
 	if(SymQ(x))
@@ -345,6 +480,7 @@ void Unset(Var x)
 		}
 	}
 }
+
 void Clear(Var x)
 {
 	OwnValues.erase(x);
@@ -354,6 +490,7 @@ void Clear(Var x)
 	Properties.erase(x);
 	Attributes.erase(x);
 }
+
 var Thread(Var h, Var b)
 {
 	size_t n = Size(b);
@@ -379,6 +516,7 @@ var Thread(Var h, Var b)
 	}
 	return r;
 }
+
 void Flatten(Var r, Var b)
 {
 	size_t n = Size(b);
@@ -395,6 +533,7 @@ void Flatten(Var r, Var b)
 			Push(r,c);
 	}
 }
+
 void Flatten(Var r, Var h, Var b)
 {
 	size_t n = Size(b);
@@ -412,6 +551,7 @@ void Flatten(Var r, Var h, Var b)
 			Push(r,c);
 	}
 }
+
 void FlattenAll(Var r, Var b)
 {
 	size_t n = Size(b);
@@ -421,6 +561,7 @@ void FlattenAll(Var r, Var b)
 		VecQ(c) ? FlattenAll(r,c) : Push(r,c);
 	}
 }
+
 void FlattenAll(Var r, Var h, Var b)
 {
 	size_t n = Size(b);
@@ -430,6 +571,7 @@ void FlattenAll(Var r, Var h, Var b)
 		ExQ(c,h) ? FlattenAll(r,h,Body(c)) : Push(r,c);
 	}
 }
+
 bool FixQ(Var x)
 {
 	if(VecQ(x))
@@ -454,13 +596,16 @@ bool FixQ(Var x)
 	}
 	return true;
 }
+
 wstring Unique()
 {
 	static size_t count = 0;
 	wostringstream t;
+	t.imbue(std::locale("C"));
 	t << L'$' << ++count;
 	return t.str();
 }
+
 var Supply(Var w, Var x, Var y)
 {
 	switch(Type(x))

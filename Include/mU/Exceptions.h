@@ -8,6 +8,7 @@
 #ifndef EXCEPTIONS_H_
 #define EXCEPTIONS_H_
 
+#include <string>
 #include <boost/system/error_code.hpp>
 #include <boost/version.hpp>
 #ifdef _WIN32
@@ -20,7 +21,11 @@ namespace mU
 {
 	class Exception
 	{
-
+	public:
+		Exception() {}
+		Exception(const std::string &msg) : what(msg) {}
+	private:
+		std::string what;
 	};
 
 	class ParserException : public Exception

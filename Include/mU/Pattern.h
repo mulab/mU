@@ -68,6 +68,7 @@ public:
 		return false;
 	}
 };
+
 class blank : public pat_t
 {
 	var m_name;
@@ -94,6 +95,7 @@ public:
 		return false;
 	}
 };
+
 class blank_head : public pat_t
 {
 	var m_name;
@@ -125,6 +127,7 @@ public:
 		return false;
 	}
 };
+
 class blank_flat : public pat_t
 {
 	var m_head;
@@ -162,6 +165,7 @@ public:
 		return false;
 	}
 };
+
 class blanks : public pat_t
 {
 	size_t m_size;
@@ -198,6 +202,7 @@ public:
 		return false;
 	}
 };
+
 class blanks_head : public pat_t
 {
 	var m_head;
@@ -237,6 +242,7 @@ public:
 		return false;
 	}
 };
+
 class condition : public pat_t
 {
 	class test : public pat_t
@@ -268,6 +274,7 @@ public:
 		return false;
 	}
 };
+
 class head : public pat_t
 {
 	var m_head;
@@ -282,6 +289,7 @@ public:
 		return next(m,y);
 	}
 };
+
 class push : public pat_t
 {
 public:
@@ -294,6 +302,7 @@ public:
 		return next(m,y);
 	}
 };
+
 class pop : public pat_t
 {
 public:
@@ -307,6 +316,7 @@ public:
 		return false;
 	}
 };
+
 class chain : public pat_t
 {
 	var m_head;
@@ -340,6 +350,7 @@ public:
 		return Match(m,m_head,x);
 	}
 };
+
 class orderless : public pat_t
 {
 	std::multiset<var,Before2> m_fix;
